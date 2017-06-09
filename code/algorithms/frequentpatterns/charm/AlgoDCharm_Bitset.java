@@ -1,4 +1,4 @@
-package algorithms.frequentpatterns.eclat;
+package ca.pfv.spmf.algorithms.frequentpatterns.charm;
 /* This file is copyright (c) 2008-2013 Philippe Fournier-Viger
 * 
 * This file is part of the SPMF DATA MINING SOFTWARE
@@ -16,38 +16,37 @@ package algorithms.frequentpatterns.eclat;
 * SPMF. If not, see <http://www.gnu.org/licenses/>.
 */
 
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Map;
 
-import datastructures.triangularmatrix.TriangularMatrix;
-import input.transaction_database_list_integers.TransactionDatabase;
-import patterns.itemset_array_integers_with_tids_bitset.Itemset;
-import patterns.itemset_array_integers_with_tids_bitset.Itemsets;
-import tools.MemoryLogger;
+import ca.pfv.spmf.algorithms.ArraysAlgos;
+import ca.pfv.spmf.datastructures.triangularmatrix.TriangularMatrix;
+import ca.pfv.spmf.input.transaction_database_list_integers.TransactionDatabase;
+import ca.pfv.spmf.patterns.itemset_array_integers_with_tids_bitset.Itemset;
+import ca.pfv.spmf.patterns.itemset_array_integers_with_tids_bitset.Itemsets;
+import ca.pfv.spmf.tools.MemoryLogger;
  
 /**
- * This is an implementation of the dECLAT algorithm. The difference between DECLAT
- * and ECLAT is that dECLAT utilizes diffsets instead of tidsets.
+ * This is an implementation of the dCharm algorithm. The difference between DECLAT
+ * and CHARM is that dCharm utilizes diffsets instead of tidsets.
  * In this implementation, diffsets are represented as bitsets.
- * Note that this class is a subclass of the ECLAT algorithm because a lot of
+ * Note that this class is a subclass of the Charm algorithm because a lot of
  * code is the same and we wanted to avoid redundancy. 
- * Note also that implementing diffsets using bitsets may not provide the optimal performance for
- * dEclat since even if diffsets are smaller than tidsets, as a bitset, they may not be much
- * smaller. It is thus recommended to try also the regular implementation
  * 
- * IMPORTANT: dEClat returns Itemsets annotated with their diffsets
+ * IMPORTANT: dCharm returns Itemsets annotated with their diffsets
  * rather than tidsets when the user choose to keep the result in memory.
  *  
- * DEclat was proposed by ZAKI (2000).
+ * dCharm was proposed by ZAKI (2000).
  * <br/><br/>
  * 
- * See this article for details about ECLAT:
+ * See this article for details about dCharm:
  * <br/><br/>
  * 
- * Zaki, M. J. (2000). Scalable algorithms for association mining. Knowledge and Data Engineering, IEEE Transactions on, 12(3), 372-390.
- * <br/><br/>
+ * Mohammed Javeed Zaki, Ching-Jiu Hsiao: CHARM: An Efficient Algorithm for Closed Itemset Mining. SDM 2002. * <br/><br/>
  * 
- * and: <br/><br/>
+ * and diffsets have been proposed in: <br/><br/>
  * 
  * M. J. Zaki and K. Gouda. Fast vertical mining using Diffsets. Technical Report 01-1, Computer Science
  * Dept., Rensselaer Polytechnic Institute, March 2001.
@@ -62,13 +61,13 @@ import tools.MemoryLogger;
  * @see Itemsets
  * @author Philippe Fournier-Viger
  */
-public class AlgoDEclat_Bitset extends AlgoEclat_Bitset{
+public class AlgoDCharm_Bitset extends AlgoCharm_Bitset{
 
 	/**
 	 * Print statistics about the algorithm execution to System.out.
 	 */
 	public void printStats() {
-		System.out.println("=============  DECLAT vALTERNATE-Bitset v0.96r18- STATS =============");
+		System.out.println("=============  dCharm vALTERNATE-Bitset v96r6 - STATS =============");
 		long temps = endTime - startTimestamp;
 		System.out.println(" Transactions count from database : " + database.size());
 		System.out.println(" Frequent itemsets count : " + itemsetCount);
@@ -86,6 +85,7 @@ public class AlgoDEclat_Bitset extends AlgoEclat_Bitset{
 	 */
 	int calculateSupportSingleItems(TransactionDatabase database,
 			final Map<Integer, BitSetSupport> mapItemTIDS) {
+		
 		// (1) First database pass : calculate diffsets of each item.
 		int maxItemId = 0;
 		// for each transaction
@@ -111,7 +111,6 @@ public class AlgoDEclat_Bitset extends AlgoEclat_Bitset{
 				//We set to false the bit corresponding to this transaction
 				// in the diffset of that item
 				tids.bitset.set(i, false);
-				// END DECLAT
 				// we increase the support of that item
 				tids.support++;
 			}
@@ -126,7 +125,7 @@ public class AlgoDEclat_Bitset extends AlgoEclat_Bitset{
 	 * @param tidsetJ the second diffset
 	 * @return the resulting diffset and its support
 	 */
-	BitSetSupport performAND(BitSetSupport tidsetI, BitSetSupport tidsetJ) {
+	 BitSetSupport performAND(BitSetSupport tidsetI, BitSetSupport tidsetJ) {
 		// Create the new diffset 
 		BitSetSupport bitsetSupportIJ = new BitSetSupport();
 		// Calculate the diffset 
@@ -148,7 +147,6 @@ public class AlgoDEclat_Bitset extends AlgoEclat_Bitset{
 	 */
 	BitSetSupport performANDFirstTime(BitSetSupport tidsetI,
 			BitSetSupport tidsetJ, int supportIJ) {
-		
 		// Create the new diffset and perform the logical AND to intersect the diffsets
 		BitSetSupport bitsetSupportIJ = new BitSetSupport();
 		//Calculate the diffset
@@ -160,5 +158,61 @@ public class AlgoDEclat_Bitset extends AlgoEclat_Bitset{
 		return bitsetSupportIJ;
 	}
 
+	/**
+	 * Save an itemset(as described in the paper).
+	 * @param prefix the prefix part of this itemset
+	 * @param suffix the suffix part of this itemset
+	 * @param tidset the tidset of this itemset
+	 * @throws IOException if an error occurs when writing to file
+	 */
+	void save(int[] prefix, int[] suffix, BitSetSupport tidset) throws IOException {
+		// First we concatenate the suffix and prefix of that itemset.
+		int[] prefixSuffix;
+		if(prefix == null) {
+			prefixSuffix = suffix;
+		}else {
+			prefixSuffix = ArraysAlgos.concatenate(prefix, suffix);
+		}
+		// Sort the resulting itemset
+		Arrays.sort(prefixSuffix);
+		
+		// Create an instance of "Itemset" for that itemset to put in hash table
+		ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemset itemset = new ca.pfv.spmf.patterns.itemset_array_integers_with_count.Itemset(prefixSuffix);
+		itemset.setAbsoluteSupport(tidset.support);
+
+		// Calculate the hash code of that itemset 
+		int hashcode = hash.hashCode(tidset.bitset);
+		
+		// Check in the hash table to see if the itemset has 
+		// a superset already in the hash table. If not, then it is
+		// a closed itemset and we should output it as well
+		// as insert it in the hash table.
+		if (!hash.containsSupersetOf(itemset, hashcode)) {
+			// increase the itemset count
+			itemsetCount++;
+			// if the result should be saved to memory
+			if (writer == null) { 
+				// save it to memory with its tidset
+				Itemset itemsetWithTidset = new Itemset(prefixSuffix, null, tidset.support);
+				//  ^^  NOTE: IN THE LINE ABOVE WE SET THE "TIDSET" TO NULL FOR DCHARM BECAUSE
+				// IT IS NOT MEANINGFUL TO KEEP THE DIFFSET.
+				closedItemsets.addItemset(itemsetWithTidset, itemset.size()); 
+			} else {
+				// otherwise if the result should be saved to a file,
+				// then write it to the output file
+				writer.write(itemset.toString() + " #SUP: " + itemset.support);
+				if(showTransactionIdentifiers) {
+					BitSet bitset = tidset.bitset;
+		        	writer.append(" #TID:");
+		        	for (int tid = bitset.nextSetBit(0); tid != -1; tid = bitset.nextSetBit(tid + 1)) {
+		        		writer.append(" " + tid); 
+		        	}
+				}
+				writer.newLine();
+			}
+			// add the itemset to the hashtable
+			hash.put(itemset, hashcode);
+		}
+	}
 
 }

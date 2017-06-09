@@ -1,8 +1,8 @@
-package ca.pfv.spmf.datastructures.triangularmatrix;
+package code.datastructures.triangularmatrix;
 
-import ca.pfv.spmf.algorithms.frequentpatterns.charm.AlgoCharm_Bitset;
-import ca.pfv.spmf.algorithms.frequentpatterns.eclat.AlgoEclat;
-import ca.pfv.spmf.algorithms.frequentpatterns.eclat.AlgoEclat_Bitset;
+import code.algorithms.frequentpatterns.charm.AlgoCharm_Bitset;
+import code.algorithms.frequentpatterns.eclat.AlgoEclat;
+import code.algorithms.frequentpatterns.eclat.AlgoEclat_Bitset;
 
 /* This file is copyright (c) 2008-2013 Philippe Fournier-Viger
 * 
@@ -98,7 +98,7 @@ public class TriangularMatrix implements AbstractTriangularMatrix {
 	}
 	
 	/* (non-Javadoc)
-	 * @see ca.pfv.spmf.datastructures.triangularmatrix.AbstractTriangularMatrix#toString()
+	 * @see code.datastructures.triangularmatrix.AbstractTriangularMatrix#toString()
 	 */
 	public String toString() {
 		// print the number of elements
@@ -120,7 +120,7 @@ public class TriangularMatrix implements AbstractTriangularMatrix {
 	}
 
 	/* (non-Javadoc)
-	 * @see ca.pfv.spmf.datastructures.triangularmatrix.AbstractTriangularMatrix#incrementCount(int, int)
+	 * @see code.datastructures.triangularmatrix.AbstractTriangularMatrix#incrementCount(int, int)
 	 */
 	public void incrementCount(int i, int j) {
 		if(j < i){
@@ -131,7 +131,7 @@ public class TriangularMatrix implements AbstractTriangularMatrix {
 	}
 	
 	/* (non-Javadoc)
-	 * @see ca.pfv.spmf.datastructures.triangularmatrix.AbstractTriangularMatrix#getSupportForItems(int, int)
+	 * @see code.datastructures.triangularmatrix.AbstractTriangularMatrix#getSupportForItems(int, int)
 	 */
 	public int getSupportForItems(int i, int j){
 		if(j < i){
@@ -142,7 +142,7 @@ public class TriangularMatrix implements AbstractTriangularMatrix {
 	}
 
 	/* (non-Javadoc)
-	 * @see ca.pfv.spmf.datastructures.triangularmatrix.AbstractTriangularMatrix#setSupport(java.lang.Integer, java.lang.Integer, int)
+	 * @see code.datastructures.triangularmatrix.AbstractTriangularMatrix#setSupport(java.lang.Integer, java.lang.Integer, int)
 	 */
 	public void setSupport(Integer i, Integer j, int support) {
 		if(j < i){

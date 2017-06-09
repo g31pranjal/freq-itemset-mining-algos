@@ -1,4 +1,4 @@
-package patterns.itemset_array_integers_with_tids_bitset;
+package code.patterns.itemset_array_integers_with_tids_bitset;
 
 /* This file is copyright (c) 2008-2012 Philippe Fournier-Viger
 * 

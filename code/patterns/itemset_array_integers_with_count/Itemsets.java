@@ -1,4 +1,4 @@
-package patterns.itemset_array_integers_with_count;
+package code.patterns.itemset_array_integers_with_count;
 
 /* This file is copyright (c) 2008-2012 Philippe Fournier-Viger
 * 

@@ -1,4 +1,4 @@
-package patterns;
+package code.patterns;
 
 /* This file is copyright (c) 2008-2012 Philippe Fournier-Viger
 * 

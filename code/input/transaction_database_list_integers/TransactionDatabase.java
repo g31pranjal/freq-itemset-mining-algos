@@ -1,4 +1,4 @@
-package input.transaction_database_list_integers;
+package code.input.transaction_database_list_integers;
 /* Copyright (c) 2008-2013 Philippe Fournier-Viger
 * 
 * This file is part of the SPMF DATA MINING SOFTWARE

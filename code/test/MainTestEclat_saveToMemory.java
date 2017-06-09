@@ -1,12 +1,12 @@
-package ca.pfv.spmf.test;
+package code.test;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 
-import algorithms.frequentpatterns.eclat.AlgoEclat;
-import input.transaction_database_list_integers.TransactionDatabase;
-import patterns.itemset_array_integers_with_count.Itemsets;
+import code.algorithms.frequentpatterns.eclat.AlgoEclat;
+import code.input.transaction_database_list_integers.TransactionDatabase;
+import code.patterns.itemset_array_integers_with_count.Itemsets;
 
 
 /**

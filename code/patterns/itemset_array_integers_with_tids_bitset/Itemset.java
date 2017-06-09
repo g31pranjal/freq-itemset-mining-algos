@@ -1,4 +1,4 @@
-package patterns.itemset_array_integers_with_tids_bitset;
+package code.patterns.itemset_array_integers_with_tids_bitset;
 
 /* This file is copyright (c) 2008-2012 Philippe Fournier-Viger
 * 
@@ -18,7 +18,7 @@ package patterns.itemset_array_integers_with_tids_bitset;
 
 import java.util.BitSet;
 
-import patterns.AbstractOrderedItemset;
+import code.patterns.AbstractOrderedItemset;
 
 /**
  * This class represents an itemset (a set of items) where the itemset is an array of integers 

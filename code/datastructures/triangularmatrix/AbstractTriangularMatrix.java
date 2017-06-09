@@ -1,4 +1,4 @@
-package ca.pfv.spmf.datastructures.triangularmatrix;
+package code.datastructures.triangularmatrix;
 
 public interface AbstractTriangularMatrix {
 

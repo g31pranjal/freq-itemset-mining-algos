@@ -1,4 +1,4 @@
-package algorithms.frequentpatterns.eclat;
+package code.algorithms.frequentpatterns.eclat;
 /* This file is copyright (c) 2008-2013 Philippe Fournier-Viger
 * 
 * This file is part of the SPMF DATA MINING SOFTWARE
@@ -31,11 +31,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import datastructures.triangularmatrix.TriangularMatrix;
-import input.transaction_database_list_integers.TransactionDatabase;
-import patterns.itemset_array_integers_with_count.Itemset;
-import patterns.itemset_array_integers_with_count.Itemsets;
-import tools.MemoryLogger;
+import code.datastructures.triangularmatrix.TriangularMatrix;
+import code.input.transaction_database_list_integers.TransactionDatabase;
+import code.patterns.itemset_array_integers_with_count.Itemset;
+import code.patterns.itemset_array_integers_with_count.Itemsets;
+import code.tools.MemoryLogger;
  
 
 /**

@@ -1,4 +1,4 @@
-package tools;
+package code.tools;
 /*
  *  Copyright (c) 2008-2012 Philippe Fournier-Viger
  * 
