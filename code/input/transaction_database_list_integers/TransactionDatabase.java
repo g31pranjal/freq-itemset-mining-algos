@@ -54,7 +54,7 @@ public class TransactionDatabase {
 	}
 
 	public void printDatabase() {
-		System.out.println("... Transaction Database :: ()");
+		System.out.println("... Transaction Database :: (horizontal)");
 		int count = 0; 
 		
 		for (List<Integer> itemset : transactions) { 
