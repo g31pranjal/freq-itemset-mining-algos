@@ -30,7 +30,7 @@ public class MainTestEclat_bitset_saveToFile {
 		
 		// Applying the ECLAT algorithm
 		AlgoEclat_Bitset algo = new AlgoEclat_Bitset();
-		algo.runAlgorithm(output, database, minsup, false);
+		algo.runAlgorithm(output, database, minsup);
 
 		// NOTE 1: if you  use "true" in the line above, CHARM will use
 		// a triangular matrix  for counting support of itemsets of size 2.

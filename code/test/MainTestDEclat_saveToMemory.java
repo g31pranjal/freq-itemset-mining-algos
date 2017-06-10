@@ -29,7 +29,7 @@ public class MainTestDEclat_saveToMemory {
 		
 		// Applying the dECLAT algorithm
 		AlgoEclat algo = new AlgoDEclat();
-		Itemsets patterns = algo.runAlgorithm(null, database, 0.4, true);
+		Itemsets patterns = algo.runAlgorithm(null, database, 0.4);
 		// NOTE 0: We use "null" as output file path, because in this
 		// example, we want to save the result to memory instead of
 		// saving to a file

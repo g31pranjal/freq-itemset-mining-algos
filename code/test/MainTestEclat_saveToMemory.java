@@ -29,7 +29,7 @@ public class MainTestEclat_saveToMemory {
 		
 		// Applying the ECLAT algorithm
 		AlgoEclat algo = new AlgoEclat();
-		Itemsets patterns = algo.runAlgorithm(null, database, 0.4, true);
+		Itemsets patterns = algo.runAlgorithm(null, database, 0.4);
 		// NOTE 0: We use "null" as output file path, because in this
 		// example, we want to save the result to memory instead of
 		// saving to a file

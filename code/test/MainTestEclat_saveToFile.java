@@ -38,7 +38,7 @@ public class MainTestEclat_saveToFile {
 //		// Set this variable to true to show the transaction identifiers where patterns appear in the output file
 		algo.setShowTransactionIdentifiers(true);
 		
-		algo.runAlgorithm(output, database, minsup, true);
+		algo.runAlgorithm(output, database, minsup);
 		// if you change use "true" in the line above, ECLAT will use
 		// a triangular matrix  for counting support of itemsets of size 2.
 		// For some datasets it should make the algorithm faster.

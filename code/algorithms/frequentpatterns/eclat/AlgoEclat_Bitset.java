@@ -28,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import code.datastructures.triangularmatrix.TriangularMatrix;
 import code.input.transaction_database_list_integers.TransactionDatabase;
 import code.patterns.itemset_array_integers_with_count.Itemset;
 import code.patterns.itemset_array_integers_with_count.Itemsets;
@@ -78,9 +77,6 @@ public class AlgoEclat_Bitset {
 	/** the number of patterns found */
 	protected int itemsetCount; 
 	
-	/** For optimization with a triangular matrix for counting 
-	/ itemsets of size 2.  */
-	private TriangularMatrix matrix; // the triangular matrix
 	
 	/**  buffer for storing the current itemset that is mined when performing mining
 	  the idea is to always reuse the same buffer to reduce memory usage. */
@@ -109,8 +105,7 @@ public class AlgoEclat_Bitset {
 	 * @return the result
 	 * @throws IOException exception if error while writing the file.
 	 */
-	public Itemsets runAlgorithm(String output, TransactionDatabase database, double minsupp,
-			boolean useTriangularMatrixOptimization) throws IOException {
+	public Itemsets runAlgorithm(String output, TransactionDatabase database, double minsupp) throws IOException {
 
 		// Reset the tool to assess the maximum memory usage (for statistics)
 		MemoryLogger.getInstance().reset();
@@ -145,27 +140,6 @@ public class AlgoEclat_Bitset {
 		final Map<Integer, BitSetSupport> mapItemTIDS = new HashMap<Integer, BitSetSupport>();
 		int maxItemId = calculateSupportSingleItems(database,  mapItemTIDS);
 
-		// If the user chose to use the triangular matrix optimization
-		// for counting the support of itemsets of size 2.
-		if (useTriangularMatrixOptimization) {
-			// We create the triangular matrix.
-			matrix = new TriangularMatrix(maxItemId + 1);
-			// for each transaction, take each itemset of size 2,
-			// and update the triangular matrix.
-			for (List<Integer> itemset : database.getTransactions()) {
-				Object[] array = itemset.toArray();
-				// for each item i in the transaction
-				for (int i = 0; i < itemset.size(); i++) {
-					Integer itemI = (Integer) array[i];
-					// compare with each other item j in the same transaction
-					for (int j = i + 1; j < itemset.size(); j++) {
-						Integer itemJ = (Integer) array[j];
-						// update the matrix count by 1 for the pair i, j
-						matrix.incrementCount(itemI, itemJ);
-					}
-				}
-			}
-		}
 
 		// (2) create the list of single items
 		List<Integer> frequentItems = new ArrayList<Integer>();
@@ -225,15 +199,7 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 				// the support of itemset "ij" in the matrix. This allows to determine
 				// directly without performing a join if "ij" is frequent.
 				int supportIJ = -1;
-				if(useTriangularMatrixOptimization) {
-					// check the support of {i,j} according to the triangular matrix
-					supportIJ = matrix.getSupportForItems(itemI, itemJ);
-					// if not frequent
-					if (supportIJ < minsupRelative) {
-						// we don't need to consider the itemset "ij" anymore
-						continue loopJ;
-					}
-				}
+				
 				
 				// Obtain the tidset of item J and its support.
 				BitSetSupport tidsetJ = mapItemTIDS.get(itemJ);
@@ -241,23 +207,17 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 				// Calculate the tidset of itemset "IJ" by performing the intersection of 
 				// the tidsets of I and the tidset of J.
 				BitSetSupport bitsetSupportIJ;
-				if(useTriangularMatrixOptimization) {
-					// If the triangular matrix optimization is used, then
-					// we perform the intersection but do not need to calculate the support
-					// since it is already known
-					bitsetSupportIJ = performANDFirstTime(tidsetI, tidsetJ, supportIJ);
-				}else {
-					// Otherwise, we perform the intersection and calculate the support
-					// by calculating the cardinality of the resulting tidset.
-					bitsetSupportIJ = performAND(tidsetI, tidsetJ);
-				}
 				
+				// Otherwise, we perform the intersection and calculate the support
+				// by calculating the cardinality of the resulting tidset.
+				bitsetSupportIJ = performAND(tidsetI, tidsetJ);
+			
 				// After that, we add the itemJ to the equivalence class of 2-itemsets
 				// starting with the prefix "i". Note that although we only add "j" to the
 				// equivalence class, the item "j" 
 				// actually represents the itemset "ij" since we keep the prefix "i" for the
 				// whole equilvalence class.
-				if(useTriangularMatrixOptimization || bitsetSupportIJ.support >= minsupRelative){
+				if(bitsetSupportIJ.support >= minsupRelative){
 				    equivalenceClassIitems.add(itemJ);
 				     // We also keep the tidset of "ij".
 				    equivalenceClassItidsets.add(bitsetSupportIJ);

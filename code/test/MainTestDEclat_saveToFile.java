@@ -34,7 +34,7 @@ public class MainTestDEclat_saveToFile {
 		
 		// Applying the dECLAT algorithm
 		AlgoDEclat algo = new AlgoDEclat();
-		algo.runAlgorithm(output, database, minsup, true);
+		algo.runAlgorithm(output, database, minsup);
 		// if you change use "true" in the line above, dECLAT will use
 		// a triangular matrix  for counting support of itemsets of size 2.
 		// For some datasets it should make the algorithm faster.
