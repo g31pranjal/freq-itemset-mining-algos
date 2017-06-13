@@ -103,7 +103,112 @@ public class algoFramework {
 
 
 	}
-	
+
+	private void processEquivalenceClassEclat(int[] prefix, int prefixLength, int supportPrefix,
+										 List<Integer> equivalentClassItems,
+										 List<Set<Integer>> equivalentClassTidsets) throws IOException{
+		int length = prefixLength + 1;
+
+		// if there is only one itemset in equivalence class
+		if (equivalentClassItems.size() == 1){
+			int itemI = equivalentClassItems.get(0);
+			Set<Integer> tidsetItemset = equivalentClassTidsets.get(0);
+
+			// Then, we just save that itemset to file and stop.
+			// To save the itemset we call the method save with the prefix "prefix" and the suffix "itemI"
+			int support = calculateSupportEclat(length, supportPrefix, tidsetItemset);
+			save(prefix, prefixLength, itemI, tidsetItemset, support);
+			return;
+		}
+
+		// if there is only 2 itemsets in the equivalence class
+		if (equivalentClassItems.size() == 2){
+			// We get the suffix of the first itemset (an item that we will call I)
+			int itemI = equivalentClassItems.get(0);
+			Set<Integer> tidsetI = equivalentClassTidsets.get(0);
+			int supportI = calculateSupportEclat(length, supportPrefix, tidsetI);
+			save(prefix, prefixLength, itemI, tidsetI, supportI);
+
+			//We get hte suffix of the second itemset (an item that we will call J)
+			int itemJ = equivalentClassItems.get(1);
+			Set<Integer> tidsetJ = equivalentClassTidsets.get(1);
+			int supportJ = calculateSupportEclat(length, supportPrefix, tidsetJ);
+			save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
+
+			// We calculate the tidset of the itemset resulting from the union of the first itemset and the second itemset
+			Set<Integer> tidsetIJ = this.performAND(tidsetI, tidsetI.size(), tidsetJ, tidsetJ.size());
+
+			int supportIJ = calculateSupportEclat(length, supportI, tidsetIJ);
+			// We save the itemset prefix+IJ to the output
+			if (supportIJ >= minSupRelative) {
+				// Append the prefix with I
+				int newPrefixLength = prefixLength + 1;
+				prefix[prefixLength] = itemI;
+
+				// We save the itemset prefix+IJ to the output
+				save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
+			}
+			return;
+		}
+
+		// The next loop combines each pairs of itemsets of the equivalence class
+		// to form larger itemsets
+
+		// For each itemset "prefix" + "i"
+		for (int j = 0; j < equivalentClassItems.size(); j++){
+			int suffixJ = equivalentClassItems.get(j);
+			// get the tidset and support of that itemset prefix + "j"
+			Set<Integer> tidsetJ = equivalentClassTidsets.get(j);
+			int supportJ = calculateSupportEclat(length, supportPrefix, tidsetJ);
+
+			// We will now calculate the tidset of the itemset {prefix, i, j}
+			// This is done by intersecting the tid
+
+		}
+	}
+
+	// calculate the support of an itemset X using the tidset of X.
+	int calculateSupportEclat(int lengthOfX, int supportPrefix, Set<Integer> tidsetI){
+		return tidsetI.size();
+	}
+
+	// Save an itemset to disk or memory (depending on what the user chose)
+	private void save(int[] prefix, int prefixLength, int suffixItem, Set<Integer> tidset, int support) throws IOException {
+		// increase the itemset count
+		itemsetCount++;
+		// if the result should be saved to memory
+		if (writer == null){
+			// append the prefix with the suffix
+			int[] itemsetArray = new int[prefixLength+1];
+			System.arraycopy(prefix, 0, itemsetArray, 0, prefixLength);
+			itemsetArray[prefixLength] = suffixItem;
+			// create an object "Itemset" and add it to the set of frequent itemsets
+			Itemset itemset = new Itemset(itemsetArray);
+			itemset.setAbsoluteSupport(support);
+			frequentItemsets.addItemset(itemset, itemset.size());
+		}else{
+			// if the result should be saved to a file
+			// write it to the output file
+			StringBuilder buffer = new StringBuilder();
+			for (int i = 0; i < prefixLength; i++){
+				int item = prefix[i];
+				buffer.append(item);
+				buffer.append(" ");
+			}
+			buffer.append(suffixItem);
+			// as well as its support
+			buffer.append(" #SUP: ");
+			buffer.append(support);
+			if (showTransactionIdentifiers){
+				buffer.append(" #TID:");
+				for (Integer tid : tidset){
+					buffer.append(" " + tid);
+				}
+			}
+			writer.write(buffer.toString());
+			writer.newLine();
+		}
+	}
 
 	
 }
