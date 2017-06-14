@@ -105,14 +105,14 @@ public class algoFramework {
 	}
 
 	private void processEquivalenceClassEclat(int[] prefix, int prefixLength, int supportPrefix,
-										 List<Integer> equivalentClassItems,
-										 List<Set<Integer>> equivalentClassTidsets) throws IOException{
+										 List<Integer> equivalenceClassItems,
+										 List<Set<Integer>> equivalenceClassTidsets) throws IOException{
 		int length = prefixLength + 1;
 
 		// if there is only one itemset in equivalence class
-		if (equivalentClassItems.size() == 1){
-			int itemI = equivalentClassItems.get(0);
-			Set<Integer> tidsetItemset = equivalentClassTidsets.get(0);
+		if (equivalenceClassItems.size() == 1){
+			int itemI = equivalenceClassItems.get(0);
+			Set<Integer> tidsetItemset = equivalenceClassTidsets.get(0);
 
 			// Then, we just save that itemset to file and stop.
 			// To save the itemset we call the method save with the prefix "prefix" and the suffix "itemI"
@@ -122,16 +122,16 @@ public class algoFramework {
 		}
 
 		// if there is only 2 itemsets in the equivalence class
-		if (equivalentClassItems.size() == 2){
+		if (equivalenceClassItems.size() == 2){
 			// We get the suffix of the first itemset (an item that we will call I)
-			int itemI = equivalentClassItems.get(0);
-			Set<Integer> tidsetI = equivalentClassTidsets.get(0);
+			int itemI = equivalenceClassItems.get(0);
+			Set<Integer> tidsetI = equivalenceClassTidsets.get(0);
 			int supportI = calculateSupportEclat(length, supportPrefix, tidsetI);
 			save(prefix, prefixLength, itemI, tidsetI, supportI);
 
 			//We get hte suffix of the second itemset (an item that we will call J)
-			int itemJ = equivalentClassItems.get(1);
-			Set<Integer> tidsetJ = equivalentClassTidsets.get(1);
+			int itemJ = equivalenceClassItems.get(1);
+			Set<Integer> tidsetJ = equivalenceClassTidsets.get(1);
 			int supportJ = calculateSupportEclat(length, supportPrefix, tidsetJ);
 			save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
 
@@ -155,21 +155,57 @@ public class algoFramework {
 		// to form larger itemsets
 
 		// For each itemset "prefix" + "i"
-		for (int i = 0; j < equivalentClassItems.size(); i++){
-			int suffixI = equivalentClassItems.get(i);
+		for (int i = 0; j < equivalenceClassItems.size(); i++){
+			int suffixI = equivalenceClassItems.get(i);
 			// get the tidset and support of that itemset prefix + "i"
-			Set<Integer> tidsetI = equivalentClassTidsets.get(i);
+			Set<Integer> tidsetI = equivalenceClassTidsets.get(i);
 			int supportI = calculateSupportEclat(length, supportPrefix, tidsetI);
 			// save the itemset to the file because it is frequent
 			save(prefix, prefixLength, suffixI, tidsetI, supportI);
 
 			// create the empty equivalence class for storing all itemsets of the equivalence class starting with prefix + i
-			List<Integer> equivalenceClassISuffixItems
+			List<Integer> equivalenceClassISuffixItems = new ArrayList<Integer>();
+			List<Set<Integer>> equivalenceITidsets = new ArrayList<Set<Integer>>();
 
-			// We will now calculate the tidset of the itemset {prefix, i, j}
-			// This is done by intersecting the tid
+			// For each itemset "prefix" + j
+			for (int j=i+1; j < equivalenceClassItems.size(); j++){
+				int suffixJ = equivalenceClassItems.get(j);
+
+				// Get the tidset and support of the itemset prefix + "j"
+				Set<Integer> tidsetJ = equivalenceClassTidsets.get(j);
+				int supportJ = calculateSupportEclat(length, supportPrefix, tidsetJ);
+
+				// We will now calculate the tidset of the itemset {prefix, i,j}
+				// This is done by intersecting the tidset of the itemset prefix + i
+				// with the itemset prefix+j
+				Set<Integer> tidsetIJ = performAND(tidsetI, supportI, tidsetJ, supportJ);
+				int supportIJ = calculateSupportEclat(length, supportI, tidsetIJ);
+				// If the itemset prefix+i+j is frequent, then we add it to the equivalence class of itemsets having the prefix
+				// "prefix" + i.
+				// Note actually, we just keep "j" for optimization because all itemsets in the equivalence class of prefix + i
+				// will start with prefix + i so it would just waste memory to keep prefix + i for all itemsets
+				if (supportIJ >= minSupRelative) {
+					equivalenceClassISuffixItems.add(suffixJ);
+					// We also keep the corresponding tidset
+					equivalenceITidsets.add(tidsetIJ);
+				}
+			}
+
+			// If there is more than an itemset in the equivalence class
+			// then we recursively process that equivalence class to find larger itemsets
+			if (equivalenceClassISuffixItems.size() > 0){
+				// We create the itemset prefix + i
+				prefix[prefixLength] = suffixI;
+				int newPrefixLength = prefixLength+1;
+
+				// Recursive call
+				processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassTidsets);
+			}
 
 		}
+
+		// We check the memory usage
+		MemoryLogger.getInstance().checkMemory();
 	}
 
 	// calculate the support of an itemset X using the tidset of X.
