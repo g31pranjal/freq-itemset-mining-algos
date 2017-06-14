@@ -21,7 +21,7 @@ public class algoFramework {
 
 	protected int minSupRelative;
 	protected TransactionDatabase database;
-	BufferedWriter writer = null; 
+	BufferedWriter writer = null;
 	protected Itemsets frequentItemsets;
 	protected int itemsetCount;
 
@@ -33,15 +33,15 @@ public class algoFramework {
 		if(outputFile == null) {
 			writer = null;
 			frequentItemsets =  new Itemsets("FREQUENT ITEMSETS");
-	    } 
+	    }
 	    else {
 	    	frequentItemsets = null;
-			writer = new BufferedWriter(new FileWriter(outputFile)); 
+			writer = new BufferedWriter(new FileWriter(outputFile));
 		}
 
 		itemsetCount = 0;
 
-		
+
 
 
 		/** CALCULATES THE TIDSETS AND FILTERS INFREQUENT ONES. it can be passed to the recursive function for ECLAT **/
@@ -59,14 +59,14 @@ public class algoFramework {
 						maxItemId = item;
 					}
 				}
-				set.add(i); 
+				set.add(i);
 			}
 		}
 
 		List<Integer> frequentItems = new ArrayList<Integer>();
 		List<Set<Integer> > frequentTidsets = new ArrayList<Set<Integer>>();
-	
-		// get the list of frequent 1-itemsets.		
+
+		// get the list of frequent 1-itemsets.
 		for(Entry<Integer, Set<Integer>> entry : mapItemCount.entrySet()) {
 			Set<Integer> tidset = entry.getValue();
 			int support = tidset.size();
@@ -85,17 +85,17 @@ public class algoFramework {
 			}
 		});
 
-		// populate the list of set integers corresponding to the sorted frequent 1-itemsets. 		
+		// populate the list of set integers corresponding to the sorted frequent 1-itemsets.
 		for(Integer item : frequentItems) {
-			frequentTidsets.add(mapItemCount.get(item)); 
-		} 
+			frequentTidsets.add(mapItemCount.get(item));
+		}
 
 		// System.out.println("\nfrequent 1-itemset.\n");
 		// for(int i=0;i<frequentItems.size();i++) {
 		// 	System.out.println(frequentItems.get(i)+ " : "+frequentTidsets.get(i));
 		// }
 
-		
+
 
 
 
@@ -155,11 +155,16 @@ public class algoFramework {
 		// to form larger itemsets
 
 		// For each itemset "prefix" + "i"
-		for (int j = 0; j < equivalentClassItems.size(); j++){
-			int suffixJ = equivalentClassItems.get(j);
-			// get the tidset and support of that itemset prefix + "j"
-			Set<Integer> tidsetJ = equivalentClassTidsets.get(j);
-			int supportJ = calculateSupportEclat(length, supportPrefix, tidsetJ);
+		for (int i = 0; j < equivalentClassItems.size(); i++){
+			int suffixI = equivalentClassItems.get(i);
+			// get the tidset and support of that itemset prefix + "i"
+			Set<Integer> tidsetI = equivalentClassTidsets.get(i);
+			int supportI = calculateSupportEclat(length, supportPrefix, tidsetI);
+			// save the itemset to the file because it is frequent
+			save(prefix, prefixLength, suffixI, tidsetI, supportI);
+
+			// create the empty equivalence class for storing all itemsets of the equivalence class starting with prefix + i
+			List<Integer> equivalenceClassISuffixItems
 
 			// We will now calculate the tidset of the itemset {prefix, i, j}
 			// This is done by intersecting the tid
@@ -210,5 +215,5 @@ public class algoFramework {
 		}
 	}
 
-	
+
 }
