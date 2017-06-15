@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.BitSet;
 
 import code.input.transaction_database_list_integers.TransactionDatabase;
 import code.patterns.itemset_array_integers_with_count.Itemset;
@@ -49,7 +50,7 @@ public class algoFramework {
 		// convert to vertical datastructure.
 		int maxItemId = -1;
 		final Map<Integer, Set<Integer>> mapItemCount = new HashMap<Integer, Set<Integer>>();
-		for (int i = 0; i < database.size(); i++) {
+		for (int i = 0; i < daknitted communitabase.size(); i++) {
 			for (Integer item : database.getTransactions().get(i)) {
 				Set<Integer> set = mapItemCount.get(item);
 				if (set == null) {
@@ -90,10 +91,10 @@ public class algoFramework {
 			frequentTidsets.add(mapItemCount.get(item));
 		}
 
-		// System.out.println("\nfrequent 1-itemset.\n");
+		// System.out.println("\prefixLengthnfrequent 1-itemset.\n");
 		// for(int i=0;i<frequentItems.size();i++) {
 		// 	System.out.println(frequentItems.get(i)+ " : "+frequentTidsets.get(i));
-		// }
+		// }prefixLength
 
 
 
@@ -103,6 +104,15 @@ public class algoFramework {
 
 
 	}
+
+	private void processEquivalenceClassDEclat(){
+
+    }
+
+	private void processEquivalenceClassVIPER(int[] prefix, int prefixLength, int supportPrefix, List<Integer> equivalenceClassItems, List){
+
+
+    }
 
 	private void processEquivalenceClassEclat(int[] prefix, int prefixLength, int supportPrefix,
 										 List<Integer> equivalenceClassItems,
@@ -178,7 +188,7 @@ public class algoFramework {
 				// We will now calculate the tidset of the itemset {prefix, i,j}
 				// This is done by intersecting the tidset of the itemset prefix + i
 				// with the itemset prefix+j
-				Set<Integer> tidsetIJ = performAND(tidsetI, supportI, tidsetJ, supportJ);
+				Set<Integer> tidsetIJ = performANDEclat(tidsetI, supportI, tidsetJ, supportJ);
 				int supportIJ = calculateSupportEclat(length, supportI, tidsetIJ);
 				// If the itemset prefix+i+j is frequent, then we add it to the equivalence class of itemsets having the prefix
 				// "prefix" + i.
@@ -221,7 +231,7 @@ public class algoFramework {
 		if (writer == null){
 			// append the prefix with the suffix
 			int[] itemsetArray = new int[prefixLength+1];
-			System.arraycopy(prefix, 0, itemsetArray, 0, prefixLength);
+			System.arraycopy(prefix,performAND 0, itemsetArray, 0, prefixLength);
 			itemsetArray[prefixLength] = suffixItem;
 			// create an object "Itemset" and add it to the set of frequent itemsets
 			Itemset itemset = new Itemset(itemsetArray);
@@ -250,6 +260,10 @@ public class algoFramework {
 			writer.newLine();
 		}
 	}
+
+	Set<Integer> performANDEclat(){
+
+    }
 
 
 }
