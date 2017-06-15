@@ -43,8 +43,9 @@ public class algoFramework {
 		}
 
 		itemsetCount = 0;
-
+		
 		List<Integer> oneFrequentItems = new ArrayList<Integer>();
+		Long totalInOneFrequent = 0l;
 
 		// get the list of frequent 1-itemsets.		
 		for(Entry<Integer, Set<Integer>> entry : verticalDB.entrySet()) {
@@ -53,9 +54,11 @@ public class algoFramework {
 			int item = entry.getKey();
 			if(support >= minSupRelative) {
 				oneFrequentItems.add(item);
-				// saveSingleItem(item, tidset, tidset.size());
+				totalInOneFrequent += tidset.size();
 			}
 		}
+
+		Integer avgTidsetSize = (int)(totalInOneFrequent / oneFrequentItems.size());
 
 		// sort the list of frequent 1-itemsets.
 		Collections.sort(oneFrequentItems, new Comparator<Integer>() {
@@ -65,16 +68,23 @@ public class algoFramework {
 			}
 		});
 
-
-
 		/* 
 		 *	logic to decide the algorithm to begin with 
 			we can work with some kind of problistic model to determine, with some success, the startting algorithm
 		*/
 
-		this.constructTIDSETS(oneFrequentItems);
-		this.constructDIFFSETS(oneFrequentItems);
-		this.constructBITSETS(oneFrequentItems);
+		Integer ECLATthreshold  = (int)(database.getN()*(1.0/4.0));
+		Integer DECLATthreshold = (int)(database.getN()*(3.0/4.0));
+
+		System.out.println("\nECLAT threshold : " + ECLATthreshold + ", DECLAT threshold : " + DECLATthreshold);
+		System.out.println("Average value : " + avgTidsetSize);
+
+		if(avgTidsetSize <= ECLATthreshold )
+			this.constructTIDSETS(oneFrequentItems);
+		else if(avgTidsetSize <= DECLATthreshold)
+			this.constructBITSETS(oneFrequentItems);
+		else
+			this.constructDIFFSETS(oneFrequentItems);
  
 	}
 
@@ -89,7 +99,7 @@ public class algoFramework {
 			equivalenceClassTidsets.add(verticalDB.get(item)); 
 		} 
 
-		System.out.println("\nfrequent 1-itemset.\n");
+		System.out.println("\nfrequent 1-itemsets (using TIDSET)\n");
 		for(int i=0;i<equivalenceClassItems.size();i++) {
 			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassTidsets.get(i));
 		}
@@ -116,7 +126,7 @@ public class algoFramework {
 			equivalenceClassDiffsets.add(diffset); 
 		} 
 
-		System.out.println("\nfrequent 1-itemsets (diffsets).\n");
+		System.out.println("\nfrequent 1-itemsets (using DIFFSET).\n");
 		for(int i=0;i<equivalenceClassItems.size();i++) {
 			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i));
 		}
@@ -138,7 +148,7 @@ public class algoFramework {
 			equivalenceClassBitsets.add(bs);
 		}
 
-		System.out.println("\nfrequent 1-itemset.\n");
+		System.out.println("\nfrequent 1-itemset (using BITSET)\n");
 		for(int i=0;i<equivalenceClassItems.size();i++) {
 			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassBitsets.get(i));
 		}
