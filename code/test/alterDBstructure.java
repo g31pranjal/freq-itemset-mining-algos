@@ -25,8 +25,11 @@ public class alterDBstructure {
 		}
 
 		// printing the horizontal database.
-		database.printDatabase();
-		System.out.println("# transactions (n) " + database.size() + ", # items (m) : " + database.getItemSize());
+		database.printHorizontalDatabase();
+
+		// printing the horizontal database.
+		database.printVerticalDatabase();
+
 
 		// running the framework
 		algoFramework algo = new algoFramework();

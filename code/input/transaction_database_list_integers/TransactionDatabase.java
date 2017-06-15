@@ -9,12 +9,19 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Map.Entry;
+
 
 public class TransactionDatabase {
 
 	private final Set<Integer> items = new HashSet<Integer>();
-	private final List<List<Integer>> transactions = new ArrayList<List<Integer>>();
+	private final List<List<Integer>> horizontalDB = new ArrayList<List<Integer>>();
+	private final Map<Integer, Set<Integer>> verticalDB = new HashMap<Integer, Set<Integer>>();
 	
+
+
 	public void loadFile(String path) throws IOException {
 		
 		String thisLine; 
@@ -39,6 +46,20 @@ public class TransactionDatabase {
 				myInput.close();
 			}
 		}
+
+		// convert to vertical datastructure.
+		
+		for (int i = 0; i < this.getN(); i++) {
+			for (Integer item : this.getHorizontalDB().get(i)) {
+				Set<Integer> set = verticalDB.get(item);
+				if (set == null) {
+					set = new HashSet<Integer>();
+					verticalDB.put(item, set);
+				}
+				set.add(i); 
+			}
+		}
+
 	}
 
 	private void addTransaction(String itemsString[]) {
@@ -50,44 +71,58 @@ public class TransactionDatabase {
 			itemset.add(item); 
 			items.add(item);
 		}
-		transactions.add(itemset);
+		horizontalDB.add(itemset);
 	}
 
-	public void printDatabase() {
-		System.out.println("... Transaction Database :: (horizontal)");
+
+	// prints the horizontal database
+	public void printHorizontalDatabase() {
+		System.out.println("\n... Transaction Database :: (horizontal)\n");
 		int count = 0; 
 		
-		for (List<Integer> itemset : transactions) { 
-			System.out.print(count + " : ");
-
-			StringBuilder r = new StringBuilder();
-			for (Integer item : itemset) {
-				r.append(item.toString());
-				r.append(' ');
-			}
-			System.out.println(r);
-			
-			count++;
+		for (List<Integer> itemset : horizontalDB) { 
+			System.out.println((count++) + " : " + itemset);
 		}
+		System.out.println("# transactions (n) " + this.getN() + ", # items (m) : " + this.getM());
 	}
 
-	// number of transactions (n) 
-	public int size() {
-		return transactions.size();
+
+	// prints the vertical database
+	public void printVerticalDatabase() {
+		System.out.println("\n... Transaction Database :: (vertical)\n");
+		for(Entry<Integer, Set<Integer>> entry : verticalDB.entrySet()) {
+			System.out.println(entry.getKey() + " : " + entry.getValue());
+		}
+		System.out.println("# transactions (n) " + this.getN() + ", # items (m) : " + this.getM());
 	}
 
-	// list of transactions
-	public List<List<Integer>> getTransactions() {
-		return transactions;
+
+	// number of horizontalDB (n) 
+	public int getN() {
+		return horizontalDB.size();
 	}
+
+
+	// list of horizontalDB
+	public List<List<Integer>> getHorizontalDB() {
+		return horizontalDB;
+	}
+
+
+	// list of verticalDB
+	public Map<Integer, Set<Integer>> getVerticalDB() {
+		return verticalDB;
+	}
+
 	
 	// list of all the items 
 	public Set<Integer> getItems() {
 		return items;
 	}
+
 	
 	// number of items (m)
-	public int getItemSize() {
+	public int getM() {
 		return items.size();
 	}
 }

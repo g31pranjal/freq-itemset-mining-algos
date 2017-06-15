@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.BitSet;
 
 import code.input.transaction_database_list_integers.TransactionDatabase;
 import code.patterns.itemset_array_integers_with_count.Itemset;
@@ -21,6 +22,7 @@ public class algoFramework {
 
 	protected int minSupRelative;
 	protected TransactionDatabase database;
+	protected Map<Integer, Set<Integer>> verticalDB;
 	BufferedWriter writer = null; 
 	protected Itemsets frequentItemsets;
 	protected int itemsetCount;
@@ -28,7 +30,8 @@ public class algoFramework {
 	public void runAlgo(String outputFile, TransactionDatabase database, double minsupp) throws IOException {
 
 		this.database = database;
-		this.minSupRelative = (int) Math.ceil(minsupp * database.size());
+		this.minSupRelative = (int) Math.ceil(minsupp * database.getN());
+		this.verticalDB = database.getVerticalDB();
 
 		if(outputFile == null) {
 			writer = null;
@@ -41,68 +44,120 @@ public class algoFramework {
 
 		itemsetCount = 0;
 
-		
+		List<Integer> oneFrequentItems = new ArrayList<Integer>();
 
-
-		/** CALCULATES THE TIDSETS AND FILTERS INFREQUENT ONES. it can be passed to the recursive function for ECLAT **/
-
-		// convert to vertical datastructure.
-		int maxItemId = -1;
-		final Map<Integer, Set<Integer>> mapItemCount = new HashMap<Integer, Set<Integer>>();
-		for (int i = 0; i < database.size(); i++) {
-			for (Integer item : database.getTransactions().get(i)) {
-				Set<Integer> set = mapItemCount.get(item);
-				if (set == null) {
-					set = new HashSet<Integer>();
-					mapItemCount.put(item, set);
-					if (item > maxItemId) {
-						maxItemId = item;
-					}
-				}
-				set.add(i); 
-			}
-		}
-
-		List<Integer> frequentItems = new ArrayList<Integer>();
-		List<Set<Integer> > frequentTidsets = new ArrayList<Set<Integer>>();
-	
 		// get the list of frequent 1-itemsets.		
-		for(Entry<Integer, Set<Integer>> entry : mapItemCount.entrySet()) {
+		for(Entry<Integer, Set<Integer>> entry : verticalDB.entrySet()) {
 			Set<Integer> tidset = entry.getValue();
 			int support = tidset.size();
 			int item = entry.getKey();
 			if(support >= minSupRelative) {
-				frequentItems.add(item);
+				oneFrequentItems.add(item);
 				// saveSingleItem(item, tidset, tidset.size());
 			}
 		}
 
-		// sort the list of frequen 1-itemsets.
-		Collections.sort(frequentItems, new Comparator<Integer>() {
+		// sort the list of frequent 1-itemsets.
+		Collections.sort(oneFrequentItems, new Comparator<Integer>() {
 			@Override
 			public int compare(Integer arg0, Integer arg1) {
-				return mapItemCount.get(arg0).size() - mapItemCount.get(arg1).size();
+				return verticalDB.get(arg0).size() - verticalDB.get(arg1).size();
 			}
 		});
 
+
+
+		/* 
+		 *	logic to decide the algorithm to begin with 
+			we can work with some kind of problistic model to determine, with some success, the startting algorithm
+		*/
+
+		this.constructTIDSETS(oneFrequentItems);
+		this.constructDIFFSETS(oneFrequentItems);
+		this.constructBITSETS(oneFrequentItems);
+ 
+	}
+
+
+
+	public void constructTIDSETS(List<Integer> equivalenceClassItems) {
+		
+		List<Set<Integer> > equivalenceClassTidsets = new ArrayList<Set<Integer>>();
+	
 		// populate the list of set integers corresponding to the sorted frequent 1-itemsets. 		
-		for(Integer item : frequentItems) {
-			frequentTidsets.add(mapItemCount.get(item)); 
+		for(Integer item : equivalenceClassItems) {
+			equivalenceClassTidsets.add(verticalDB.get(item)); 
 		} 
 
-		// System.out.println("\nfrequent 1-itemset.\n");
-		// for(int i=0;i<frequentItems.size();i++) {
-		// 	System.out.println(frequentItems.get(i)+ " : "+frequentTidsets.get(i));
-		// }
-
-		
-
-
-
-
-
+		System.out.println("\nfrequent 1-itemset.\n");
+		for(int i=0;i<equivalenceClassItems.size();i++) {
+			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassTidsets.get(i));
+		}
 
 	}
+
+
+	public void constructDIFFSETS(List<Integer> equivalenceClassItems) {
+		
+		List<Set<Integer> > equivalenceClassDiffsets = new ArrayList<Set<Integer>>();
+
+		// populate the list of set integers corresponding to the sorted frequent 1-itemsets. 		
+		for(Integer item : equivalenceClassItems) {
+			
+			Set<Integer> tidset = verticalDB.get(item);
+			Set<Integer> diffset = new HashSet<Integer>();
+			Set<Integer> items = database.getItems();
+
+			for(Integer i : items) {
+				if(!tidset.contains(i)) {
+					diffset.add(i);
+				}
+			}
+			equivalenceClassDiffsets.add(diffset); 
+		} 
+
+		System.out.println("\nfrequent 1-itemsets (diffsets).\n");
+		for(int i=0;i<equivalenceClassItems.size();i++) {
+			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i));
+		}
+
+	}
+
+	public void constructBITSETS(List<Integer> equivalenceClassItems) {
+		
+		List<BitSetSupport> equivalenceClassBitsets = new ArrayList<BitSetSupport>();
+	
+		// populate the list of set integers corresponding to the sorted frequent 1-itemsets. 		
+		for(Integer item : equivalenceClassItems) {
+			
+			BitSetSupport bs = new BitSetSupport();
+			for(Integer i : equivalenceClassItems) {
+				bs.bitset.set(i);
+				bs.support++;
+			}
+			equivalenceClassBitsets.add(bs);
+		}
+
+		System.out.println("\nfrequent 1-itemset.\n");
+		for(int i=0;i<equivalenceClassItems.size();i++) {
+			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassBitsets.get(i));
+		}
+
+	}
+
+
+
+
+
+
+
+	public class BitSetSupport{
+		BitSet bitset = new BitSet();
+		int support;
+	}
+
+
+	
 	
 
 	
