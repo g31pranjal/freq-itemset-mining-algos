@@ -289,6 +289,17 @@ public class algoFramework {
 			// return the new tidset
 			return tidsetIJ;
   }
+	BitSetSupport performANDVIPER(BitSetSupport tidsetI,
+	 BitSetSupport tidsetJ) {
+ // Create the new tidset and perform the logical AND to intersect the tidset
+ BitSetSupport bitsetSupportIJ = new BitSetSupport();
+ bitsetSupportIJ.bitset = (BitSet)tidsetI.bitset.clone();
+ bitsetSupportIJ.bitset.and(tidsetJ.bitset);
+ // set the support as the cardinality of the new tidset
+ bitsetSupportIJ.support = bitsetSupportIJ.bitset.cardinality();
+ // return the new tidset
+ return bitsetSupportIJ;
+}
 
 
 }
