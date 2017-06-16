@@ -79,11 +79,11 @@ public class algoFramework {
 		System.out.println("\nECLAT threshold : " + ECLATthreshold + ", DECLAT threshold : " + DECLATthreshold);
 		System.out.println("Average value : " + avgTidsetSize);
 
-		if(avgTidsetSize <= ECLATthreshold )
-			this.constructTIDSETS(oneFrequentItems);
-		else if(avgTidsetSize <= DECLATthreshold)
-			this.constructBITSETS(oneFrequentItems);
-		else
+		// if(avgTidsetSize <= ECLATthreshold )
+		// 	this.constructTIDSETS(oneFrequentItems);
+		// else if(avgTidsetSize <= DECLATthreshold)
+		// 	this.constructBITSETS(oneFrequentItems);
+		// else
 			this.constructDIFFSETS(oneFrequentItems);
  
 	}
@@ -107,7 +107,7 @@ public class algoFramework {
 	}
 
 
-	public void constructDIFFSETS(List<Integer> equivalenceClassItems) {
+	public void constructDIFFSETS(List<Integer> equivalenceClassItems) throws IOException{
 		
 		List<Set<Integer> > equivalenceClassDiffsets = new ArrayList<Set<Integer>>();
 
@@ -131,7 +131,10 @@ public class algoFramework {
 			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i));
 		}
 
+		this.processEquivalenceClassDEclat(new int[20], 0, database.getN(), equivalenceClassItems, equivalenceClassDiffsets);
+
 	}
+
 
 	public void constructBITSETS(List<Integer> equivalenceClassItems) {
 		
@@ -156,9 +159,103 @@ public class algoFramework {
 	}
 
 
-	private void processEquivalenceClassDEclat(){
+	private void processEquivalenceClassDEclat( int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassDiffsets) throws IOException {
 
+		int length = prefixLength+1;
+		
+		if(equivalenceClassItems.size() == 1) {
+			
+			int item = equivalenceClassItems.get(0);
+			Set<Integer> diffset = equivalenceClassDiffsets.get(0);
+			//save(prefix, prefixLength, itemI, tidsetItemset, support);
+			return;
+		}
+
+		if(equivalenceClassItems.size() == 2) {
+			
+			int itemI = equivalenceClassItems.get(0);
+			Set<Integer> diffsetI = equivalenceClassDiffsets.get(0);
+			int supportI = prefixSupport - diffsetI.size();
+			// save(prefix, prefixLength, itemI, tidsetI, supportI);
+			
+			int itemJ = equivalenceClassItems.get(1);
+			Set<Integer> diffsetJ = equivalenceClassDiffsets.get(1);
+			int supportJ = prefixSupport - diffsetJ.size();
+			// save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
+			
+			Set<Integer> diffsetIJ = this.performDIFFERENCE(diffsetI, diffsetI.size(), diffsetJ, diffsetJ.size());
+			int supportIJ = supportI - diffsetIJ.size();
+			
+			if(supportIJ >= minSupRelative) {
+				int newPrefixLength = prefixLength+1;
+				prefix[prefixLength] = itemI;
+				//save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
+			
+			}
+			return;
+		}
+
+
+		for(int i=0; i< equivalenceClassItems.size(); i++) {
+			
+			int suffixI = equivalenceClassItems.get(i);
+			Set<Integer> diffsetI = equivalenceClassDiffsets.get(i);
+			int supportI = prefixSupport - diffsetI.size();
+			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
+			
+			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
+			List<Set<Integer>> equivalenceClassIDiffsets = new ArrayList<Set<Integer>>();
+
+			// System.out.println("SUFFIX i : " + suffixI + " , " +diffsetI);
+			
+			for(int j=i+1; j < equivalenceClassItems.size(); j++) {
+				
+				int suffixJ = equivalenceClassItems.get(j);
+				Set<Integer> diffsetJ = equivalenceClassDiffsets.get(j);
+				int supportJ = prefixSupport - diffsetJ.size();
+				
+				// System.out.println("SUFFIX j : " + suffixJ + " , " +diffsetJ);
+
+				Set<Integer> diffsetIJ = performDIFFERENCE(diffsetI, supportI, diffsetJ, supportJ);
+				
+				// System.out.println("SUFFIX IJ : "  +diffsetJ);
+
+				int supportIJ = supportI - diffsetIJ.size();
+				if(supportIJ >= minSupRelative) {
+					equivalenceClassISuffixItems.add(suffixJ);
+					equivalenceClassIDiffsets.add(diffsetIJ);
+				}
+			}
+			
+			if(equivalenceClassISuffixItems.size() > 0) {
+
+
+				prefix[prefixLength] = suffixI;
+				int newPrefixLength = prefixLength+1;
+
+				processEquivalenceClassDEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+
+			}
+		}
+		
     }
+
+	
+	// diff(PXY) = diff(PY) - DIFF(PX)	
+	Set<Integer> performDIFFERENCE(Set<Integer> tidsetI, int supportI, Set<Integer> tidsetJ, int supportJ) {
+		
+		Set<Integer> diffsetIJ = new HashSet<Integer>();
+		for(Integer tid : tidsetJ) {
+			if(tidsetI.contains(tid) == false) {
+				diffsetIJ.add(tid);
+			}			
+		}
+
+		return diffsetIJ;
+	}
+
+
+
 
 
 	// private void processEquivalenceClassVIPER(int[] prefix, int prefixLength, int supportPrefix, List<Integer> equivalenceClassItems, List){

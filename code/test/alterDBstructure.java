@@ -33,7 +33,7 @@ public class alterDBstructure {
 
 		// running the framework
 		algoFramework algo = new algoFramework();
-		algo.runAlgo(null, database, 0.3);
+		algo.runAlgo(null, database, 0.0);
 
 	}
 
