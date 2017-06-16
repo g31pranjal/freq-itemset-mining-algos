@@ -79,12 +79,15 @@ public class algoFramework {
 		System.out.println("\nECLAT threshold : " + ECLATthreshold + ", DECLAT threshold : " + DECLATthreshold);
 		System.out.println("Average value : " + avgTidsetSize);
 
-		// if(avgTidsetSize <= ECLATthreshold )
-		// 	this.constructTIDSETS(oneFrequentItems);
-		// else if(avgTidsetSize <= DECLATthreshold)
-		// 	this.constructBITSETS(oneFrequentItems);
-		// else
-			this.constructDIFFSETS(oneFrequentItems);
+		if(avgTidsetSize <= ECLATthreshold )
+			System.out.println("ECLAT");
+		else if(avgTidsetSize <= DECLATthreshold)
+			System.out.println("VIPER");
+		else
+			System.out.println("DECLAT");
+			
+
+		this.constructDIFFSETS(oneFrequentItems);
  
 	}
 
@@ -116,9 +119,8 @@ public class algoFramework {
 			
 			Set<Integer> tidset = verticalDB.get(item);
 			Set<Integer> diffset = new HashSet<Integer>();
-			Set<Integer> items = database.getItems();
-
-			for(Integer i : items) {
+			
+			for(int i=0;i<database.getN();i++) {
 				if(!tidset.contains(i)) {
 					diffset.add(i);
 				}
@@ -131,7 +133,7 @@ public class algoFramework {
 			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i));
 		}
 
-		this.processEquivalenceClassDEclat(new int[20], 0, database.getN(), equivalenceClassItems, equivalenceClassDiffsets);
+		this.processEquivalenceClassDEclat(new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassDiffsets);
 
 	}
 
@@ -195,33 +197,42 @@ public class algoFramework {
 			return;
 		}
 
+		int ETotal = 0;
+		int DTotal = 0;
 
 		for(int i=0; i< equivalenceClassItems.size(); i++) {
 			
+
 			int suffixI = equivalenceClassItems.get(i);
+			// System.out.println(" i : "+suffixI);
 			Set<Integer> diffsetI = equivalenceClassDiffsets.get(i);
+			// System.out.println(" prefixSupport : "+prefixSupport);
 			int supportI = prefixSupport - diffsetI.size();
 			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
 			
 			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
 			List<Set<Integer>> equivalenceClassIDiffsets = new ArrayList<Set<Integer>>();
 
-			// System.out.println("SUFFIX i : " + suffixI + " , " +diffsetI);
-			
 			for(int j=i+1; j < equivalenceClassItems.size(); j++) {
 				
 				int suffixJ = equivalenceClassItems.get(j);
+				// System.out.println(" j : "+suffixJ);
 				Set<Integer> diffsetJ = equivalenceClassDiffsets.get(j);
+				// System.out.println(" j : "+diffsetJ);
 				int supportJ = prefixSupport - diffsetJ.size();
 				
-				// System.out.println("SUFFIX j : " + suffixJ + " , " +diffsetJ);
-
 				Set<Integer> diffsetIJ = performDIFFERENCE(diffsetI, supportI, diffsetJ, supportJ);
 				
-				// System.out.println("SUFFIX IJ : "  +diffsetJ);
+				// System.out.println("\n diffset ij : "+diffsetIJ);
+
 
 				int supportIJ = supportI - diffsetIJ.size();
+					
+				// System.out.println("support ij : "+supportI);
+
 				if(supportIJ >= minSupRelative) {
+					ETotal += supportIJ;
+					DTotal += (supportI - supportIJ);
 					equivalenceClassISuffixItems.add(suffixJ);
 					equivalenceClassIDiffsets.add(diffsetIJ);
 				}
@@ -229,13 +240,54 @@ public class algoFramework {
 			
 			if(equivalenceClassISuffixItems.size() > 0) {
 
-
 				prefix[prefixLength] = suffixI;
 				int newPrefixLength = prefixLength+1;
 
-				processEquivalenceClassDEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+				// print before recursive class
+				System.out.println("\nfrequent "+(newPrefixLength+1)+"-itemset : \n");
+				for(int p=0;p<equivalenceClassISuffixItems.size();p++) {
+					for(int k=0;k<newPrefixLength;k++) {
+						System.out.print(prefix[k]);
+					}
+					System.out.println(","+equivalenceClassISuffixItems.get(p)+" : "+equivalenceClassIDiffsets.get(p));
+				}
 
+				double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
+				double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
+				
+				int ECLATthreshold = (int)(database.getN()*(1.0/4.0) );
+				int ECLATstart = 0;
+				int DECLATthreshold  = supportI - ECLATthreshold;
+				int DECLATstart  = supportI;
+
+				System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
+				System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
+				System.out.println("E(avg) : "+EAvg);
+				System.out.println("D(avg) : "+DAvg);
+
+				if(DECLATthreshold <= ECLATthreshold) {
+					double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
+					System.out.println("POINT OF DIFF : " + PointOfDiff);
+					if(EAvg > PointOfDiff)
+						System.out.println("DECLAT");
+					else 
+						System.out.println("ECLAT");
+				}
+				else {
+					if(EAvg <= ECLATthreshold)
+						System.out.println("ECLAT");
+					else if(EAvg <= DECLATthreshold)
+						System.out.println("VIPER");
+					else
+						System.out.println("DECLAT");
+				}
+
+				processEquivalenceClassDEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+				
 			}
+			
+			break;
+
 		}
 		
     }
@@ -245,11 +297,9 @@ public class algoFramework {
 	Set<Integer> performDIFFERENCE(Set<Integer> tidsetI, int supportI, Set<Integer> tidsetJ, int supportJ) {
 		
 		Set<Integer> diffsetIJ = new HashSet<Integer>();
-		for(Integer tid : tidsetJ) {
-			if(tidsetI.contains(tid) == false) {
+		for(Integer tid : tidsetJ) 
+			if(tidsetI.contains(tid) == false)
 				diffsetIJ.add(tid);
-			}			
-		}
 
 		return diffsetIJ;
 	}
