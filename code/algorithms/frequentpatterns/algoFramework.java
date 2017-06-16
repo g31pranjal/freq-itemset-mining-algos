@@ -50,7 +50,7 @@ public class algoFramework {
 		// convert to vertical datastructure.
 		int maxItemId = -1;
 		final Map<Integer, Set<Integer>> mapItemCount = new HashMap<Integer, Set<Integer>>();
-		for (int i = 0; i < daknitted communitabase.size(); i++) {
+		for (int i = 0; i <database.size(); i++) {
 			for (Integer item : database.getTransactions().get(i)) {
 				Set<Integer> set = mapItemCount.get(item);
 				if (set == null) {
@@ -261,9 +261,34 @@ public class algoFramework {
 		}
 	}
 
-	Set<Integer> performANDEclat(){
-
-    }
+	Set<Integer> performANDEclat(Set<Integer> tidsetI, int supportI, Set<Integer> tidsetJ, int supportJ){
+			// Create the new tidset that will store the intersection
+			Set<Integer> tidsetIJ = new HashSet<Integer>();
+			// To reduce the number of comparisons of the two tidsets,
+			// if the tidset of I is larger than the tidset of J,
+			// we will loop on the tidset of J, we will loop on the tidset of I
+			if(supportI > supportJ) {
+				// for each tid containing j
+				for(Integer tid : tidsetJ) {
+					// if the transaction also contains i, add it to tidset of {i,j}
+					if(tidsetI.contains(tid)) {
+						// add it to the intersection
+						tidsetIJ.add(tid);
+					}
+				}
+			}else {
+				// for each tid containing i
+				for(Integer tid : tidsetI) {
+					// if the transaction also contains j, add it to tidset of {i,j}
+					if(tidsetJ.contains(tid)) {
+						// add it to the intersection
+						tidsetIJ.add(tid);
+					}
+				}
+			}
+			// return the new tidset
+			return tidsetIJ;
+  }
 
 
 }
