@@ -1,617 +1,3083 @@
 
-... Transaction Database :: (horizontal)
-
-0 : [0, 5, 10, 15, 20]
-1 : [1, 6, 11, 16, 21]
-2 : [2, 7, 12, 17, 22]
-3 : [3, 8, 13, 14, 19]
-4 : [4, 9, 14, 19, 20]
-5 : [5, 10, 15, 20, 21]
-6 : [6, 11, 16, 21, 22]
-7 : [7, 12, 17, 22, 23]
-8 : [8, 13, 18, 23, 24]
-9 : [9, 14, 19, 24, 25]
-# transactions (n) 10, # items (m) : 26
-
 ... Transaction Database :: (vertical)
 
-0 : [0]
-1 : [1]
-2 : [2]
-3 : [3]
-4 : [4]
-5 : [0, 5]
-6 : [1, 6]
-7 : [2, 7]
-8 : [3, 8]
-9 : [4, 9]
-10 : [0, 5]
-11 : [1, 6]
-12 : [2, 7]
-13 : [3, 8]
-14 : [3, 4, 9]
-15 : [0, 5]
-16 : [1, 6]
-17 : [2, 7]
-18 : [8]
-19 : [3, 4, 9]
-20 : [0, 4, 5]
-21 : [1, 5, 6]
-22 : [2, 6, 7]
-23 : [7, 8]
-24 : [8, 9]
-25 : [9]
-# transactions (n) 10, # items (m) : 26
+0 : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+1 : [0, 1, 2, 3, 4, 5, 6, 7, 8]
+2 : [0, 1, 2, 3, 4, 5, 6, 7]
+3 : [0, 1, 2, 3, 4, 5, 6]
+4 : [0, 1, 2, 3, 4, 5]
+5 : [0, 1, 2, 3, 4]
+6 : [0, 1, 2, 3]
+7 : [0, 1, 2]
+8 : [0, 1]
+9 : [0, 1]
+# transactions (n) 10, # items (m) : 10
 
 ECLAT threshold : 2, DECLAT threshold : 7
-Average value : 1
-ECLAT
+Average value : 5
+VIPER
 
 frequent 1-itemsets (using DIFFSET).
 
-0 : [1, 2, 3, 4, 5, 6, 7, 8, 9]
-1 : [0, 2, 3, 4, 5, 6, 7, 8, 9]
-2 : [0, 1, 3, 4, 5, 6, 7, 8, 9]
-3 : [0, 1, 2, 4, 5, 6, 7, 8, 9]
-4 : [0, 1, 2, 3, 5, 6, 7, 8, 9]
-18 : [0, 1, 2, 3, 4, 5, 6, 7, 9]
-25 : [0, 1, 2, 3, 4, 5, 6, 7, 8]
-5 : [1, 2, 3, 4, 6, 7, 8, 9]
-6 : [0, 2, 3, 4, 5, 7, 8, 9]
-7 : [0, 1, 3, 4, 5, 6, 8, 9]
-8 : [0, 1, 2, 4, 5, 6, 7, 9]
-9 : [0, 1, 2, 3, 5, 6, 7, 8]
-10 : [1, 2, 3, 4, 6, 7, 8, 9]
-11 : [0, 2, 3, 4, 5, 7, 8, 9]
-12 : [0, 1, 3, 4, 5, 6, 8, 9]
-13 : [0, 1, 2, 4, 5, 6, 7, 9]
-15 : [1, 2, 3, 4, 6, 7, 8, 9]
-16 : [0, 2, 3, 4, 5, 7, 8, 9]
-17 : [0, 1, 3, 4, 5, 6, 8, 9]
-23 : [0, 1, 2, 3, 4, 5, 6, 9]
-24 : [0, 1, 2, 3, 4, 5, 6, 7]
-14 : [0, 1, 2, 5, 6, 7, 8]
-19 : [0, 1, 2, 5, 6, 7, 8]
-20 : [1, 2, 3, 6, 7, 8, 9]
-21 : [0, 2, 3, 4, 7, 8, 9]
-22 : [0, 1, 3, 4, 5, 8, 9]
+8 : [2, 3, 4, 5, 6, 7, 8, 9]
+9 : [2, 3, 4, 5, 6, 7, 8, 9]
+7 : [3, 4, 5, 6, 7, 8, 9]
+6 : [4, 5, 6, 7, 8, 9]
+5 : [5, 6, 7, 8, 9]
+4 : [6, 7, 8, 9]
+3 : [7, 8, 9]
+2 : [8, 9]
+1 : [9]
+0 : []
 
 frequent 2-itemset : 
 
-0,1 : [0]
-0,2 : [0]
-0,3 : [0]
-0,4 : [0]
-0,18 : [0]
-0,25 : [0]
-0,5 : []
-0,6 : [0]
-0,7 : [0]
-0,8 : [0]
-0,9 : [0]
-0,10 : []
-0,11 : [0]
-0,12 : [0]
-0,13 : [0]
-0,15 : []
-0,16 : [0]
-0,17 : [0]
-0,23 : [0]
-0,24 : [0]
-0,14 : [0]
-0,19 : [0]
-0,20 : []
-0,21 : [0]
-0,22 : [0]
-ECLAT thr. : 2 , DECLAT thr. : -1
-ECLAT str. : 0 , DECLAT str. : 1
-E(avg) : 0.16
-D(avg) : 0.84
-POINT OF DIFF : 0.5
-ECLAT
+8,9 : [0, 1]
+8,7 : [0, 1]
+8,6 : [0, 1]
+8,5 : [0, 1]
+8,4 : [0, 1]
+8,3 : [0, 1]
+8,2 : [0, 1]
+8,1 : [0, 1]
+8,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
 
 frequent 3-itemset : 
 
-01,2 : []
-01,3 : []
-01,4 : []
-01,18 : []
-01,25 : []
-01,5 : []
-01,6 : []
-01,7 : []
-01,8 : []
-01,9 : []
-01,10 : []
-01,11 : []
-01,12 : []
-01,13 : []
-01,15 : []
-01,16 : []
-01,17 : []
-01,23 : []
-01,24 : []
-01,14 : []
-01,19 : []
-01,20 : []
-01,21 : []
-01,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89,7 : [0, 1]
+89,6 : [0, 1]
+89,5 : [0, 1]
+89,4 : [0, 1]
+89,3 : [0, 1]
+89,2 : [0, 1]
+89,1 : [0, 1]
+89,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
 frequent 4-itemset : 
 
-012,3 : []
-012,4 : []
-012,18 : []
-012,25 : []
-012,5 : []
-012,6 : []
-012,7 : []
-012,8 : []
-012,9 : []
-012,10 : []
-012,11 : []
-012,12 : []
-012,13 : []
-012,15 : []
-012,16 : []
-012,17 : []
-012,23 : []
-012,24 : []
-012,14 : []
-012,19 : []
-012,20 : []
-012,21 : []
-012,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+897,6 : [0, 1]
+897,5 : [0, 1]
+897,4 : [0, 1]
+897,3 : [0, 1]
+897,2 : [0, 1]
+897,1 : [0, 1]
+897,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
 frequent 5-itemset : 
 
-0123,4 : []
-0123,18 : []
-0123,25 : []
-0123,5 : []
-0123,6 : []
-0123,7 : []
-0123,8 : []
-0123,9 : []
-0123,10 : []
-0123,11 : []
-0123,12 : []
-0123,13 : []
-0123,15 : []
-0123,16 : []
-0123,17 : []
-0123,23 : []
-0123,24 : []
-0123,14 : []
-0123,19 : []
-0123,20 : []
-0123,21 : []
-0123,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+8976,5 : [0, 1]
+8976,4 : [0, 1]
+8976,3 : [0, 1]
+8976,2 : [0, 1]
+8976,1 : [0, 1]
+8976,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
 frequent 6-itemset : 
 
-01234,18 : []
-01234,25 : []
-01234,5 : []
-01234,6 : []
-01234,7 : []
-01234,8 : []
-01234,9 : []
-01234,10 : []
-01234,11 : []
-01234,12 : []
-01234,13 : []
-01234,15 : []
-01234,16 : []
-01234,17 : []
-01234,23 : []
-01234,24 : []
-01234,14 : []
-01234,19 : []
-01234,20 : []
-01234,21 : []
-01234,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
 frequent 7-itemset : 
 
-0123418,25 : []
-0123418,5 : []
-0123418,6 : []
-0123418,7 : []
-0123418,8 : []
-0123418,9 : []
-0123418,10 : []
-0123418,11 : []
-0123418,12 : []
-0123418,13 : []
-0123418,15 : []
-0123418,16 : []
-0123418,17 : []
-0123418,23 : []
-0123418,24 : []
-0123418,14 : []
-0123418,19 : []
-0123418,20 : []
-0123418,21 : []
-0123418,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
 frequent 8-itemset : 
 
-012341825,5 : []
-012341825,6 : []
-012341825,7 : []
-012341825,8 : []
-012341825,9 : []
-012341825,10 : []
-012341825,11 : []
-012341825,12 : []
-012341825,13 : []
-012341825,15 : []
-012341825,16 : []
-012341825,17 : []
-012341825,23 : []
-012341825,24 : []
-012341825,14 : []
-012341825,19 : []
-012341825,20 : []
-012341825,21 : []
-012341825,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
 frequent 9-itemset : 
 
-0123418255,6 : []
-0123418255,7 : []
-0123418255,8 : []
-0123418255,9 : []
-0123418255,10 : []
-0123418255,11 : []
-0123418255,12 : []
-0123418255,13 : []
-0123418255,15 : []
-0123418255,16 : []
-0123418255,17 : []
-0123418255,23 : []
-0123418255,24 : []
-0123418255,14 : []
-0123418255,19 : []
-0123418255,20 : []
-0123418255,21 : []
-0123418255,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 10-itemset : 
+frequent 9-itemset : 
 
-01234182556,7 : []
-01234182556,8 : []
-01234182556,9 : []
-01234182556,10 : []
-01234182556,11 : []
-01234182556,12 : []
-01234182556,13 : []
-01234182556,15 : []
-01234182556,16 : []
-01234182556,17 : []
-01234182556,23 : []
-01234182556,24 : []
-01234182556,14 : []
-01234182556,19 : []
-01234182556,20 : []
-01234182556,21 : []
-01234182556,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 11-itemset : 
+frequent 8-itemset : 
 
-012341825567,8 : []
-012341825567,9 : []
-012341825567,10 : []
-012341825567,11 : []
-012341825567,12 : []
-012341825567,13 : []
-012341825567,15 : []
-012341825567,16 : []
-012341825567,17 : []
-012341825567,23 : []
-012341825567,24 : []
-012341825567,14 : []
-012341825567,19 : []
-012341825567,20 : []
-012341825567,21 : []
-012341825567,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 12-itemset : 
+frequent 9-itemset : 
 
-0123418255678,9 : []
-0123418255678,10 : []
-0123418255678,11 : []
-0123418255678,12 : []
-0123418255678,13 : []
-0123418255678,15 : []
-0123418255678,16 : []
-0123418255678,17 : []
-0123418255678,23 : []
-0123418255678,24 : []
-0123418255678,14 : []
-0123418255678,19 : []
-0123418255678,20 : []
-0123418255678,21 : []
-0123418255678,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 13-itemset : 
+frequent 9-itemset : 
 
-01234182556789,10 : []
-01234182556789,11 : []
-01234182556789,12 : []
-01234182556789,13 : []
-01234182556789,15 : []
-01234182556789,16 : []
-01234182556789,17 : []
-01234182556789,23 : []
-01234182556789,24 : []
-01234182556789,14 : []
-01234182556789,19 : []
-01234182556789,20 : []
-01234182556789,21 : []
-01234182556789,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 14-itemset : 
+frequent 7-itemset : 
 
-0123418255678910,11 : []
-0123418255678910,12 : []
-0123418255678910,13 : []
-0123418255678910,15 : []
-0123418255678910,16 : []
-0123418255678910,17 : []
-0123418255678910,23 : []
-0123418255678910,24 : []
-0123418255678910,14 : []
-0123418255678910,19 : []
-0123418255678910,20 : []
-0123418255678910,21 : []
-0123418255678910,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 15-itemset : 
+frequent 8-itemset : 
 
-012341825567891011,12 : []
-012341825567891011,13 : []
-012341825567891011,15 : []
-012341825567891011,16 : []
-012341825567891011,17 : []
-012341825567891011,23 : []
-012341825567891011,24 : []
-012341825567891011,14 : []
-012341825567891011,19 : []
-012341825567891011,20 : []
-012341825567891011,21 : []
-012341825567891011,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 16-itemset : 
+frequent 9-itemset : 
 
-01234182556789101112,13 : []
-01234182556789101112,15 : []
-01234182556789101112,16 : []
-01234182556789101112,17 : []
-01234182556789101112,23 : []
-01234182556789101112,24 : []
-01234182556789101112,14 : []
-01234182556789101112,19 : []
-01234182556789101112,20 : []
-01234182556789101112,21 : []
-01234182556789101112,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 17-itemset : 
+frequent 9-itemset : 
 
-0123418255678910111213,15 : []
-0123418255678910111213,16 : []
-0123418255678910111213,17 : []
-0123418255678910111213,23 : []
-0123418255678910111213,24 : []
-0123418255678910111213,14 : []
-0123418255678910111213,19 : []
-0123418255678910111213,20 : []
-0123418255678910111213,21 : []
-0123418255678910111213,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 18-itemset : 
+frequent 8-itemset : 
 
-012341825567891011121315,16 : []
-012341825567891011121315,17 : []
-012341825567891011121315,23 : []
-012341825567891011121315,24 : []
-012341825567891011121315,14 : []
-012341825567891011121315,19 : []
-012341825567891011121315,20 : []
-012341825567891011121315,21 : []
-012341825567891011121315,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 19-itemset : 
+frequent 9-itemset : 
 
-01234182556789101112131516,17 : []
-01234182556789101112131516,23 : []
-01234182556789101112131516,24 : []
-01234182556789101112131516,14 : []
-01234182556789101112131516,19 : []
-01234182556789101112131516,20 : []
-01234182556789101112131516,21 : []
-01234182556789101112131516,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 20-itemset : 
+frequent 9-itemset : 
 
-0123418255678910111213151617,23 : []
-0123418255678910111213151617,24 : []
-0123418255678910111213151617,14 : []
-0123418255678910111213151617,19 : []
-0123418255678910111213151617,20 : []
-0123418255678910111213151617,21 : []
-0123418255678910111213151617,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 21-itemset : 
+frequent 6-itemset : 
 
-012341825567891011121315161723,24 : []
-012341825567891011121315161723,14 : []
-012341825567891011121315161723,19 : []
-012341825567891011121315161723,20 : []
-012341825567891011121315161723,21 : []
-012341825567891011121315161723,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 22-itemset : 
+frequent 7-itemset : 
 
-01234182556789101112131516172324,14 : []
-01234182556789101112131516172324,19 : []
-01234182556789101112131516172324,20 : []
-01234182556789101112131516172324,21 : []
-01234182556789101112131516172324,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 23-itemset : 
+frequent 8-itemset : 
 
-0123418255678910111213151617232414,19 : []
-0123418255678910111213151617232414,20 : []
-0123418255678910111213151617232414,21 : []
-0123418255678910111213151617232414,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 24-itemset : 
+frequent 9-itemset : 
 
-012341825567891011121315161723241419,20 : []
-012341825567891011121315161723241419,21 : []
-012341825567891011121315161723241419,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
 
-frequent 25-itemset : 
+frequent 9-itemset : 
 
-01234182556789101112131516172324141920,21 : []
-01234182556789101112131516172324141920,22 : []
-ECLAT thr. : 2 , DECLAT thr. : -2
-ECLAT str. : 0 , DECLAT str. : 0
-E(avg) : 0.0
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
 D(avg) : 0.0
-POINT OF DIFF : 0.0
-ECLAT
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 5-itemset : 
+
+8976,5 : [0, 1]
+8976,4 : [0, 1]
+8976,3 : [0, 1]
+8976,2 : [0, 1]
+8976,1 : [0, 1]
+8976,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 4-itemset : 
+
+897,6 : [0, 1]
+897,5 : [0, 1]
+897,4 : [0, 1]
+897,3 : [0, 1]
+897,2 : [0, 1]
+897,1 : [0, 1]
+897,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 5-itemset : 
+
+8976,5 : [0, 1]
+8976,4 : [0, 1]
+8976,3 : [0, 1]
+8976,2 : [0, 1]
+8976,1 : [0, 1]
+8976,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 5-itemset : 
+
+8976,5 : [0, 1]
+8976,4 : [0, 1]
+8976,3 : [0, 1]
+8976,2 : [0, 1]
+8976,1 : [0, 1]
+8976,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 3-itemset : 
+
+89,7 : [0, 1]
+89,6 : [0, 1]
+89,5 : [0, 1]
+89,4 : [0, 1]
+89,3 : [0, 1]
+89,2 : [0, 1]
+89,1 : [0, 1]
+89,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 4-itemset : 
+
+897,6 : [0, 1]
+897,5 : [0, 1]
+897,4 : [0, 1]
+897,3 : [0, 1]
+897,2 : [0, 1]
+897,1 : [0, 1]
+897,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 5-itemset : 
+
+8976,5 : [0, 1]
+8976,4 : [0, 1]
+8976,3 : [0, 1]
+8976,2 : [0, 1]
+8976,1 : [0, 1]
+8976,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 5-itemset : 
+
+8976,5 : [0, 1]
+8976,4 : [0, 1]
+8976,3 : [0, 1]
+8976,2 : [0, 1]
+8976,1 : [0, 1]
+8976,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 4-itemset : 
+
+897,6 : [0, 1]
+897,5 : [0, 1]
+897,4 : [0, 1]
+897,3 : [0, 1]
+897,2 : [0, 1]
+897,1 : [0, 1]
+897,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 5-itemset : 
+
+8976,5 : [0, 1]
+8976,4 : [0, 1]
+8976,3 : [0, 1]
+8976,2 : [0, 1]
+8976,1 : [0, 1]
+8976,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 5-itemset : 
+
+8976,5 : [0, 1]
+8976,4 : [0, 1]
+8976,3 : [0, 1]
+8976,2 : [0, 1]
+8976,1 : [0, 1]
+8976,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 6-itemset : 
+
+89765,4 : [0, 1]
+89765,3 : [0, 1]
+89765,2 : [0, 1]
+89765,1 : [0, 1]
+89765,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 7-itemset : 
+
+897654,3 : [0, 1]
+897654,2 : [0, 1]
+897654,1 : [0, 1]
+897654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 8-itemset : 
+
+8976543,2 : [0, 1]
+8976543,1 : [0, 1]
+8976543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT
+
+frequent 9-itemset : 
+
+89765432,1 : [0, 1]
+89765432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+POINT OF DIFF : 1.0
+DECLAT

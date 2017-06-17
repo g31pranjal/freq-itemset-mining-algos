@@ -16,22 +16,22 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import code.input.transaction_database_list_integers.TransactionDatabase;
-// import code.patterns.itemset_array_integers_with_count.Itemset;
-// import code.patterns.itemset_array_integers_with_count.Itemsets;
-// import code.tools.MemoryLogger;
+import code.patterns.itemset_array_integers_with_count.Itemset;
+import code.patterns.itemset_array_integers_with_count.Itemsets;
+import code.tools.MemoryLogger;
  
 public class AlgoEclat {
 
 	private int minsupRelative;  
 	protected TransactionDatabase database; 
-	// protected long startTimestamp;
-	// protected long endTime; 
+	protected long startTimestamp;
+	protected long endTime; 
 	protected Itemsets frequentItemsets;
 	BufferedWriter writer = null; 
 	protected int itemsetCount; 
-	// final int BUFFERS_SIZE = 2000;
-	// private int[] itemsetBuffer = null;
-	// boolean showTransactionIdentifiers = false;
+	final int BUFFERS_SIZE = 2000;
+	private int[] itemsetBuffer = null;
+	boolean showTransactionIdentifiers = false;
 
 
 	public AlgoEclat() {	
@@ -40,10 +40,11 @@ public class AlgoEclat {
 
 	public Itemsets runAlgorithm(String output, TransactionDatabase database, double minsupp) throws IOException {
 		
-		// MemoryLogger.getInstance().reset();
-		// itemsetBuffer = new int[BUFFERS_SIZE];
+		MemoryLogger.getInstance().reset();
+		itemsetBuffer = new int[BUFFERS_SIZE];
 
 		this.database = database;
+
 		this.minsupRelative = (int) Math.ceil(minsupp * database.size());
 		
 		if(output == null) {
@@ -164,7 +165,7 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 		int maxItemId = 0;
 		
 		for (int i = 0; i < database.size(); i++) {
-			for (Integer item : database.getTransactions().get(i)) {
+			for (Integer item : database.getHorizontalDB().get(i)) {
 				// get the current tidset of that item
 				Set<Integer> set = mapItemCount.get(item);
 				// if no tidset, then we create one

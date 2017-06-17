@@ -58,36 +58,41 @@ public class algoFramework {
 			}
 		}
 
-		Integer avgTidsetSize = (int)(totalInOneFrequent / oneFrequentItems.size());
+		if(oneFrequentItems.size() > 0) {
 
-		// sort the list of frequent 1-itemsets.
-		Collections.sort(oneFrequentItems, new Comparator<Integer>() {
-			@Override
-			public int compare(Integer arg0, Integer arg1) {
-				return verticalDB.get(arg0).size() - verticalDB.get(arg1).size();
-			}
-		});
+			Integer avgTidsetSize = (int)(totalInOneFrequent / oneFrequentItems.size());
 
-		/* 
-		 *	logic to decide the algorithm to begin with 
-			we can work with some kind of problistic model to determine, with some success, the startting algorithm
-		*/
+			// sort the list of frequent 1-itemsets.
+			Collections.sort(oneFrequentItems, new Comparator<Integer>() {
+				@Override
+				public int compare(Integer arg0, Integer arg1) {
+					return verticalDB.get(arg0).size() - verticalDB.get(arg1).size();
+				}
+			});
 
-		Integer ECLATthreshold  = (int)(database.getN()*(1.0/4.0));
-		Integer DECLATthreshold = (int)(database.getN()*(3.0/4.0));
+			/* 
+			 *	logic to decide the algorithm to begin with 
+				we can work with some kind of problistic model to determine, with some success, the startting algorithm
+			*/
 
-		System.out.println("\nECLAT threshold : " + ECLATthreshold + ", DECLAT threshold : " + DECLATthreshold);
-		System.out.println("Average value : " + avgTidsetSize);
+			Integer ECLATthreshold  = (int)(database.getN()*(1.0/4.0));
+			Integer DECLATthreshold = (int)(database.getN()*(3.0/4.0));
 
-		if(avgTidsetSize <= ECLATthreshold )
-			System.out.println("ECLAT");
-		else if(avgTidsetSize <= DECLATthreshold)
-			System.out.println("VIPER");
-		else
-			System.out.println("DECLAT");
-			
+			System.out.println("\nECLAT threshold : " + ECLATthreshold + ", DECLAT threshold : " + DECLATthreshold);
+			System.out.println("Average value : " + avgTidsetSize);
 
-		this.constructDIFFSETS(oneFrequentItems);
+			if(avgTidsetSize <= ECLATthreshold )
+				System.out.println("ECLAT");
+			else if(avgTidsetSize <= DECLATthreshold)
+				System.out.println("VIPER");
+			else
+				System.out.println("DECLAT");
+				
+
+			this.constructDIFFSETS(oneFrequentItems);
+		
+		}
+
  
 	}
 
@@ -106,7 +111,6 @@ public class algoFramework {
 		for(int i=0;i<equivalenceClassItems.size();i++) {
 			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassTidsets.get(i));
 		}
-
 	}
 
 
@@ -130,11 +134,11 @@ public class algoFramework {
 
 		System.out.println("\nfrequent 1-itemsets (using DIFFSET).\n");
 		for(int i=0;i<equivalenceClassItems.size();i++) {
+			// System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i).size());
 			System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i));
 		}
 
-		this.processEquivalenceClassDEclat(new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassDiffsets);
-
+		this.processEquivalenceClassDEclat(new HashSet<Integer>(), new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassDiffsets);
 	}
 
 
@@ -161,7 +165,7 @@ public class algoFramework {
 	}
 
 
-	private void processEquivalenceClassDEclat( int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassDiffsets) throws IOException {
+	private void processEquivalenceClassDEclat(Set<Integer> parentDiffsUnion, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassDiffsets) throws IOException {
 
 		int length = prefixLength+1;
 		
@@ -242,15 +246,22 @@ public class algoFramework {
 
 				prefix[prefixLength] = suffixI;
 				int newPrefixLength = prefixLength+1;
+				
+				// printing in TIDSETS. Unwanted peice of code ---------------------------------------------
+				
+				parentDiffsUnion.addAll(diffsetI);
 
-				// print before recursive class
+				List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETtoTIDSET(parentDiffsUnion, equivalenceClassIDiffsets);
+				
 				System.out.println("\nfrequent "+(newPrefixLength+1)+"-itemset : \n");
 				for(int p=0;p<equivalenceClassISuffixItems.size();p++) {
 					for(int k=0;k<newPrefixLength;k++) {
 						System.out.print(prefix[k]);
 					}
-					System.out.println(","+equivalenceClassISuffixItems.get(p)+" : "+equivalenceClassIDiffsets.get(p));
+					System.out.println(","+equivalenceClassISuffixItems.get(p) +" : "+equivalenceClassITidsets.get(p));
 				}
+
+				// -----------------------------------------------------------------------------------------
 
 				double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
 				double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
@@ -268,26 +279,42 @@ public class algoFramework {
 				if(DECLATthreshold <= ECLATthreshold) {
 					double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
 					System.out.println("POINT OF DIFF : " + PointOfDiff);
-					if(EAvg > PointOfDiff)
+					if(EAvg > PointOfDiff){
 						System.out.println("DECLAT");
-					else 
+						// parentDiffsUnion.addAll(diffsetI);
+						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+					}
+					else {
 						System.out.println("ECLAT");
+						// List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETtoTIDSET(parentDiffsUnion, equivalenceClassIDiffsets);
+						// call to eclat
+					}
 				}
 				else {
-					if(EAvg <= ECLATthreshold)
+					if(EAvg <= ECLATthreshold){
 						System.out.println("ECLAT");
-					else if(EAvg <= DECLATthreshold)
+						// List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETtoTIDSET(parentDiffsUnion, equivalenceClassIDiffsets);
+						// call to processEquivalentClassEclat()
+					
+					}
+					else if(EAvg <= DECLATthreshold){
 						System.out.println("VIPER");
-					else
+						// change to BITSETS
+						// call to processEquivalentClassViper()
+					
+					}
+					else{
 						System.out.println("DECLAT");
+						// parentDiffsUnion.addAll(diffsetI);
+						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+					}
 				}
 
-				processEquivalenceClassDEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+				parentDiffsUnion.addAll(diffsetI);
+				processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 				
 			}
-			
 			break;
-
 		}
 		
     }
@@ -302,6 +329,22 @@ public class algoFramework {
 				diffsetIJ.add(tid);
 
 		return diffsetIJ;
+	}
+
+	List<Set<Integer>> convertDIFFSETtoTIDSET(Set<Integer> parentDiffsUnion, List<Set<Integer>> equivalenceClassIDiffsets) {
+
+		List<Set<Integer>> equivalenceClassITidsets = new ArrayList<Set<Integer>>();
+
+		for(Set<Integer> diffset : equivalenceClassIDiffsets) {
+			Set<Integer> tid = new HashSet<Integer>();
+			for(int i=0;i<database.getN();i++) {
+				if(!parentDiffsUnion.contains(i) && !diffset.contains(i))
+					tid.add(i);
+			}
+			equivalenceClassITidsets.add(tid);
+		}
+
+		return equivalenceClassITidsets;
 	}
 
 

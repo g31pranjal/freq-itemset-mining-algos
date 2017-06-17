@@ -12,7 +12,7 @@ public class alterDBstructure {
 
 	public static void main(String args[]) throws IOException{
 		
-		String filename = "../../datasets/test1.txt";
+		String filename = "../../datasets/test2.txt";
 		URL url = alterDBstructure.class.getResource(filename);
 		String input = java.net.URLDecoder.decode(url.getPath(),"UTF-8");
 
@@ -25,7 +25,7 @@ public class alterDBstructure {
 		}
 
 		// printing the horizontal database.
-		database.printHorizontalDatabase();
+		// database.printHorizontalDatabase();
 
 		// printing the horizontal database.
 		database.printVerticalDatabase();
@@ -33,7 +33,7 @@ public class alterDBstructure {
 
 		// running the framework
 		algoFramework algo = new algoFramework();
-		algo.runAlgo(null, database, 0.0);
+		algo.runAlgo(null, database, 0.01);
 
 	}
 

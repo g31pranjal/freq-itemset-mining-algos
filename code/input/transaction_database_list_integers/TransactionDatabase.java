@@ -102,6 +102,9 @@ public class TransactionDatabase {
 		return horizontalDB.size();
 	}
 
+	public int size() {
+		return horizontalDB.size();
+	}
 
 	// list of horizontalDB
 	public List<List<Integer>> getHorizontalDB() {

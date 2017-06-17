@@ -17,11 +17,11 @@ public class MainTestDEclat_saveToFile {
 	public static void main(String [] arg) throws IOException{
 		
 		// the file paths
-		String input = fileToPath("contextPasquier99.txt");  // the database
+		String input = fileToPath("../../datasets/retail.txt");  // the database
 		String output = ".//output.txt";  // the path for saving the frequent itemsets found
 		
 		// minimum support
-		double minsup = 0.4; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.005; // means a minsup of 2 transaction (we used a relative support)
 
 		// Loading the transaction database
 		TransactionDatabase database = new TransactionDatabase();
