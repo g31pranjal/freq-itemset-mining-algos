@@ -10,22 +10,121 @@
 6 : [0, 1, 2, 3]
 7 : [0, 1, 2]
 8 : [0, 1]
-9 : [0, 1]
+9 : [0, 1, 2]
 # transactions (n) 10, # items (m) : 10
 
 ECLAT threshold : 2, DECLAT threshold : 7
 Average value : 5
-VIPER
 
-frequent 1-itemset (using BITSET)
+frequent 1-itemsets (using TIDSET)
 
-8 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@15db9742
-9 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@6d06d69c
-7 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@7852e922
-6 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@4e25154f
-5 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@70dea4e
-4 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@5c647e05
-3 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@33909752
-2 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@55f96302
-1 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@3d4eac69
-0 : code.algorithms.frequentpatterns.algoFramework$BitSetSupport@42a57993
+8 : [0, 1]
+7 : [0, 1, 2]
+9 : [0, 1, 2]
+6 : [0, 1, 2, 3]
+5 : [0, 1, 2, 3, 4]
+4 : [0, 1, 2, 3, 4, 5]
+3 : [0, 1, 2, 3, 4, 5, 6]
+2 : [0, 1, 2, 3, 4, 5, 6, 7]
+1 : [0, 1, 2, 3, 4, 5, 6, 7, 8]
+0 : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+
+frequent 2-itemset : 
+
+8,7 : [0, 1]
+8,9 : [0, 1]
+8,6 : [0, 1]
+8,5 : [0, 1]
+8,4 : [0, 1]
+8,3 : [0, 1]
+8,2 : [0, 1]
+8,1 : [0, 1]
+8,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+
+frequent 3-itemset : 
+
+87,9 : [0, 1]
+87,6 : [0, 1]
+87,5 : [0, 1]
+87,4 : [0, 1]
+87,3 : [0, 1]
+87,2 : [0, 1]
+87,1 : [0, 1]
+87,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+
+frequent 4-itemset : 
+
+879,6 : [0, 1]
+879,5 : [0, 1]
+879,4 : [0, 1]
+879,3 : [0, 1]
+879,2 : [0, 1]
+879,1 : [0, 1]
+879,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+
+frequent 5-itemset : 
+
+8796,5 : [0, 1]
+8796,4 : [0, 1]
+8796,3 : [0, 1]
+8796,2 : [0, 1]
+8796,1 : [0, 1]
+8796,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+
+frequent 6-itemset : 
+
+87965,4 : [0, 1]
+87965,3 : [0, 1]
+87965,2 : [0, 1]
+87965,1 : [0, 1]
+87965,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+
+frequent 7-itemset : 
+
+879654,3 : [0, 1]
+879654,2 : [0, 1]
+879654,1 : [0, 1]
+879654,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+
+frequent 8-itemset : 
+
+8796543,2 : [0, 1]
+8796543,1 : [0, 1]
+8796543,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
+
+frequent 9-itemset : 
+
+87965432,1 : [0, 1]
+87965432,0 : [0, 1]
+ECLAT thr. : 2 , DECLAT thr. : 0
+ECLAT str. : 0 , DECLAT str. : 2
+E(avg) : 2.0
+D(avg) : 0.0
