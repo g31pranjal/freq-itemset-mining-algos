@@ -347,6 +347,24 @@ public class algoFramework {
 		return equivalenceClassITidsets;
 	}
 
+	List<BitSetSupport> convertDIFFSETtoBITSET(Set<Integer> parentDiffsUnion, List<Set<Integer>> equivalenceClassIDiffsets) {
+
+		List<BitSetSupport> equivalenceClassIBitsets = new ArrayList<BitSetSupport>();
+
+		for(Set<Integer> diffset : equivalenceClassIDiffsets) {
+			BitSetSupport bs = new BitSetSupport();
+			for(int i=0;i<database.getN();i++) {
+				if(!parentDiffsUnion.contains(i) && !diffset.contains(i)) {
+					bs.bitset.set(i);
+					bs.support++;
+				}
+			}
+			equivalenceClassIBitsets.add(bs);
+		}
+
+		return equivalenceClassIBitsets;
+	}
+
 
 
 
