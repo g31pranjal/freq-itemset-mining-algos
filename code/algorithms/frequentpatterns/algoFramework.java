@@ -824,19 +824,52 @@ public class algoFramework {
 	}
 
 	List<Set<Integer>> convertBITSETStoTIDSETS(List<BitSetSupport> equivalenceClassIBitsets) {
-		return null;
+		
+		List<Set<Integer>> equivalenceClassITidsets = new ArrayList<Set<Integer>>();
+
+		for( BitSetSupport bitset : equivalenceClassIBitsets ) {
+			Set<Integer> tidset = new HashSet<Integer>();
+			for(int i=bitset.bitset.nextSetBit(0); i >= 0; i = bitset.bitset.nextSetBit(i+1)) {
+				tidset.add(i);
+			}
+			equivalenceClassITidsets.add(tidset);
+		}
+		return equivalenceClassITidsets;
 	}
 
 	Set<Integer> formPrefixTidsetFromPrefixBitsets(BitSetSupport prefixBitset) {
-		return null;
+		Set<Integer> prefixTidset = new HashSet<Integer>();
+		for(int i = prefixBitset.bitset.nextSetBit(0); i >= 0; i = prefixBitset.bitset.nextSetBit(i+1)) {
+			prefixTidset.add(i);
+		}
+		return prefixTidset;
 	}
 
 	List<Set<Integer>> convertBITSETStoDIFFSETS(BitSetSupport prefixBitset, List<BitSetSupport> equivalenceClassIBitsets) {
-		return null;
+		
+		List<Set<Integer>> equivalenceClassIDiffsets = new ArrayList<Set<Integer>>();
+		
+		for(BitSetSupport bitset : equivalenceClassIBitsets) {
+			Set<Integer> diffset = new HashSet<Integer>();
+			for(int i = prefixBitset.bitset.nextSetBit(0); i>= 0; i = prefixBitset.bitset.nextSetBit(i+1))
+				if(!bitset.bitset.get(i))
+					diffset.add(i);
+			equivalenceClassIDiffsets.add(diffset);
+		}
+
+		return equivalenceClassIDiffsets;
 	}
 
 	Set<Integer> formParentDiffsUnionFromPrefixBitset(BitSetSupport prefixBitset) {
-		return null;
+	
+		Set<Integer> parentDiffsUnion = new HashSet<Integer>();
+		for(int i=0;i<database.getN();i++) {
+			if(!prefixBitset.bitset.get(i))
+				parentDiffsUnion.add(i);
+		}
+
+		return parentDiffsUnion;
+	
 	}
 
 }
