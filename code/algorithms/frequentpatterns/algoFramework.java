@@ -17,13 +17,10 @@ import java.util.BitSet;
 import code.input.transaction_database_list_integers.TransactionDatabase;
 import code.patterns.itemset_array_integers_with_count.Itemset;
 import code.patterns.itemset_array_integers_with_count.Itemsets;
+import code.tools.MemoryLogger;
 
 
 public class algoFramework {
-
-
-
-
 
 	protected int minSupRelative;
 	protected TransactionDatabase database;
@@ -31,13 +28,24 @@ public class algoFramework {
 	BufferedWriter writer = null; 
 	protected Itemsets frequentItemsets;
 	protected int itemsetCount;
+	protected long startTime;
+	protected long endTime;
+	protected int algo;
+	// 1 : ECLAT, 2 : VIPER, 3 : DECLAT, 0 : VARIABLE
 
+	// the default route of algo is 0 i.e. VARIABLE
+	public algoFramework() {
+		this.algo = 0;
+	}
 
-
-
-
+	public algoFramework(int algo) {
+		this.algo = algo;
+	}
 
 	public void runAlgo(String outputFile, TransactionDatabase database, double minsupp) throws IOException {
+
+		MemoryLogger.getInstance().reset();
+		startTime = System.currentTimeMillis();
 
 		this.database = database;
 		this.minSupRelative = (int) Math.ceil(minsupp * database.getN());
@@ -91,26 +99,38 @@ public class algoFramework {
 			System.out.println("\nECLAT threshold : " + ECLATthreshold + ", DECLAT threshold : " + DECLATthreshold);
 			System.out.println("Average value : " + avgTidsetSize);
 
-			if(avgTidsetSize <= ECLATthreshold ) {
-				System.out.println("ECLAT");
-				this.constructTIDSETS(oneFrequentItems);
+			if(algo == 0) {
+				if(avgTidsetSize <= ECLATthreshold ) {
+					System.out.println("ECLAT");
+					this.constructTIDSETS(oneFrequentItems);
+				}
+				else if(avgTidsetSize <= DECLATthreshold){
+					System.out.println("VIPER");
+					this.constructBITSETS(oneFrequentItems);
+				}
+				else{
+					System.out.println("DECLAT");
+					this.constructDIFFSETS(oneFrequentItems);
+				}
 			}
-			else if(avgTidsetSize <= DECLATthreshold){
-				System.out.println("VIPER");
-				this.constructBITSETS(oneFrequentItems);
-			}
-			else{
-				System.out.println("DECLAT");
-				this.constructDIFFSETS(oneFrequentItems);
+			else {
+				if(algo == 1) {
+					this.constructTIDSETS(oneFrequentItems);
+				}
+				else if(algo == 2){
+					this.constructBITSETS(oneFrequentItems);
+				}
+				else if(algo == 3){
+					this.constructDIFFSETS(oneFrequentItems);
+				}	
 			}
 		}
+
+		MemoryLogger.getInstance().checkMemory();
+		endTime = System.currentTimeMillis();
+
+		this.printStats();
 	}
-
-
-
-
-
-
 
 
 	public void constructTIDSETS(List<Integer> equivalenceClassItems) throws IOException {
@@ -132,31 +152,6 @@ public class algoFramework {
 			enot.add(i);
 
 		this.processEquivalenceClassEclat(enot ,new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassTidsets);
-	}
-
-
-	public void constructDIFFSETS(List<Integer> equivalenceClassItems) throws IOException{
-		
-		List<Set<Integer> > equivalenceClassDiffsets = new ArrayList<Set<Integer>>();
-
-		// populate the list of set integers corresponding to the sorted frequent 1-itemsets. 		
-		for(Integer item : equivalenceClassItems) {
-			Set<Integer> tidset = verticalDB.get(item);
-			Set<Integer> diffset = new HashSet<Integer>();
-			for(int i=0;i<database.getN();i++) {
-				if(!tidset.contains(i)) {
-					diffset.add(i);
-				}
-			}
-			equivalenceClassDiffsets.add(diffset); 
-		} 
-
-		// System.out.println("\nfrequent 1-itemsets (using DIFFSET).\n");
-		// for(int i=0;i<equivalenceClassItems.size();i++) {
-		// 	System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i));
-		// }
-
-		this.processEquivalenceClassDEclat(new HashSet<Integer>(), new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassDiffsets);
 	}
 
 
@@ -190,18 +185,472 @@ public class algoFramework {
 	}
 
 
+	public void constructDIFFSETS(List<Integer> equivalenceClassItems) throws IOException{
+		
+		List<Set<Integer> > equivalenceClassDiffsets = new ArrayList<Set<Integer>>();
+
+		// populate the list of set integers corresponding to the sorted frequent 1-itemsets. 		
+		for(Integer item : equivalenceClassItems) {
+			Set<Integer> tidset = verticalDB.get(item);
+			Set<Integer> diffset = new HashSet<Integer>();
+			for(int i=0;i<database.getN();i++) {
+				if(!tidset.contains(i)) {
+					diffset.add(i);
+				}
+			}
+			equivalenceClassDiffsets.add(diffset); 
+		} 
+
+		// System.out.println("\nfrequent 1-itemsets (using DIFFSET).\n");
+		// for(int i=0;i<equivalenceClassItems.size();i++) {
+		// 	System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i));
+		// }
+
+		this.processEquivalenceClassDEclat(new HashSet<Integer>(), new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassDiffsets);
+	}
 
 
+	private void processEquivalenceClassEclat(Set<Integer> prefixTidset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassTidsets) throws IOException {
+
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> ECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+		int length = prefixLength+1;
+		
+		if(equivalenceClassItems.size() == 1) {
+			
+			int item = equivalenceClassItems.get(0);
+			Set<Integer> tidset = equivalenceClassTidsets.get(0);
+			//save(prefix, prefixLength, itemI, tidsetItemset, support);
+			return;
+		}
+
+		if(equivalenceClassItems.size() == 2) {
+			
+			int itemI = equivalenceClassItems.get(0);
+			Set<Integer> tidsetI = equivalenceClassTidsets.get(0);
+			int supportI = tidsetI.size();
+			// save(prefix, prefixLength, itemI, tidsetI, supportI);
+			
+			int itemJ = equivalenceClassItems.get(1);
+			Set<Integer> tidsetJ = equivalenceClassTidsets.get(1);
+			int supportJ = tidsetJ.size();
+			// save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
+			
+			Set<Integer> tidsetIJ = this.performINTERSECTION(tidsetI, tidsetJ);
+			int supportIJ = tidsetIJ.size();
+			
+			if(supportIJ >= minSupRelative) {
+				int newPrefixLength = prefixLength+1;
+				prefix[prefixLength] = itemI;
+				//save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
+			}
+			return;
+		}
 
 
+		for(int i=0; i< equivalenceClassItems.size(); i++) {
+			
+			int ETotal = 0;
+			int DTotal = 0;
+
+			int suffixI = equivalenceClassItems.get(i);
+			Set<Integer> tidsetI = equivalenceClassTidsets.get(i);
+			int supportI = tidsetI.size();
+			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
+			
+			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
+			List<Set<Integer>> equivalenceClassITidsets = new ArrayList<Set<Integer>>();
+
+			for(int j=i+1; j < equivalenceClassItems.size(); j++) {
+				
+				int suffixJ = equivalenceClassItems.get(j);
+				Set<Integer> tidsetJ = equivalenceClassTidsets.get(j);
+				int supportJ = tidsetJ.size();
+				
+				Set<Integer> tidsetIJ = this.performINTERSECTION(tidsetI, tidsetJ);
+				int supportIJ = tidsetIJ.size();
+					
+				if(supportIJ >= minSupRelative) {
+					ETotal += supportIJ;
+					DTotal += (supportI - supportIJ);
+					equivalenceClassISuffixItems.add(suffixJ);
+					equivalenceClassITidsets.add(tidsetIJ);
+				}
+			}
+			
+			if(equivalenceClassISuffixItems.size() > 0) {
+
+				prefix[prefixLength] = suffixI;
+				int newPrefixLength = prefixLength+1;
+				
+				// printing in TIDSETS. Unwanted peice of code ----------------------------------------------------------
+								
+				// System.out.println("\nfrequent "+(newPrefixLength+1)+"-itemset : \n");
+				// for(int p=0;p<equivalenceClassISuffixItems.size();p++) {
+				// 	for(int k=0;k<newPrefixLength;k++) {
+				// 		System.out.print(prefix[k]);
+				// 	}
+				// 	System.out.println(","+equivalenceClassISuffixItems.get(p) +" : "+equivalenceClassITidsets.get(p));
+				// }
+
+				// ------------------------------------------------------------------------------------------------------
+
+				if(algo == 1) {
+
+					this.processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+
+				}
+				else {
+
+					double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
+					double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
+					
+					int ECLATthreshold = (int)(database.getN()*(1.0/4.0) );
+					int ECLATstart = 0;
+					int DECLATthreshold  = supportI - ECLATthreshold;
+					int DECLATstart  = supportI;
+
+					System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
+					System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
+					System.out.println("E(avg) : "+EAvg);
+					System.out.println("D(avg) : "+DAvg);
+
+					if(DECLATthreshold <= ECLATthreshold) {
+						double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
+						System.out.println("POINT OF DIFF : " + PointOfDiff);
+						if(EAvg > PointOfDiff){
+							
+							System.out.println("DECLAT");
+							
+							List<Set<Integer>> equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
+							Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
+							processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						}
+						else {
+							
+							System.out.println("ECLAT");
+							
+							this.processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+						}
+					}
+					else {
+						if(EAvg <= ECLATthreshold){
+							
+							System.out.println("ECLAT");
+							
+							this.processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+						}
+						else if(EAvg <= DECLATthreshold){
+							
+							System.out.println("VIPER");
+							
+							BitSetSupport prefixBitset = formPrefixBitsetFromPrefixTidset(tidsetI);
+							List<BitSetSupport> equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
+							this.processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+						}
+						else{
+							
+							System.out.println("DECLAT");
+							
+							List<Set<Integer>> equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
+							Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
+							processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						}
+					}
+				}
+				
+			}
+		}
+	}
 
 
+	// diff(PXY) = diff(PY) - DIFF(PX)	
+	Set<Integer> performINTERSECTION(Set<Integer> tidsetI, Set<Integer> tidsetJ) {
+		
+		Set<Integer> tidsetIJ = new HashSet<Integer>();
+		for(Integer tid : tidsetJ) 
+			if(tidsetI.contains(tid))
+				tidsetIJ.add(tid);
+
+		return tidsetIJ;
+	}
 
 
+	List<Set<Integer>> convertTIDSETStoDIFFSETS(Set<Integer> prefixTidset, List<Set<Integer>> equivalenceClassITidsets) {
+		
+		List<Set<Integer>> equivalenceClassIDiffsets = new ArrayList<Set<Integer>>();
+		
+		for(Set<Integer> tidset : equivalenceClassITidsets) {
+			Set<Integer> diffset = new HashSet<Integer>();
+			for(int tid : prefixTidset)
+				if(!tidset.contains(tid))
+					diffset.add(tid);
+			equivalenceClassIDiffsets.add(diffset);
+		}
 
+		return equivalenceClassIDiffsets;
+	}
+
+
+	Set<Integer> formParentDiffsUnionFromPrefixTidset(Set<Integer> prefixTidset) {
+
+		Set<Integer> parentDiffsUnion = new HashSet<Integer>();
+		for(int i=0;i<database.getN();i++) {
+			if(!prefixTidset.contains(i))
+				parentDiffsUnion.add(i);
+		}
+
+		return parentDiffsUnion;
+	}
+
+
+	List<BitSetSupport> convertTIDSETStoBITSETS(List<Set<Integer>> equivalenceClassITidsets) {
+		
+		List<BitSetSupport> equivalenceClassIBitsets = new ArrayList<BitSetSupport>();
+
+		for(Set<Integer> tidset : equivalenceClassITidsets) {
+			BitSetSupport bs = new BitSetSupport();
+			for(Integer tid : tidset) {
+				bs.bitset.set(tid);
+				bs.support++;
+			}
+			equivalenceClassIBitsets.add(bs);
+		}
+
+		return equivalenceClassIBitsets;
+	}
+
+
+	BitSetSupport formPrefixBitsetFromPrefixTidset(Set<Integer> prefixTidset) {
+		
+		BitSetSupport prefixBitset = new BitSetSupport();
+
+		for(Integer tid : prefixTidset) {
+			prefixBitset.bitset.set(tid);
+			prefixBitset.support++;
+		}
+
+		return prefixBitset;
+	}
+
+
+	private void processEquivalenceClassViper(BitSetSupport prefixBitset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<BitSetSupport> equivalenceClassBitsets) throws IOException {
+
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
+		int length = prefixLength+1;
+		
+		if(equivalenceClassItems.size() == 1) {
+			
+			int item = equivalenceClassItems.get(0);
+			BitSetSupport bitset = equivalenceClassBitsets.get(0);
+			//save(prefix, prefixLength, itemI, tidsetItemset, support);
+			return;
+		}
+
+		if(equivalenceClassItems.size() == 2) {
+			
+			int itemI = equivalenceClassItems.get(0);
+			BitSetSupport bitsetI = equivalenceClassBitsets.get(0);
+			int supportI = bitsetI.support;
+			// save(prefix, prefixLength, itemI, tidsetI, supportI);
+			
+			int itemJ = equivalenceClassItems.get(1);
+			BitSetSupport bitsetJ = equivalenceClassBitsets.get(1);
+			int supportJ = bitsetJ.support;
+			// save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
+			
+			BitSetSupport bitsetIJ = this.performAND(bitsetI, bitsetJ);
+			int supportIJ = bitsetIJ.support;
+			
+			if(supportIJ >= minSupRelative) {
+				int newPrefixLength = prefixLength+1;
+				prefix[prefixLength] = itemI;
+				//save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
+			}
+			return;
+		}
+
+		
+		for(int i=0; i< equivalenceClassItems.size(); i++) {
+			
+			int ETotal = 0;
+			int DTotal = 0;
+
+			int suffixI = equivalenceClassItems.get(i);
+			BitSetSupport bitsetI = equivalenceClassBitsets.get(i);
+			int supportI = bitsetI.support;
+			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
+			
+			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
+			List<BitSetSupport> equivalenceClassIBitsets = new ArrayList<BitSetSupport>();
+
+			for(int j=i+1; j < equivalenceClassItems.size(); j++) {
+				
+				int suffixJ = equivalenceClassItems.get(j);
+				BitSetSupport bitsetJ = equivalenceClassBitsets.get(j);
+				int supportJ = bitsetJ.support;
+				
+				BitSetSupport bitsetIJ = this.performAND(bitsetI, bitsetJ);
+				int supportIJ = bitsetIJ.support;
+					
+				if(supportIJ >= minSupRelative) {
+					ETotal += supportIJ;
+					DTotal += (supportI - supportIJ);
+					equivalenceClassISuffixItems.add(suffixJ);
+					equivalenceClassIBitsets.add(bitsetIJ);
+				}
+			}
+			
+			if(equivalenceClassISuffixItems.size() > 0) {
+
+				prefix[prefixLength] = suffixI;
+				int newPrefixLength = prefixLength+1;
+				
+				if(algo == 2) {
+
+					this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassBitsets);
+
+				}
+				else {
+
+					double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
+					double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
+					
+					int ECLATthreshold = (int)(database.getN()*(1.0/4.0) );
+					int ECLATstart = 0;
+					int DECLATthreshold  = supportI - ECLATthreshold;
+					int DECLATstart  = supportI;
+
+					System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
+					System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
+					System.out.println("E(avg) : "+EAvg);
+					System.out.println("D(avg) : "+DAvg);
+
+					if(DECLATthreshold <= ECLATthreshold) {
+						double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
+						System.out.println("POINT OF DIFF : " + PointOfDiff);
+						if(EAvg > PointOfDiff){
+							
+							System.out.println("DECLAT");
+						
+							List<Set<Integer>> equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
+							Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+							processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						}
+						else {
+							
+							System.out.println("ECLAT");
+						
+							List<Set<Integer>> equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
+							Set<Integer> prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+							processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+						}
+					}
+					else {
+						if(EAvg <= ECLATthreshold){
+							
+							System.out.println("ECLAT");
+							
+							List<Set<Integer>> equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
+							Set<Integer> prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+							processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+						}
+						else if(EAvg <= DECLATthreshold){
+							
+							System.out.println("VIPER");
+							
+							this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassBitsets);
+						}
+						else{
+							
+							System.out.println("DECLAT");
+							
+							List<Set<Integer>> equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
+							Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+							processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						}
+					}
+
+				}
+				
+			}
+		}
+	}
+
+
+	public class BitSetSupport{
+		BitSet bitset = new BitSet();
+		int support;
+	}
+
+
+	BitSetSupport performAND(BitSetSupport bitsetI, BitSetSupport bitsetJ) {
+		
+		BitSetSupport bitsetIJ = new BitSetSupport();
+		bitsetIJ.bitset = (BitSet)bitsetI.bitset.clone();
+		bitsetIJ.bitset.and(bitsetJ.bitset);
+		bitsetIJ.support = bitsetIJ.bitset.cardinality();
+
+		return bitsetIJ;
+	}
+
+
+	List<Set<Integer>> convertBITSETStoTIDSETS(List<BitSetSupport> equivalenceClassIBitsets) {
+		
+		List<Set<Integer>> equivalenceClassITidsets = new ArrayList<Set<Integer>>();
+
+		for( BitSetSupport bitset : equivalenceClassIBitsets ) {
+			Set<Integer> tidset = new HashSet<Integer>();
+			for(int i=bitset.bitset.nextSetBit(0); i >= 0; i = bitset.bitset.nextSetBit(i+1)) {
+				tidset.add(i);
+			}
+			equivalenceClassITidsets.add(tidset);
+		}
+		return equivalenceClassITidsets;
+	}
+
+
+	Set<Integer> formPrefixTidsetFromPrefixBitsets(BitSetSupport prefixBitset) {
+		Set<Integer> prefixTidset = new HashSet<Integer>();
+		for(int i = prefixBitset.bitset.nextSetBit(0); i >= 0; i = prefixBitset.bitset.nextSetBit(i+1)) {
+			prefixTidset.add(i);
+		}
+		return prefixTidset;
+	}
+
+
+	List<Set<Integer>> convertBITSETStoDIFFSETS(BitSetSupport prefixBitset, List<BitSetSupport> equivalenceClassIBitsets) {
+		
+		List<Set<Integer>> equivalenceClassIDiffsets = new ArrayList<Set<Integer>>();
+		
+		for(BitSetSupport bitset : equivalenceClassIBitsets) {
+			Set<Integer> diffset = new HashSet<Integer>();
+			for(int i = prefixBitset.bitset.nextSetBit(0); i>= 0; i = prefixBitset.bitset.nextSetBit(i+1))
+				if(!bitset.bitset.get(i))
+					diffset.add(i);
+			equivalenceClassIDiffsets.add(diffset);
+		}
+
+		return equivalenceClassIDiffsets;
+	}
+
+
+	Set<Integer> formParentDiffsUnionFromPrefixBitset(BitSetSupport prefixBitset) {
+	
+		Set<Integer> parentDiffsUnion = new HashSet<Integer>();
+		for(int i=0;i<database.getN();i++) {
+			if(!prefixBitset.bitset.get(i))
+				parentDiffsUnion.add(i);
+		}
+
+		return parentDiffsUnion;
+	}
 
 
 	private void processEquivalenceClassDEclat(Set<Integer> parentDiffsUnion, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassDiffsets) throws IOException {
+
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> DECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
 		int length = prefixLength+1;
 		
@@ -289,73 +738,80 @@ public class algoFramework {
 
 				// ------------------------------------------------------------------------------------------------------
 
-				double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
-				double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
-				
-				int ECLATthreshold = (int)(database.getN()*(1.0/4.0) );
-				int ECLATstart = 0;
-				int DECLATthreshold  = supportI - ECLATthreshold;
-				int DECLATstart  = supportI;
+				if(algo == 3) {
 
-				System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
-				System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
-				System.out.println("E(avg) : "+EAvg);
-				System.out.println("D(avg) : "+DAvg);
+					parentDiffsUnion.addAll(diffsetI);
+					this.processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 
-				if(DECLATthreshold <= ECLATthreshold) {
-					double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
-					System.out.println("POINT OF DIFF : " + PointOfDiff);
-					if(EAvg > PointOfDiff){
-						
-						System.out.println("DECLAT");
-						
-						parentDiffsUnion.addAll(diffsetI);
-						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-					}
-					else {
-						
-						System.out.println("ECLAT");
-
-						parentDiffsUnion.addAll(diffsetI);
-						List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETStoTIDSETS(parentDiffsUnion, equivalenceClassIDiffsets);
-						Set<Integer> prefixTidset = formPrefixTidsetFromParentDiffsUnion(parentDiffsUnion);
-						processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
 				}
 				else {
-					if(EAvg <= ECLATthreshold){
-						
-						System.out.println("ECLAT");
-						
-						parentDiffsUnion.addAll(diffsetI);
-						List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETStoTIDSETS(parentDiffsUnion, equivalenceClassIDiffsets);
-						Set<Integer> prefixTidset = formPrefixTidsetFromParentDiffsUnion(parentDiffsUnion);
-						processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
-					else if(EAvg <= DECLATthreshold){
-						
-						System.out.println("VIPER");
-						
-						parentDiffsUnion.addAll(diffsetI);
-						List<BitSetSupport> equivalenceClassIBitsets = convertDIFFSETStoBITSETS(parentDiffsUnion, equivalenceClassIDiffsets);
-						BitSetSupport prefixBitset = formPrefixBitsetFromParentDiffsUnion(parentDiffsUnion);
-						this.processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
-					}
-					else{
-						
-						System.out.println("DECLAT");
-						
-						parentDiffsUnion.addAll(diffsetI);
-						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-					}
-				}
 
-				// parentDiffsUnion.addAll(diffsetI);
-				// processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-				
+					double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
+					double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
+					
+					int ECLATthreshold = (int)(database.getN()*(1.0/4.0) );
+					int ECLATstart = 0;
+					int DECLATthreshold  = supportI - ECLATthreshold;
+					int DECLATstart  = supportI;
+
+					System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
+					System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
+					System.out.println("E(avg) : "+EAvg);
+					System.out.println("D(avg) : "+DAvg);
+
+					if(DECLATthreshold <= ECLATthreshold) {
+						double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
+						System.out.println("POINT OF DIFF : " + PointOfDiff);
+						if(EAvg > PointOfDiff){
+							
+							System.out.println("DECLAT");
+							
+							parentDiffsUnion.addAll(diffsetI);
+							processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						}
+						else {
+							
+							System.out.println("ECLAT");
+
+							parentDiffsUnion.addAll(diffsetI);
+							List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETStoTIDSETS(parentDiffsUnion, equivalenceClassIDiffsets);
+							Set<Integer> prefixTidset = formPrefixTidsetFromParentDiffsUnion(parentDiffsUnion);
+							processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+						}
+					}
+					else {
+						if(EAvg <= ECLATthreshold){
+							
+							System.out.println("ECLAT");
+							
+							parentDiffsUnion.addAll(diffsetI);
+							List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETStoTIDSETS(parentDiffsUnion, equivalenceClassIDiffsets);
+							Set<Integer> prefixTidset = formPrefixTidsetFromParentDiffsUnion(parentDiffsUnion);
+							processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+						}
+						else if(EAvg <= DECLATthreshold){
+							
+							System.out.println("VIPER");
+							
+							parentDiffsUnion.addAll(diffsetI);
+							List<BitSetSupport> equivalenceClassIBitsets = convertDIFFSETStoBITSETS(parentDiffsUnion, equivalenceClassIDiffsets);
+							BitSetSupport prefixBitset = formPrefixBitsetFromParentDiffsUnion(parentDiffsUnion);
+							this.processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+						}
+						else{
+							
+							System.out.println("DECLAT");
+							
+							parentDiffsUnion.addAll(diffsetI);
+							processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						}
+					}
+
+				}
 			}
 		}
 	}
+
 
 	// diff(PXY) = diff(PY) - DIFF(PX)	
 	Set<Integer> performDIFFERENCE(Set<Integer> diffsetI, Set<Integer> diffsetJ) {
@@ -367,6 +823,7 @@ public class algoFramework {
 
 		return diffsetIJ;
 	}
+
 
 	List<Set<Integer>> convertDIFFSETStoTIDSETS(Set<Integer> parentDiffsUnion, List<Set<Integer>> equivalenceClassIDiffsets) {
 
@@ -384,6 +841,7 @@ public class algoFramework {
 		return equivalenceClassITidsets;
 	}
 
+
 	Set<Integer> formPrefixTidsetFromParentDiffsUnion(Set<Integer> parentDiffsUnion) {
 
 		Set<Integer> prefixTidset = new HashSet<Integer>();
@@ -394,6 +852,7 @@ public class algoFramework {
 
 		return prefixTidset;
 	}
+
 
 	List<BitSetSupport> convertDIFFSETStoBITSETS(Set<Integer> parentDiffsUnion, List<Set<Integer>> equivalenceClassIDiffsets) {
 
@@ -413,6 +872,7 @@ public class algoFramework {
 		return equivalenceClassIBitsets;
 	}
 
+
 	BitSetSupport formPrefixBitsetFromParentDiffsUnion(Set<Integer> parentDiffsUnion) {
 
 		BitSetSupport prefixBitset = new BitSetSupport();
@@ -427,449 +887,13 @@ public class algoFramework {
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	private void processEquivalenceClassEclat(Set<Integer> prefixTidset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassTidsets) throws IOException {
-
-		int length = prefixLength+1;
-		
-		if(equivalenceClassItems.size() == 1) {
-			
-			int item = equivalenceClassItems.get(0);
-			Set<Integer> tidset = equivalenceClassTidsets.get(0);
-			//save(prefix, prefixLength, itemI, tidsetItemset, support);
-			return;
-		}
-
-		if(equivalenceClassItems.size() == 2) {
-			
-			int itemI = equivalenceClassItems.get(0);
-			Set<Integer> tidsetI = equivalenceClassTidsets.get(0);
-			int supportI = tidsetI.size();
-			// save(prefix, prefixLength, itemI, tidsetI, supportI);
-			
-			int itemJ = equivalenceClassItems.get(1);
-			Set<Integer> tidsetJ = equivalenceClassTidsets.get(1);
-			int supportJ = tidsetJ.size();
-			// save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
-			
-			Set<Integer> tidsetIJ = this.performINTERSECTION(tidsetI, tidsetJ);
-			int supportIJ = tidsetIJ.size();
-			
-			if(supportIJ >= minSupRelative) {
-				int newPrefixLength = prefixLength+1;
-				prefix[prefixLength] = itemI;
-				//save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
-			}
-			return;
-		}
-
-
-		for(int i=0; i< equivalenceClassItems.size(); i++) {
-			
-			int ETotal = 0;
-			int DTotal = 0;
-
-			int suffixI = equivalenceClassItems.get(i);
-			Set<Integer> tidsetI = equivalenceClassTidsets.get(i);
-			int supportI = tidsetI.size();
-			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
-			
-			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
-			List<Set<Integer>> equivalenceClassITidsets = new ArrayList<Set<Integer>>();
-
-			for(int j=i+1; j < equivalenceClassItems.size(); j++) {
-				
-				int suffixJ = equivalenceClassItems.get(j);
-				Set<Integer> tidsetJ = equivalenceClassTidsets.get(j);
-				int supportJ = tidsetJ.size();
-				
-				Set<Integer> tidsetIJ = this.performINTERSECTION(tidsetI, tidsetJ);
-				int supportIJ = tidsetIJ.size();
-					
-				if(supportIJ >= minSupRelative) {
-					ETotal += supportIJ;
-					DTotal += (supportI - supportIJ);
-					equivalenceClassISuffixItems.add(suffixJ);
-					equivalenceClassITidsets.add(tidsetIJ);
-				}
-			}
-			
-			if(equivalenceClassISuffixItems.size() > 0) {
-
-				prefix[prefixLength] = suffixI;
-				int newPrefixLength = prefixLength+1;
-				
-				// printing in TIDSETS. Unwanted peice of code ----------------------------------------------------------
-								
-				// System.out.println("\nfrequent "+(newPrefixLength+1)+"-itemset : \n");
-				// for(int p=0;p<equivalenceClassISuffixItems.size();p++) {
-				// 	for(int k=0;k<newPrefixLength;k++) {
-				// 		System.out.print(prefix[k]);
-				// 	}
-				// 	System.out.println(","+equivalenceClassISuffixItems.get(p) +" : "+equivalenceClassITidsets.get(p));
-				// }
-
-				// ------------------------------------------------------------------------------------------------------
-
-				double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
-				double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
-				
-				int ECLATthreshold = (int)(database.getN()*(1.0/4.0) );
-				int ECLATstart = 0;
-				int DECLATthreshold  = supportI - ECLATthreshold;
-				int DECLATstart  = supportI;
-
-				System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
-				System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
-				System.out.println("E(avg) : "+EAvg);
-				System.out.println("D(avg) : "+DAvg);
-
-				if(DECLATthreshold <= ECLATthreshold) {
-					double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
-					System.out.println("POINT OF DIFF : " + PointOfDiff);
-					if(EAvg > PointOfDiff){
-						
-						System.out.println("DECLAT");
-						
-						List<Set<Integer>> equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
-						Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
-						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-					}
-					else {
-						
-						System.out.println("ECLAT");
-						
-						this.processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
-				}
-				else {
-					if(EAvg <= ECLATthreshold){
-						
-						System.out.println("ECLAT");
-						
-						this.processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
-					else if(EAvg <= DECLATthreshold){
-						
-						System.out.println("VIPER");
-						
-						BitSetSupport prefixBitset = formPrefixBitsetFromPrefixTidset(tidsetI);
-						List<BitSetSupport> equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
-						this.processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
-					}
-					else{
-						
-						System.out.println("DECLAT");
-						
-						List<Set<Integer>> equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
-						Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
-						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-					}
-				}
-
-				// processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-				
-			}
-		}
+	public void printStats() {
+		long temps = endTime - startTime;
+		System.out.println(" Transactions count from database : " + database.getN());
+		System.out.println(" Total time ~ " + temps + " ms");
+		System.out.println(" Maximum memory usage : "+ MemoryLogger.getInstance().getMaxMemory() + " mb");
+		System.out.println("===================================================");
 	}
 
-
-	// diff(PXY) = diff(PY) - DIFF(PX)	
-	Set<Integer> performINTERSECTION(Set<Integer> tidsetI, Set<Integer> tidsetJ) {
-		
-		Set<Integer> tidsetIJ = new HashSet<Integer>();
-		for(Integer tid : tidsetJ) 
-			if(tidsetI.contains(tid))
-				tidsetIJ.add(tid);
-
-		return tidsetIJ;
-	}
-
-	List<Set<Integer>> convertTIDSETStoDIFFSETS(Set<Integer> prefixTidset, List<Set<Integer>> equivalenceClassITidsets) {
-		
-		List<Set<Integer>> equivalenceClassIDiffsets = new ArrayList<Set<Integer>>();
-		
-		for(Set<Integer> tidset : equivalenceClassITidsets) {
-			Set<Integer> diffset = new HashSet<Integer>();
-			for(int tid : prefixTidset)
-				if(!tidset.contains(tid))
-					diffset.add(tid);
-			equivalenceClassIDiffsets.add(diffset);
-		}
-
-		return equivalenceClassIDiffsets;
-	}
-
-	Set<Integer> formParentDiffsUnionFromPrefixTidset(Set<Integer> prefixTidset) {
-
-		Set<Integer> parentDiffsUnion = new HashSet<Integer>();
-		for(int i=0;i<database.getN();i++) {
-			if(!prefixTidset.contains(i))
-				parentDiffsUnion.add(i);
-		}
-
-		return parentDiffsUnion;
-	}
-
-	List<BitSetSupport> convertTIDSETStoBITSETS(List<Set<Integer>> equivalenceClassITidsets) {
-		
-		List<BitSetSupport> equivalenceClassIBitsets = new ArrayList<BitSetSupport>();
-
-		for(Set<Integer> tidset : equivalenceClassITidsets) {
-			BitSetSupport bs = new BitSetSupport();
-			for(Integer tid : tidset) {
-				bs.bitset.set(tid);
-				bs.support++;
-			}
-			equivalenceClassIBitsets.add(bs);
-		}
-
-		return equivalenceClassIBitsets;
-	}
-
-	BitSetSupport formPrefixBitsetFromPrefixTidset(Set<Integer> prefixTidset) {
-		
-		BitSetSupport prefixBitset = new BitSetSupport();
-
-		for(Integer tid : prefixTidset) {
-			prefixBitset.bitset.set(tid);
-			prefixBitset.support++;
-		}
-
-		return prefixBitset;
-	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-	private void processEquivalenceClassViper(BitSetSupport prefixBitset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<BitSetSupport> equivalenceClassBitsets) throws IOException {
-
-		int length = prefixLength+1;
-		
-		if(equivalenceClassItems.size() == 1) {
-			
-			int item = equivalenceClassItems.get(0);
-			BitSetSupport bitset = equivalenceClassBitsets.get(0);
-			//save(prefix, prefixLength, itemI, tidsetItemset, support);
-			return;
-		}
-
-		if(equivalenceClassItems.size() == 2) {
-			
-			int itemI = equivalenceClassItems.get(0);
-			BitSetSupport bitsetI = equivalenceClassBitsets.get(0);
-			int supportI = bitsetI.support;
-			// save(prefix, prefixLength, itemI, tidsetI, supportI);
-			
-			int itemJ = equivalenceClassItems.get(1);
-			BitSetSupport bitsetJ = equivalenceClassBitsets.get(1);
-			int supportJ = bitsetJ.support;
-			// save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
-			
-			BitSetSupport bitsetIJ = this.performAND(bitsetI, bitsetJ);
-			int supportIJ = bitsetIJ.support;
-			
-			if(supportIJ >= minSupRelative) {
-				int newPrefixLength = prefixLength+1;
-				prefix[prefixLength] = itemI;
-				//save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
-			}
-			return;
-		}
-
-		
-		for(int i=0; i< equivalenceClassItems.size(); i++) {
-			
-			int ETotal = 0;
-			int DTotal = 0;
-
-			int suffixI = equivalenceClassItems.get(i);
-			BitSetSupport bitsetI = equivalenceClassBitsets.get(i);
-			int supportI = bitsetI.support;
-			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
-			
-			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
-			List<BitSetSupport> equivalenceClassIBitsets = new ArrayList<BitSetSupport>();
-
-			for(int j=i+1; j < equivalenceClassItems.size(); j++) {
-				
-				int suffixJ = equivalenceClassItems.get(j);
-				BitSetSupport bitsetJ = equivalenceClassBitsets.get(j);
-				int supportJ = bitsetJ.support;
-				
-				BitSetSupport bitsetIJ = this.performAND(bitsetI, bitsetJ);
-				int supportIJ = bitsetIJ.support;
-					
-				if(supportIJ >= minSupRelative) {
-					ETotal += supportIJ;
-					DTotal += (supportI - supportIJ);
-					equivalenceClassISuffixItems.add(suffixJ);
-					equivalenceClassIBitsets.add(bitsetIJ);
-				}
-			}
-			
-			if(equivalenceClassISuffixItems.size() > 0) {
-
-				prefix[prefixLength] = suffixI;
-				int newPrefixLength = prefixLength+1;
-				
-				double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
-				double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
-				
-				int ECLATthreshold = (int)(database.getN()*(1.0/4.0) );
-				int ECLATstart = 0;
-				int DECLATthreshold  = supportI - ECLATthreshold;
-				int DECLATstart  = supportI;
-
-				System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
-				System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
-				System.out.println("E(avg) : "+EAvg);
-				System.out.println("D(avg) : "+DAvg);
-
-				if(DECLATthreshold <= ECLATthreshold) {
-					double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
-					System.out.println("POINT OF DIFF : " + PointOfDiff);
-					if(EAvg > PointOfDiff){
-						
-						System.out.println("DECLAT");
-					
-						List<Set<Integer>> equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
-						Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
-						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-					}
-					else {
-						
-						System.out.println("ECLAT");
-					
-						List<Set<Integer>> equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
-						Set<Integer> prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
-						processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
-				}
-				else {
-					if(EAvg <= ECLATthreshold){
-						
-						System.out.println("ECLAT");
-						
-						List<Set<Integer>> equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
-						Set<Integer> prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
-						processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
-					else if(EAvg <= DECLATthreshold){
-						
-						System.out.println("VIPER");
-						
-						this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassBitsets);
-					}
-					else{
-						
-						System.out.println("DECLAT");
-						
-						List<Set<Integer>> equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
-						Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
-						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-					}
-				}
-
-				// processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-				
-			}
-		}
-
-	}
-
-	public class BitSetSupport{
-		BitSet bitset = new BitSet();
-		int support;
-	}
-
-	BitSetSupport performAND(BitSetSupport bitsetI, BitSetSupport bitsetJ) {
-		
-		BitSetSupport bitsetIJ = new BitSetSupport();
-		bitsetIJ.bitset = (BitSet)bitsetI.bitset.clone();
-		bitsetIJ.bitset.and(bitsetJ.bitset);
-		bitsetIJ.support = bitsetIJ.bitset.cardinality();
-
-		return bitsetIJ;
-	}
-
-	List<Set<Integer>> convertBITSETStoTIDSETS(List<BitSetSupport> equivalenceClassIBitsets) {
-		
-		List<Set<Integer>> equivalenceClassITidsets = new ArrayList<Set<Integer>>();
-
-		for( BitSetSupport bitset : equivalenceClassIBitsets ) {
-			Set<Integer> tidset = new HashSet<Integer>();
-			for(int i=bitset.bitset.nextSetBit(0); i >= 0; i = bitset.bitset.nextSetBit(i+1)) {
-				tidset.add(i);
-			}
-			equivalenceClassITidsets.add(tidset);
-		}
-		return equivalenceClassITidsets;
-	}
-
-	Set<Integer> formPrefixTidsetFromPrefixBitsets(BitSetSupport prefixBitset) {
-		Set<Integer> prefixTidset = new HashSet<Integer>();
-		for(int i = prefixBitset.bitset.nextSetBit(0); i >= 0; i = prefixBitset.bitset.nextSetBit(i+1)) {
-			prefixTidset.add(i);
-		}
-		return prefixTidset;
-	}
-
-	List<Set<Integer>> convertBITSETStoDIFFSETS(BitSetSupport prefixBitset, List<BitSetSupport> equivalenceClassIBitsets) {
-		
-		List<Set<Integer>> equivalenceClassIDiffsets = new ArrayList<Set<Integer>>();
-		
-		for(BitSetSupport bitset : equivalenceClassIBitsets) {
-			Set<Integer> diffset = new HashSet<Integer>();
-			for(int i = prefixBitset.bitset.nextSetBit(0); i>= 0; i = prefixBitset.bitset.nextSetBit(i+1))
-				if(!bitset.bitset.get(i))
-					diffset.add(i);
-			equivalenceClassIDiffsets.add(diffset);
-		}
-
-		return equivalenceClassIDiffsets;
-	}
-
-	Set<Integer> formParentDiffsUnionFromPrefixBitset(BitSetSupport prefixBitset) {
-	
-		Set<Integer> parentDiffsUnion = new HashSet<Integer>();
-		for(int i=0;i<database.getN();i++) {
-			if(!prefixBitset.bitset.get(i))
-				parentDiffsUnion.add(i);
-		}
-
-		return parentDiffsUnion;
-	
-	}
 
 }

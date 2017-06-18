@@ -11,8 +11,8 @@ import code.algorithms.frequentpatterns.algoFramework;
 public class alterDBstructure {
 
 	public static void main(String args[]) throws IOException{
-		
-		String filename = "../../datasets/test2.txt";
+
+		String filename = "../../datasets/retail.txt";
 		URL url = alterDBstructure.class.getResource(filename);
 		String input = java.net.URLDecoder.decode(url.getPath(),"UTF-8");
 
@@ -28,12 +28,12 @@ public class alterDBstructure {
 		// database.printHorizontalDatabase();
 
 		// printing the horizontal database.
-		database.printVerticalDatabase();
+		// database.printVerticalDatabase();
 
 
 		// running the framework
-		algoFramework algo = new algoFramework();
-		algo.runAlgo(null, database, 0.01);
+		algoFramework algo = new algoFramework(Integer.parseInt(args[0]));
+		algo.runAlgo(null, database, 0.005);
 
 	}
 

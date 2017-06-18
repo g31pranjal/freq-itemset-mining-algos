@@ -265,7 +265,7 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 			// for each item in that transaction
 			
 			// For each item
-			for (Integer item : database.getTransactions().get(i)) {
+			for (Integer item : database.getHorizontalDB().get(i)) {
 				// Get the current tidset of that item
 				BitSetSupport tids = mapItemTIDS.get(item);
 				// If none, then we create one
