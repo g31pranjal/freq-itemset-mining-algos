@@ -31,15 +31,18 @@ public class algoFramework {
 	protected long startTime;
 	protected long endTime;
 	protected int algo;
+	protected int[] rec;
 	// 1 : ECLAT, 2 : VIPER, 3 : DECLAT, 0 : VARIABLE
 
 	// the default route of algo is 0 i.e. VARIABLE
 	public algoFramework() {
 		this.algo = 0;
+		rec = new int[4];
 	}
 
 	public algoFramework(int algo) {
 		this.algo = algo;
+		rec = new int[4];
 	}
 
 	public void runAlgo(String outputFile, TransactionDatabase database, double minsupp) throws IOException {
@@ -51,15 +54,8 @@ public class algoFramework {
 		this.minSupRelative = (int) Math.ceil(minsupp * database.getN());
 		this.verticalDB = database.getVerticalDB();
 
-		if(outputFile == null) {
-			writer = null;
-			frequentItemsets =  new Itemsets("FREQUENT ITEMSETS");
-		}
-		else {
-			frequentItemsets = null;
-			writer = new BufferedWriter(new FileWriter(outputFile));
-		}
-
+		writer = new BufferedWriter(new FileWriter(outputFile));
+		
 		itemsetCount = 0;
 		
 		List<Integer> oneFrequentItems = new ArrayList<Integer>();
@@ -128,6 +124,7 @@ public class algoFramework {
 
 		MemoryLogger.getInstance().checkMemory();
 		endTime = System.currentTimeMillis();
+		writer.close();
 
 		this.printStats();
 	}
@@ -163,7 +160,7 @@ public class algoFramework {
 		for(Integer item : equivalenceClassItems) {
 			
 			BitSetSupport bs = new BitSetSupport();
-			for(Integer i : equivalenceClassItems) {
+			for(Integer i : verticalDB.get(item)) {
 				bs.bitset.set(i);
 				bs.support++;
 			}
@@ -199,6 +196,7 @@ public class algoFramework {
 				}
 			}
 			equivalenceClassDiffsets.add(diffset); 
+
 		} 
 
 		// System.out.println("\nfrequent 1-itemsets (using DIFFSET).\n");
@@ -214,13 +212,16 @@ public class algoFramework {
 
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> ECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
+		rec[1]++;
+
 		int length = prefixLength+1;
 		
 		if(equivalenceClassItems.size() == 1) {
 			
 			int item = equivalenceClassItems.get(0);
 			Set<Integer> tidset = equivalenceClassTidsets.get(0);
-			//save(prefix, prefixLength, itemI, tidsetItemset, support);
+			int support = tidset.size();
+			this.save(prefix, prefixLength, item, support);
 			return;
 		}
 
@@ -229,12 +230,12 @@ public class algoFramework {
 			int itemI = equivalenceClassItems.get(0);
 			Set<Integer> tidsetI = equivalenceClassTidsets.get(0);
 			int supportI = tidsetI.size();
-			// save(prefix, prefixLength, itemI, tidsetI, supportI);
+			this.save(prefix, prefixLength, itemI, supportI);
 			
 			int itemJ = equivalenceClassItems.get(1);
 			Set<Integer> tidsetJ = equivalenceClassTidsets.get(1);
 			int supportJ = tidsetJ.size();
-			// save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
+			this.save(prefix, prefixLength, itemJ, supportJ);
 			
 			Set<Integer> tidsetIJ = this.performINTERSECTION(tidsetI, tidsetJ);
 			int supportIJ = tidsetIJ.size();
@@ -242,7 +243,7 @@ public class algoFramework {
 			if(supportIJ >= minSupRelative) {
 				int newPrefixLength = prefixLength+1;
 				prefix[prefixLength] = itemI;
-				//save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
+				this.save(prefix, newPrefixLength, itemJ, supportIJ);
 			}
 			return;
 		}
@@ -253,23 +254,29 @@ public class algoFramework {
 			int ETotal = 0;
 			int DTotal = 0;
 
+			System.out.println("CP1");
+
 			int suffixI = equivalenceClassItems.get(i);
 			Set<Integer> tidsetI = equivalenceClassTidsets.get(i);
 			int supportI = tidsetI.size();
-			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
+			this.save(prefix, prefixLength, suffixI, supportI);
 			
 			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
 			List<Set<Integer>> equivalenceClassITidsets = new ArrayList<Set<Integer>>();
 
 			for(int j=i+1; j < equivalenceClassItems.size(); j++) {
 				
+				// System.out.println(".....CP2");
+
 				int suffixJ = equivalenceClassItems.get(j);
 				Set<Integer> tidsetJ = equivalenceClassTidsets.get(j);
 				int supportJ = tidsetJ.size();
 				
 				Set<Integer> tidsetIJ = this.performINTERSECTION(tidsetI, tidsetJ);
 				int supportIJ = tidsetIJ.size();
-					
+				
+				// System.out.println(".....CP3");
+
 				if(supportIJ >= minSupRelative) {
 					ETotal += supportIJ;
 					DTotal += (supportI - supportIJ);
@@ -296,7 +303,7 @@ public class algoFramework {
 				// ------------------------------------------------------------------------------------------------------
 
 				if(algo == 1) {
-
+					
 					this.processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 
 				}
@@ -310,17 +317,17 @@ public class algoFramework {
 					int DECLATthreshold  = supportI - ECLATthreshold;
 					int DECLATstart  = supportI;
 
-					System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
-					System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
-					System.out.println("E(avg) : "+EAvg);
-					System.out.println("D(avg) : "+DAvg);
+					// System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
+					// System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
+					// System.out.println("E(avg) : "+EAvg);
+					// System.out.println("D(avg) : "+DAvg);
 
 					if(DECLATthreshold <= ECLATthreshold) {
 						double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
-						System.out.println("POINT OF DIFF : " + PointOfDiff);
+						// System.out.println("POINT OF DIFF : " + PointOfDiff);
 						if(EAvg > PointOfDiff){
 							
-							System.out.println("DECLAT");
+							// System.out.println("DECLAT");
 							
 							List<Set<Integer>> equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
 							Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
@@ -328,7 +335,7 @@ public class algoFramework {
 						}
 						else {
 							
-							System.out.println("ECLAT");
+							// System.out.println("ECLAT");
 							
 							this.processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 						}
@@ -336,13 +343,13 @@ public class algoFramework {
 					else {
 						if(EAvg <= ECLATthreshold){
 							
-							System.out.println("ECLAT");
+							// System.out.println("ECLAT");
 							
 							this.processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 						}
 						else if(EAvg <= DECLATthreshold){
 							
-							System.out.println("VIPER");
+							// System.out.println("VIPER");
 							
 							BitSetSupport prefixBitset = formPrefixBitsetFromPrefixTidset(tidsetI);
 							List<BitSetSupport> equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
@@ -350,7 +357,7 @@ public class algoFramework {
 						}
 						else{
 							
-							System.out.println("DECLAT");
+							// System.out.println("DECLAT");
 							
 							List<Set<Integer>> equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
 							Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
@@ -364,14 +371,20 @@ public class algoFramework {
 	}
 
 
-	// diff(PXY) = diff(PY) - DIFF(PX)	
 	Set<Integer> performINTERSECTION(Set<Integer> tidsetI, Set<Integer> tidsetJ) {
 		
 		Set<Integer> tidsetIJ = new HashSet<Integer>();
-		for(Integer tid : tidsetJ) 
-			if(tidsetI.contains(tid))
-				tidsetIJ.add(tid);
-
+		if(tidsetJ.size() < tidsetI.size()){
+			for(Integer tid : tidsetJ) 
+				if(tidsetI.contains(tid))
+					tidsetIJ.add(tid);
+		}
+		else {
+			for(Integer tid : tidsetI) 
+				if(tidsetJ.contains(tid))
+					tidsetIJ.add(tid);
+		}
+	
 		return tidsetIJ;
 	}
 
@@ -438,13 +451,15 @@ public class algoFramework {
 
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
+		rec[2]++;
+		
 		int length = prefixLength+1;
 		
 		if(equivalenceClassItems.size() == 1) {
 			
 			int item = equivalenceClassItems.get(0);
 			BitSetSupport bitset = equivalenceClassBitsets.get(0);
-			//save(prefix, prefixLength, itemI, tidsetItemset, support);
+			save(prefix, prefixLength, item, bitset.support);
 			return;
 		}
 
@@ -453,12 +468,12 @@ public class algoFramework {
 			int itemI = equivalenceClassItems.get(0);
 			BitSetSupport bitsetI = equivalenceClassBitsets.get(0);
 			int supportI = bitsetI.support;
-			// save(prefix, prefixLength, itemI, tidsetI, supportI);
+			save(prefix, prefixLength, itemI, supportI);
 			
 			int itemJ = equivalenceClassItems.get(1);
 			BitSetSupport bitsetJ = equivalenceClassBitsets.get(1);
 			int supportJ = bitsetJ.support;
-			// save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
+			save(prefix, prefixLength, itemJ, supportJ);
 			
 			BitSetSupport bitsetIJ = this.performAND(bitsetI, bitsetJ);
 			int supportIJ = bitsetIJ.support;
@@ -466,7 +481,7 @@ public class algoFramework {
 			if(supportIJ >= minSupRelative) {
 				int newPrefixLength = prefixLength+1;
 				prefix[prefixLength] = itemI;
-				//save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
+				save(prefix, newPrefixLength, itemJ, supportIJ);
 			}
 			return;
 		}
@@ -480,7 +495,7 @@ public class algoFramework {
 			int suffixI = equivalenceClassItems.get(i);
 			BitSetSupport bitsetI = equivalenceClassBitsets.get(i);
 			int supportI = bitsetI.support;
-			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
+			this.save(prefix, prefixLength, suffixI, supportI);
 			
 			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
 			List<BitSetSupport> equivalenceClassIBitsets = new ArrayList<BitSetSupport>();
@@ -493,7 +508,7 @@ public class algoFramework {
 				
 				BitSetSupport bitsetIJ = this.performAND(bitsetI, bitsetJ);
 				int supportIJ = bitsetIJ.support;
-					
+
 				if(supportIJ >= minSupRelative) {
 					ETotal += supportIJ;
 					DTotal += (supportI - supportIJ);
@@ -509,7 +524,7 @@ public class algoFramework {
 				
 				if(algo == 2) {
 
-					this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassBitsets);
+					this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
 
 				}
 				else {
@@ -522,17 +537,17 @@ public class algoFramework {
 					int DECLATthreshold  = supportI - ECLATthreshold;
 					int DECLATstart  = supportI;
 
-					System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
-					System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
-					System.out.println("E(avg) : "+EAvg);
-					System.out.println("D(avg) : "+DAvg);
+					// System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
+					// System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
+					// System.out.println("E(avg) : "+EAvg);
+					// System.out.println("D(avg) : "+DAvg);
 
 					if(DECLATthreshold <= ECLATthreshold) {
 						double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
-						System.out.println("POINT OF DIFF : " + PointOfDiff);
+						// System.out.println("POINT OF DIFF : " + PointOfDiff);
 						if(EAvg > PointOfDiff){
 							
-							System.out.println("DECLAT");
+							// System.out.println("DECLAT");
 						
 							List<Set<Integer>> equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
 							Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
@@ -540,7 +555,7 @@ public class algoFramework {
 						}
 						else {
 							
-							System.out.println("ECLAT");
+							// System.out.println("ECLAT");
 						
 							List<Set<Integer>> equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
 							Set<Integer> prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
@@ -550,7 +565,7 @@ public class algoFramework {
 					else {
 						if(EAvg <= ECLATthreshold){
 							
-							System.out.println("ECLAT");
+							// System.out.println("ECLAT");
 							
 							List<Set<Integer>> equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
 							Set<Integer> prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
@@ -558,13 +573,13 @@ public class algoFramework {
 						}
 						else if(EAvg <= DECLATthreshold){
 							
-							System.out.println("VIPER");
+							// System.out.println("VIPER");
 							
 							this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassBitsets);
 						}
 						else{
 							
-							System.out.println("DECLAT");
+							// System.out.println("DECLAT");
 							
 							List<Set<Integer>> equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
 							Set<Integer> parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
@@ -652,13 +667,16 @@ public class algoFramework {
 
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> DECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 
+		rec[3]++;
+		
 		int length = prefixLength+1;
 		
 		if(equivalenceClassItems.size() == 1) {
 			
 			int item = equivalenceClassItems.get(0);
 			Set<Integer> diffset = equivalenceClassDiffsets.get(0);
-			//save(prefix, prefixLength, itemI, tidsetItemset, support);
+			int support = prefixSupport = diffset.size();
+			save(prefix, prefixLength, item, support);
 			return;
 		}
 
@@ -667,12 +685,12 @@ public class algoFramework {
 			int itemI = equivalenceClassItems.get(0);
 			Set<Integer> diffsetI = equivalenceClassDiffsets.get(0);
 			int supportI = prefixSupport - diffsetI.size();
-			// save(prefix, prefixLength, itemI, tidsetI, supportI);
+			save(prefix, prefixLength, itemI, supportI);
 			
 			int itemJ = equivalenceClassItems.get(1);
 			Set<Integer> diffsetJ = equivalenceClassDiffsets.get(1);
 			int supportJ = prefixSupport - diffsetJ.size();
-			// save(prefix, prefixLength, itemJ, tidsetJ, supportJ);
+			save(prefix, prefixLength, itemJ, supportJ);
 			
 			Set<Integer> diffsetIJ = this.performDIFFERENCE(diffsetI, diffsetJ);
 			int supportIJ = supportI - diffsetIJ.size();
@@ -680,12 +698,11 @@ public class algoFramework {
 			if(supportIJ >= minSupRelative) {
 				int newPrefixLength = prefixLength+1;
 				prefix[prefixLength] = itemI;
-				//save(prefix, newPrefixLength, itemJ, tidsetIJ, supportIJ);
+				save(prefix, newPrefixLength, itemJ, supportIJ);
 			
 			}
 			return;
 		}
-
 
 		for(int i=0; i< equivalenceClassItems.size(); i++) {
 			
@@ -695,7 +712,7 @@ public class algoFramework {
 			int suffixI = equivalenceClassItems.get(i);
 			Set<Integer> diffsetI = equivalenceClassDiffsets.get(i);
 			int supportI = prefixSupport - diffsetI.size();
-			// save(prefix, prefixLength, suffixI, tidsetI, supportI);
+			save(prefix, prefixLength, suffixI, supportI);
 			
 			List<Integer> equivalenceClassISuffixItems= new ArrayList<Integer>();
 			List<Set<Integer>> equivalenceClassIDiffsets = new ArrayList<Set<Integer>>();
@@ -754,24 +771,24 @@ public class algoFramework {
 					int DECLATthreshold  = supportI - ECLATthreshold;
 					int DECLATstart  = supportI;
 
-					System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
-					System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
-					System.out.println("E(avg) : "+EAvg);
-					System.out.println("D(avg) : "+DAvg);
+					// System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
+					// System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
+					// System.out.println("E(avg) : "+EAvg);
+					// System.out.println("D(avg) : "+DAvg);
 
 					if(DECLATthreshold <= ECLATthreshold) {
 						double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
-						System.out.println("POINT OF DIFF : " + PointOfDiff);
+						// System.out.println("POINT OF DIFF : " + PointOfDiff);
 						if(EAvg > PointOfDiff){
 							
-							System.out.println("DECLAT");
+							// System.out.println("DECLAT");
 							
 							parentDiffsUnion.addAll(diffsetI);
 							processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 						}
 						else {
 							
-							System.out.println("ECLAT");
+							// System.out.println("ECLAT");
 
 							parentDiffsUnion.addAll(diffsetI);
 							List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETStoTIDSETS(parentDiffsUnion, equivalenceClassIDiffsets);
@@ -782,7 +799,7 @@ public class algoFramework {
 					else {
 						if(EAvg <= ECLATthreshold){
 							
-							System.out.println("ECLAT");
+							// System.out.println("ECLAT");
 							
 							parentDiffsUnion.addAll(diffsetI);
 							List<Set<Integer>> equivalenceClassITidsets = convertDIFFSETStoTIDSETS(parentDiffsUnion, equivalenceClassIDiffsets);
@@ -791,7 +808,7 @@ public class algoFramework {
 						}
 						else if(EAvg <= DECLATthreshold){
 							
-							System.out.println("VIPER");
+							// System.out.println("VIPER");
 							
 							parentDiffsUnion.addAll(diffsetI);
 							List<BitSetSupport> equivalenceClassIBitsets = convertDIFFSETStoBITSETS(parentDiffsUnion, equivalenceClassIDiffsets);
@@ -800,7 +817,7 @@ public class algoFramework {
 						}
 						else{
 							
-							System.out.println("DECLAT");
+							// System.out.println("DECLAT");
 							
 							parentDiffsUnion.addAll(diffsetI);
 							processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
@@ -892,8 +909,28 @@ public class algoFramework {
 		System.out.println(" Transactions count from database : " + database.getN());
 		System.out.println(" Total time ~ " + temps + " ms");
 		System.out.println(" Maximum memory usage : "+ MemoryLogger.getInstance().getMaxMemory() + " mb");
+		System.out.println(" Usage : ECLAT " +rec[1]+" VIPER "+rec[2]+" DECLAT "+rec[3]);
 		System.out.println("===================================================");
 	}
 
+	private void save(int[] prefix, int prefixLength, int suffixItem, int support) throws IOException {
+		
+		itemsetCount++;
+	
+		StringBuilder buffer = new StringBuilder();
+		for(int i=0; i < prefixLength; i++) {
+			int item = prefix[i];
+			buffer.append(item);
+			buffer.append(" ");
+		}
+		buffer.append(suffixItem);
+		
+		buffer.append(" #SUP: ");
+		buffer.append(support);
+		
+		writer.write(buffer.toString());
+		writer.newLine();
+
+	}
 
 }

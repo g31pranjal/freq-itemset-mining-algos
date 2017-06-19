@@ -21,7 +21,7 @@ public class MainTestEclat_saveToFile {
 		String output = ".//output.txt";  // the path for saving the frequent itemsets found
 		
 		// minimum support
-		double minsup = 0.01; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.001; // means a minsup of 2 transaction (we used a relative support)
 
 		// Loading the transaction database
 		TransactionDatabase database = new TransactionDatabase();
@@ -36,7 +36,7 @@ public class MainTestEclat_saveToFile {
 		AlgoEclat algo = new AlgoEclat();
 
 //		// Set this variable to true to show the transaction identifiers where patterns appear in the output file
-		algo.setShowTransactionIdentifiers(true);
+		algo.setShowTransactionIdentifiers(false);
 		
 		algo.runAlgorithm(output, database, minsup);
 		// if you change use "true" in the line above, ECLAT will use
