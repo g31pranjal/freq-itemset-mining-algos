@@ -20,13 +20,17 @@ public class UItem{
     }
 
     public boolean equals(Object object) {
-        UItem item = (UItem) object;
-        // if the same id, then true
-        if ((item.getId() == this.getId())) {
-            return true;
+        if (object instanceof UItem){
+            UItem item = (UItem) object;
+            // if the same id, then true
+            if ((item.getId() == this.getId())) {
+                return true;
+            }
+            // if not the same id, then false
+            return false;
+        }else {
+            return false;
         }
-        // if not the same id, then false
-        return false;
     }
 
     /**

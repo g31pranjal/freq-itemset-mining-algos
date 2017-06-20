@@ -14,116 +14,146 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 
 public class UncertainTransactionDatabase{
-    private final Set<Integer> items = new HashSet<Integer>();
-    private final List<List<Integer>> horizontalDB = new ArrayList<List<Integer>>();
-    private final Map<Integer, Set<Integer>> verticalDB = new HashMap<Integer, Set<Integer>>();
+    // this is the set of items in the database
+    private final Set<Integer> allItems = new HashSet<Integer>();
+    // this is the list of transactions in the database
+    private final List<UncertainItemset> transactions = new ArrayList<UncertainItemset>();
+    private final Map<Integer, Set<TidAndProb>> verticalDB = new HashMap<Integer, Set<TidAndProb>>();
 
-
-
+    /**
+     * Load a transaction database from a file.
+     * @param path the path of the file
+     * @throws IOException exception if error while reading the file.
+     */
     public void loadFile(String path) throws IOException {
-
         String thisLine;
         BufferedReader myInput = null;
-
-        // opening the line and reading each line
         try {
             FileInputStream fin = new FileInputStream(new File(path));
             myInput = new BufferedReader(new InputStreamReader(fin));
+            // for each transaction (line) in the input file
             while ((thisLine = myInput.readLine()) != null) {
-                if (thisLine.isEmpty() == false &&
-                        thisLine.charAt(0) != '#' && thisLine.charAt(0) != '%' && thisLine.charAt(0) != '@') {
-                    addTransaction(thisLine.split(" "));
+                // if the line is  a comment, is  empty or is a
+                // kind of metadata
+                if (thisLine.isEmpty() == true ||
+                        thisLine.charAt(0) == '#' || thisLine.charAt(0) == '%'
+                        || thisLine.charAt(0) == '@') {
+                    continue;
                 }
+
+                // process the transaction
+                processTransactions(thisLine.split(" "));
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
+            // catch exceptions
             e.printStackTrace();
-        }
-        finally {
+        } finally {
             if (myInput != null) {
+                // close the file
                 myInput.close();
             }
         }
 
-        // convert to vertical datastructure.
 
-        for (int i = 0; i < this.getN(); i++) {
-            for (Integer item : this.getHorizontalDB().get(i)) {
-                Set<Integer> set = verticalDB.get(item);
+        // convert it to vertical DB
+        for (int i = 0; i < transactions.size(); i++) {
+            //get the current transaction
+            UncertainItemset currTransaction = transactions.get(i);
+            // for each item in current transaction
+            System.out.print("Current Transaction: "+(i)+" number of items is: "+ currTransaction.size()+" Items are: ");
+            for (int j = 0; j < currTransaction.size(); j++ ) {
+                Integer item = currTransaction.get(j).getId();
+                System.out.print(item+" /");
+                Set<TidAndProb> set = verticalDB.get(item);
                 if (set == null) {
-                    set = new HashSet<Integer>();
+                    set = new HashSet<TidAndProb>();
                     verticalDB.put(item, set);
                 }
-                set.add(i);
+                TidAndProb newPair = new TidAndProb(i+1, currTransaction.get(j).getProbability());
+                set.add(newPair);
             }
+            System.out.println();
         }
-
+        System.out.println("testing..........................");
+        System.out.println(verticalDB.size());
+//        for (int i = 0; i < verticalDB.size(); i++) {
+//            System.out.print("Item#: "+i+" ");
+//            System.out.println(verticalDB.get(i));
+//        }
+        for (Map.Entry<Integer, Set<TidAndProb>> entry:verticalDB.entrySet()) {
+            Integer itemID = entry.getKey();
+            System.out.print("Item#: "+itemID+" ");
+            System.out.println(entry.getValue());
+        }
     }
 
-    private void addTransaction(String itemsString[]) {
+    private void processTransactions(String itemsString[]) {
+        // We assume that there is no empty line
 
-        List<Integer> itemset = new ArrayList<Integer>();
+        // create a new itemset oject representing the transaction
+        UncertainItemset transaction = new UncertainItemset();
+        // for each item
+        for (String itemString : itemsString) {
+            // get the position of left parenthesis and right parenthesis
+            int indexOfLeftParanthesis = itemString.indexOf('(');
+            int indexOfRightParanthesis = itemString.indexOf(')');
+            // get the item ID
+            int itemID = Integer.parseInt(itemString.substring(0,
+                    indexOfLeftParanthesis));
+            // get the existential probability
+            double value = Double.parseDouble(itemString.substring(
+                    indexOfLeftParanthesis + 1, indexOfRightParanthesis));
 
-        for (String attribute : itemsString) {
-            int item = Integer.parseInt(attribute);
-            itemset.add(item);
-            items.add(item);
+            // create an item
+            UItem item = new UItem(itemID, value);
+            // add it to the transaction
+            transaction.addItem(item);
+            // add it to the set of all items
+            allItems.add(item.getId());
         }
-        horizontalDB.add(itemset);
+        // add the itemset to the transaction to the in-memory database
+        transactions.add(transaction);
     }
 
-
-    // prints the horizontal database
-    public void printHorizontalDatabase() {
-        System.out.println("\n... Transaction Database :: (horizontal)\n");
+    /**verticalDB
+     * Print this database to System.out.
+     */
+    public void printDatabase() {
+        System.out
+                .println("===================  UNCERTAIN DATABASE ===================");
         int count = 0;
-
-        for (List<Integer> itemset : horizontalDB) {
-            System.out.println((count++) + " : " + itemset);
+        // for each transaction
+        for (UncertainItemset itemset : transactions) {
+            // print the transaction
+            System.out.print("0" + count + ":  ");
+            itemset.print();
+            System.out.println("");
+            count++;
         }
-        System.out.println("# transactions (n) " + this.getN() + ", # items (m) : " + this.getM());
     }
 
-
-    // prints the vertical database
-    public void printVerticalDatabase() {
-        System.out.println("\n... Transaction Database :: (vertical)\n");
-        for(Entry<Integer, Set<Integer>> entry : verticalDB.entrySet()) {
-            System.out.println(entry.getKey() + " : " + entry.getValue());
-        }
-        System.out.println("# transactions (n) " + this.getN() + ", # items (m) : " + this.getM());
-    }
-
-
-    // number of horizontalDB (n)
-    public int getN() {
-        return horizontalDB.size();
-    }
-
+    /**
+     * Get the number of transactions.
+     * @return a int
+     */
     public int size() {
-        return horizontalDB.size();
+        return transactions.size();
     }
 
-    // list of horizontalDB
-    public List<List<Integer>> getHorizontalDB() {
-        return horizontalDB;
+    /**
+     * Get the list of transactions.
+     * @return the list of Transactions.
+     */
+    public List<UncertainItemset> getTransactions() {
+        return transactions;
     }
 
-
-    // list of verticalDB
-    public Map<Integer, Set<Integer>> getVerticalDB() {
-        return verticalDB;
+    /**
+     * Get the set of items in this database.
+     * @return a Set of Integers
+     */
+    public Set<Integer> getAllItems() {
+        return allItems;
     }
 
-
-    // list of all the items
-    public Set<Integer> getItems() {
-        return items;
-    }
-
-
-    // number of items (m)
-    public int getM() {
-        return items.size();
-    }
 }

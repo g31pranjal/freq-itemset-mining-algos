@@ -6,11 +6,12 @@ import java.util.List;
 
 
 public class UncertainItemset{
-    private List<UItem> items = new ArrayList<UItem>();
-    private double expectedsupport = 0;
+    private List<UItem> items;
+    private double expectedsupport;
 
     public UncertainItemset(){
-
+        items = new ArrayList<UItem>();
+        expectedsupport = 0;
     }
 
     public double getExpectedSupport() {
@@ -77,7 +78,7 @@ public class UncertainItemset{
         return items.contains(item);
     }
 
-    public boolean isLexicallySmallerthan(UItem itemset2){
+    public boolean isLexicallySmallerthan(UncertainItemset itemset2){
         // for each item in this itemset
         for(int i=0; i< items.size(); i++){
             // if it is larger than the item at the same position in itemset2
@@ -95,7 +96,7 @@ public class UncertainItemset{
         return true;
     }
 
-    public boolean isEqualTo(UItem itemset2){
+    public boolean isEqualTo(UncertainItemset itemset2){
         // if not the same size, they can't be equal!
         if(items.size() != itemset2.items.size()){
             return false;
