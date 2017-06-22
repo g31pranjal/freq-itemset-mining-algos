@@ -1,2 +1,2 @@
-javac -classpath ~/dblabs/umdblab/ alterDBstructure.java 
-java -classpath ~/dblabs/umdblab/ code.test.alterDBstructure $1
+javac -classpath ~/Desktop/repo/umdblab/ alterDBstructure.java
+java -classpath ~/Desktop/repo/umdblab/ code.test.alterDBstructure $1
