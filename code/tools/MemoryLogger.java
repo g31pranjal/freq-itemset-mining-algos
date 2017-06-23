@@ -20,8 +20,7 @@ public class MemoryLogger {
 	}
 	
 	public void checkMemory() {
-		double currentMemory = (Runtime.getRuntime().totalMemory() -  Runtime.getRuntime().freeMemory())
-				/ 1024d / 1024d;
+		double currentMemory = (Runtime.getRuntime().totalMemory() -  Runtime.getRuntime().freeMemory());
 		if (currentMemory > maxMemory) {
 			maxMemory = currentMemory;
 		}

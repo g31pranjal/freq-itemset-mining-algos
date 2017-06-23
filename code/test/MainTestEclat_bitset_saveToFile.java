@@ -19,7 +19,7 @@ public class MainTestEclat_bitset_saveToFile {
 		String input = fileToPath("../../datasets/retail.txt");  // the database
 		String output = ".//output.txt";  // the path for saving the frequent itemsets found
 		
-		double minsup = 0.005; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.001; // means a minsup of 2 transaction (we used a relative support)
 		
 		TransactionDatabase database = new TransactionDatabase();
 		try {

@@ -358,6 +358,8 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 	private void processEquivalenceClass(int[] prefix, int prefixLength, List<Integer> equivalenceClassItems,
 			List<BitSetSupport> equivalenceClassTidsets) throws IOException {
 		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
 		// If there is only on itemset in equivalence class
 		if(equivalenceClassItems.size() == 1) {
 			int itemI = equivalenceClassItems.get(0);
