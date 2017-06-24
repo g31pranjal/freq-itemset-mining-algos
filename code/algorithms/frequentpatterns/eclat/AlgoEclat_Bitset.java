@@ -265,7 +265,7 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 			// for each item in that transaction
 			
 			// For each item
-			for (Integer item : database.getTransactions().get(i)) {
+			for (Integer item : database.getHorizontalDB().get(i)) {
 				// Get the current tidset of that item
 				BitSetSupport tids = mapItemTIDS.get(item);
 				// If none, then we create one
@@ -358,6 +358,8 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 	private void processEquivalenceClass(int[] prefix, int prefixLength, List<Integer> equivalenceClassItems,
 			List<BitSetSupport> equivalenceClassTidsets) throws IOException {
 		
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
 		// If there is only on itemset in equivalence class
 		if(equivalenceClassItems.size() == 1) {
 			int itemI = equivalenceClassItems.get(0);

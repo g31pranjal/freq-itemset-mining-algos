@@ -21,7 +21,7 @@ public class MainTestDEclat_saveToFile {
 		String output = ".//output.txt";  // the path for saving the frequent itemsets found
 		
 		// minimum support
-		double minsup = 0.005; // means a minsup of 2 transaction (we used a relative support)
+		double minsup = 0.001; // means a minsup of 2 transaction (we used a relative support)
 
 		// Loading the transaction database
 		TransactionDatabase database = new TransactionDatabase();

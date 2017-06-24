@@ -1,4 +1,20 @@
 package code.algorithms.frequentpatterns.eclat;
+/* This file is copyright (c) 2008-2013 Philippe Fournier-Viger
+* 
+* This file is part of the SPMF DATA MINING SOFTWARE
+* (http://www.philippe-fournier-viger.com/spmf).
+* 
+* SPMF is free software: you can redistribute it and/or modify it under the
+* terms of the GNU General Public License as published by the Free Software
+* Foundation, either version 3 of the License, or (at your option) any later
+* version.
+* 
+* SPMF is distributed in the hope that it will be useful, but WITHOUT ANY
+* WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+* A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+* You should have received a copy of the GNU General Public License along with
+* SPMF. If not, see <http://www.gnu.org/licenses/>.
+*/
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -20,61 +36,139 @@ import code.patterns.itemset_array_integers_with_count.Itemset;
 import code.patterns.itemset_array_integers_with_count.Itemsets;
 import code.tools.MemoryLogger;
  
+
+/**
+ * This is a recent version of the ECLAT algorithm. It uses sets of integers to represent tidsets.
+ *  
+ * Eclat was proposed by ZAKI (2000).
+ * <br/><br/>
+ * 
+ * See this article for details about ECLAT:
+ * <br/><br/>
+ * 
+ * Zaki, M. J. (2000). Scalable algorithms for association mining. Knowledge and Data Engineering, IEEE Transactions on, 12(3), 372-390.
+ * <br/><br/>
+ * 
+ * This  version  saves the result to a file
+ * or keep it into memory if no output path is provided
+ * by the user to the runAlgorithm method().
+ * 
+ * @see TriangularMatrix
+ * @see TransactionDatabase
+ * @see Itemset
+ * @see Itemsets
+ * @author Philippe Fournier-Viger
+ */
 public class AlgoEclat {
 
+	/** relative minimum support **/
 	private int minsupRelative;  
+	
+	/** the transaction database **/
 	protected TransactionDatabase database; 
+
+	/**  start time of the last execution */
 	protected long startTimestamp;
+	/** end  time of the last execution */
 	protected long endTime; 
+	
+	/** The  patterns that are found 
+	(if the user want to keep them into memory) */
 	protected Itemsets frequentItemsets;
+	
+	/** object to write the output file */
 	BufferedWriter writer = null; 
+	
+	/** the number of patterns found */
 	protected int itemsetCount; 
+		
+	/**  buffer for storing the current itemset that is mined when performing mining
+	 the idea is to always reuse the same buffer to reduce memory usage. */
 	final int BUFFERS_SIZE = 2000;
+	
+	/** size of the buffer*/
 	private int[] itemsetBuffer = null;
+	
+	/** if true, transaction identifiers of each pattern will be shown*/
 	boolean showTransactionIdentifiers = false;
 
+	private int rec = 0;
 
-	public AlgoEclat() {	
-		;
+	/**
+	 * Default constructor
+	 */
+	public AlgoEclat() {
+		
 	}
+
+
+	/**
+	 * Run the algorithm.
+	 * @param database a transaction database
+	 * @param output an output file path for writing the result or if null the result is saved into memory and returned
+	 * @param minsupp the minimum support
+	 * @return the result
+	 * @throws IOException exception if error while writing the file.
+	 */
 
 	public Itemsets runAlgorithm(String output, TransactionDatabase database, double minsupp) throws IOException {
 		
 		MemoryLogger.getInstance().reset();
+
+		// initialize the buffer for storing the current itemset
 		itemsetBuffer = new int[BUFFERS_SIZE];
-
-		this.database = database;
-
-		this.minsupRelative = (int) Math.ceil(minsupp * database.size());
 		
-		if(output == null) {
+		// if the user want to keep the result into memory
+		if(output == null){
 			writer = null;
 			frequentItemsets =  new Itemsets("FREQUENT ITEMSETS");
-	    } 
-	    else {
+	    }else{ // if the user want to save the result to a file
 	    	frequentItemsets = null;
 			writer = new BufferedWriter(new FileWriter(output)); 
 		}
 
+		// reset the number of itemset found to 0
 		itemsetCount =0;
-		// startTimestamp = System.currentTimeMillis();
+
+		this.database = database;
 		
+		// record the start time
+		startTimestamp = System.currentTimeMillis();
+		
+		// convert from an absolute minsup to a relative minsup by multiplying
+		// by the database size
+		this.minsupRelative = (int) Math.ceil(minsupp * database.size());
+
+		// (1) First database pass : calculate tidsets of each item.
+		// This map will contain the tidset of each item
+		// Key: item   Value :  tidset
 		final Map<Integer, Set<Integer>> mapItemCount = new HashMap<Integer, Set<Integer>>();
 		
+		// for each transaction
 		int maxItemId = calculateSupportSingleItems(database, mapItemCount);
 
+
+		// (2) create the list of single items
 		List<Integer> frequentItems = new ArrayList<Integer>();
 		
+		// for each item
 		for(Entry<Integer, Set<Integer>> entry : mapItemCount.entrySet()) {
+			// get the tidset of that item
 			Set<Integer> tidset = entry.getValue();
+			// get the support of that item (the cardinality of the tidset)
 			int support = tidset.size();
 			int item = entry.getKey();
+			// if the item is frequent
 			if(support >= minsupRelative) {
+				// add the item to the list of frequent single items
 				frequentItems.add(item);
+				// output the item
 				saveSingleItem(item, tidset, tidset.size());
 			}
 		}
 		
+		// Sort the list of items by the total order of increasing support.
+		// This total order is suggested in the article by Zaki.
 		Collections.sort(frequentItems, new Comparator<Integer>() {
 			@Override
 			public int compare(Integer arg0, Integer arg1) {
@@ -86,6 +180,9 @@ public class AlgoEclat {
 		
 		// For each frequent item I according to the total order
 		for(int i=0; i < frequentItems.size(); i++) {
+
+			// System.out.println("CP1");
+
 			Integer itemI = frequentItems.get(i);
 			// we obtain the tidset and support of that item
 			Set<Integer> tidsetI = mapItemCount.get(itemI);
@@ -109,10 +206,7 @@ public class AlgoEclat {
 loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 				int itemJ = frequentItems.get(j);
 				
-				// if the triangular matrix optimization is activated we obtain
-				// the support of itemset "ij" in the matrix. This allows to determine
-				// directly without performing a join if "ij" is frequent.
-			
+
 				// Obtain the tidset of item J and its support.
 				Set<Integer> tidsetJ = mapItemCount.get(itemJ);
 				int supportJ = tidsetJ.size();
@@ -126,7 +220,11 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 				// equivalence class, the item "j" 
 				// actually represents the itemset "ij" since we keep the prefix "i" for the
 				// whole equilvalence class.
-				
+				if(calculateSupport(2, supportI, tidsetIJ) >= minsupRelative){
+				    equivalenceClassIitems.add(itemJ);
+				     // We also keep the tidset of "ij".
+				    equivalenceClassItidsets.add(tidsetIJ);
+				}
 			}
 			// Process all itemsets from the equivalence class of 2-itemsets starting with prefix I 
 			// to find larger itemsets if that class has more than 0 itemsets.
@@ -163,8 +261,8 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 	private int calculateSupportSingleItems(TransactionDatabase database,
 			final Map<Integer, Set<Integer>> mapItemCount) {
 		int maxItemId = 0;
-		
 		for (int i = 0; i < database.size(); i++) {
+			// for each item in that transaction
 			for (Integer item : database.getHorizontalDB().get(i)) {
 				// get the current tidset of that item
 				Set<Integer> set = mapItemCount.get(item);
@@ -219,6 +317,11 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 	 */
 	private void processEquivalenceClass(int[] prefix, int prefixLength, int supportPrefix, List<Integer> equivalenceClassItems,
 			List<Set<Integer>> equivalenceClassTidsets) throws IOException {
+
+		rec++;
+
+		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> ECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+
 		
 		int length = prefixLength+1;
 		
@@ -274,6 +377,9 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 		
 		// For each itemset "prefix" + "i"
 		for(int i=0; i< equivalenceClassItems.size(); i++) {
+
+			System.out.println("CP1");
+
 			int suffixI = equivalenceClassItems.get(i);
 			// get the tidset and support of that itemset
 			Set<Integer> tidsetI = equivalenceClassTidsets.get(i);
@@ -502,13 +608,11 @@ loopJ:		for(int j=i+1; j < frequentItems.size(); j++) {
 	public void printStats() {
 		System.out.println("=============  ECLAT v0.96r18 - STATS =============");
 		long temps = endTime - startTimestamp;
-		System.out.println(" Transactions count from database : "
-				+ database.size());
-		System.out.println(" Frequent itemsets count : "
-				+ itemsetCount);
+		System.out.println(" Transactions count from database : " + database.size());
+		System.out.println(" Frequent itemsets count : " + itemsetCount);
 		System.out.println(" Total time ~ " + temps + " ms");
-		System.out.println(" Maximum memory usage : "
-				+ MemoryLogger.getInstance().getMaxMemory() + " mb");
+		System.out.println(" Maximum memory usage : " + MemoryLogger.getInstance().getMaxMemory() + " mb");
+		System.out.println(" Recursion : " + rec);
 		System.out.println("===================================================");
 	}
 
