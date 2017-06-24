@@ -1,3 +1,2 @@
-javac -classpath ~/dblabs/umdblab/ alterDBstructure.java 
-# java -agentlib:hprof=heap=all -classpath ~/dblabs/umdblab/ code.test.alterDBstructure $1
-java -classpath ~/dblabs/umdblab/ code.test.alterDBstructure $1
+javac -classpath ~/Desktop/repo/umdblab/ alterDBstructure.java
+java -classpath ~/Desktop/repo/umdblab/ code.test.alterDBstructure $1
