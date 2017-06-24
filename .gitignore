@@ -1,1 +1,5 @@
 *.class
+out.put
+output.txt
+*.txt
+cns

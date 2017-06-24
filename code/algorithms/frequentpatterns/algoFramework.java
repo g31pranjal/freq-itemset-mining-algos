@@ -33,7 +33,7 @@ public class algoFramework {
 	protected int algo;
 	protected int[] rec;
 
-	protected int INTSIZE = 32; //bits
+	protected int INTSIZE = 1000; //bits
 
 	// 1 : ECLAT, 2 : VIPER, 3 : DECLAT, 0 : VARIABLE
 
@@ -924,6 +924,7 @@ public class algoFramework {
 
 	public void printStats() {
 		long temps = endTime - startTime;
+		System.out.println("\n\n===================================================");
 		System.out.println(" Transactions count from database : " + database.getN());
 		System.out.println(" Total time ~ " + temps + " ms");
 		System.out.println(" Maximum memory usage : "+ MemoryLogger.getInstance().getMaxMemory() + " mb");
