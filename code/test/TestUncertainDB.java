@@ -8,6 +8,7 @@ import code.input.transaction_database_list_integers.UncertainTransactionDatabas
 import code.input.transaction_database_list_integers.UncertainItemset;
 import code.input.transaction_database_list_integers.UItem;
 import code.input.transaction_database_list_integers.TidAndProb;
+import code.algorithms.frequentpatterns.UncertainAlgoFramework;
 
 
 public class TestUncertainDB {
@@ -26,6 +27,9 @@ public class TestUncertainDB {
             e.printStackTrace();
         }
         database.printDatabase();
+
+        UncertainAlgoFramework algo = new UncertainAlgoFramework();
+        algo.runAlgo(null, database,0.05);
         // printing the horizontal database.
         // database.printHorizontalDatabase();
 
