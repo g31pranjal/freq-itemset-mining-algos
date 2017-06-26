@@ -12,7 +12,7 @@ public class alterDBstructure {
 
 	public static void main(String args[]) throws IOException{
 
-		String filename = "../../datasets/connect.txt";
+		String filename = "../../datasets/mushrooms.txt";
 		URL url = alterDBstructure.class.getResource(filename);
 		String input = java.net.URLDecoder.decode(url.getPath(),"UTF-8");
 
@@ -33,7 +33,7 @@ public class alterDBstructure {
 
 		// running the framework
 		algoFramework algo = new algoFramework(Integer.parseInt(args[0]));
-		algo.runAlgo("out.put", database, 0.9);
+		algo.runAlgo("out.put", database, 0.1);
 
 	}
 

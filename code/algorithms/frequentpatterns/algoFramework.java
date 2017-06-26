@@ -805,7 +805,7 @@ public class algoFramework {
 
 				// ------------------------------------------------------------------------------------------------------
 
-				if(algo == 1) {
+				if(algo == 3) {
 
 					this.processEquivalenceClassDEclat(newParentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 
