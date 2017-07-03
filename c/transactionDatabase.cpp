@@ -28,6 +28,53 @@ transactionDatabase::transactionDatabase() {
 	verticalDB = new map<int, set<int> * >(); 
 }
 
+transactionDatabase::~ transactionDatabase() {
+	this->dismantleItems();
+	this->dismantleHorizontalDatabase();
+	this->dismantleVerticalDatabase();
+}
+
+void transactionDatabase::loadFile(string path){
+		
+	string thisLine; 
+	ifstream infile(path.c_str());
+
+	while(getline(infile, thisLine)) {
+		if(thisLine.length() != 0 && thisLine[0] != '#' && thisLine[0] != '%' && thisLine[0] != '@') {
+			transactionDatabase::addTransaction(stringSplit(thisLine, " "));
+		} 
+	}
+
+	N = this->horizontalDB->size();
+
+	// convert to vertical datastructure.	
+	
+	vector<int> * txn;
+	set<int> * st;
+
+	for (int i = 0; i < this->getN(); i++) {
+		txn = horizontalDB->at(i);
+		for (int j=0;j<txn->size();j++) {
+			if(verticalDB->find(txn->at(j)) == verticalDB->end() ){
+				st = new set<int>();
+				verticalDB->insert(make_pair(txn->at(j), st));
+			}
+			else{
+				st = verticalDB->at(txn->at(j));
+			}
+			st->insert(i); 
+		}
+	}
+
+	M = this->items->size();
+
+	// dismantle unused structures
+
+	this->dismantleHorizontalDatabase();
+	this->dismantleItems();
+}
+
+
 void transactionDatabase::addTransaction(vector<string> itemsString) {
 	vector<int> * itemset = new vector<int>();
 		
@@ -40,27 +87,23 @@ void transactionDatabase::addTransaction(vector<string> itemsString) {
 }
 
 int transactionDatabase::getN() {
-	return horizontalDB->size();
+	return this->N;
 }
 
-int transactionDatabase::size() {
-	return horizontalDB->size();
-}
-
-vector<vector<int> * > * transactionDatabase::getHorizontalDatabase() {
-	return horizontalDB;
-}
+// vector<vector<int> * > * transactionDatabase::getHorizontalDatabase() {
+// 	return horizontalDB;
+// }
 
 map<int, set<int> * > * transactionDatabase::getVerticalDatabase() {
-	return verticalDB;
+	return this->verticalDB;
 }
 	
-set<int> * transactionDatabase::getItems() {
-	return items;
-}
+// set<int> * transactionDatabase::getItems() {
+// 	return items;
+// }
 	
 int transactionDatabase::getM() {
-	return items->size();
+	return this->M;
 }
 
 void transactionDatabase::printHorizontalDatabase() {
@@ -92,37 +135,31 @@ void transactionDatabase::printVerticalDatabase() {
 	cout << "# transactions (n) " << this->getN() << ", # items (m) : " << this->getM() << endl;
 }
 
-
-void transactionDatabase::loadFile(string path){
-		
-	string thisLine; 
-	
-	ifstream infile(path.c_str());
-
-	// cout << infile << endl;
-
-	while(getline(infile, thisLine)) {
-		if(thisLine.length() != 0 && thisLine[0] != '#' && thisLine[0] != '%' && thisLine[0] != '@') {
-			transactionDatabase::addTransaction(stringSplit(thisLine, " "));
-		} 
-	}
-
-	vector<int> * txn;
-	set<int> * st;
-
-	// convert to vertical datastructure.	
-	for (int i = 0; i < this->getN(); i++) {
-		txn = horizontalDB->at(i);
-		for (int j=0;j<txn->size();j++) {
-			if(verticalDB->find(txn->at(j)) == verticalDB->end() ){
-				st = new set<int>();
-				verticalDB->insert(make_pair(txn->at(j), st));
-			}
-			else{
-				st = verticalDB->at(txn->at(j));
-			}
-			st->insert(i); 
+void transactionDatabase::dismantleHorizontalDatabase() {
+	if(horizontalDB != NULL) {
+		for(int i=0;i<horizontalDB->size();i++) {
+			if(horizontalDB->at(i) != NULL)
+				delete horizontalDB->at(i);
 		}
+		delete horizontalDB;
+		horizontalDB = NULL;
 	}
+}
 
+void transactionDatabase::dismantleVerticalDatabase() {
+	if(verticalDB != NULL) {
+		for(map<int, set<int> * >::iterator i = verticalDB->begin(); i != verticalDB->end(); i++) {
+			if(i->second != NULL)
+				delete i->second;
+		}
+		delete verticalDB;
+		verticalDB = NULL;
+	}
+}
+
+void transactionDatabase::dismantleItems() {
+	if(items != NULL) {
+		delete items;
+		items = NULL;
+	}
 }

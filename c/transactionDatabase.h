@@ -15,23 +15,26 @@ class transactionDatabase {
 		set<int> * items;
 		vector<vector<int> * > * horizontalDB; 
 		map<int, set<int> * > * verticalDB; 
+		int N, M;
+
+		void dismantleHorizontalDatabase();
+		void dismantleItems();
+		void printHorizontalDatabase();
 
 	public :
 		transactionDatabase();
+		~ transactionDatabase();
 		void loadFile(string path);
 		void addTransaction(vector<string> itemsString);
-		void printHorizontalDatabase();
 		void printVerticalDatabase();
 		int getN();
-		int size();
 		int getM();
 
-		vector<vector<int> * > * getHorizontalDatabase();
+		void dismantleVerticalDatabase();
 		map<int, set<int> * > * getVerticalDatabase();
-		set<int> * getItems();
+		// vector<vector<int> * > * getHorizontalDatabase();
+		// set<int> * getItems();
 		
-
 };
-
 
 #endif

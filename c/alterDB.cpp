@@ -7,6 +7,7 @@
 #include <unistd.h>
 
 #include "transactionDatabase.h"
+#include "algoFramework.h"
 
 using namespace std;
 
@@ -23,16 +24,20 @@ string getFilepath(char filename[]) {
 
 }
 
-
-int main() {
+int main(int argc, char * argv[]) {
 
 	string filepath = getFilepath("../datasets/mushrooms.txt");
 
 	transactionDatabase * database = new transactionDatabase();
 	database->loadFile(filepath);
 
-	// algoFramework algo = new algoFramework(Integer.parseInt(args[0]));
-	// 	algo.runAlgo("out.put", database, 0.1);
+	if(argc != 2) {
+		cout << "Too few or too many arguments. Aborting ...\n";
+	}
+	else {
+		algoFramework * algo = new algoFramework(atoi(argv[1]));		
+		algo->runAlgo("out.put", database, 0.8);
+	}
 
-	
+
 }

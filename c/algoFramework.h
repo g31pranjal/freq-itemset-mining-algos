@@ -10,14 +10,38 @@ class algoFramework {
 		int minSupRelative;
 		transactionDatabase * database;
 		map<int, set<int> * > * verticalDB;
+		int itemsetCount, algo, rec[4], N, M;
+
+		void constructTIDSETS(vector<int> * equivalenceClassItems);
+		void constructBITSETS(vector<int> * equivalenceClassItems);
+		void constructDIFFSETS(vector<int> * equivalenceClassItems);
+
+		void processEquivalenceClassEclat(set<int> * prefixTidset, int prefix[], int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<set<int> * > * equivalenceClassTidsets);
+		set<int> * performINTERSECTION(set<int> * tidsetI, set<int> * tidsetJ);
+		vector<set<int> * > * convertTIDSETStoDIFFSETS(set<int> * prefixTidset, vector<set<int> * > * equivalenceClassITidsets);
+		set<int> * formParentDiffsUnionFromPrefixTidset(set<int> * prefixTidset);
+		// vector<BitsetSupport> convertTIDSETStoBITSETS(vector<set<int>> equivalenceClassITidsets);
+		// BitsetSupport formPrefixBitsetFromPrefixTidset(set<int> prefixTidset);
+		
+		// void processEquivalenceClassViper(BitsetSupport prefixBitset, int[] prefix, int prefixLength, int prefixSupport, vector<int> equivalenceClassItems, vector<BitsetSupport> equivalenceClassBitsets);
+		// BitsetSupport performAND(BitsetSupport bitsetI, BitsetSupport bitsetJ)
+		// vector<set<int>> convertBITSETStoTIDSETS(vector<BitsetSupport> equivalenceClassIBitsets);
+		// set<int> formPrefixTidsetFromPrefixBitsets(BitsetSupport prefixBitset);
+		// vector<set<int>> convertBITSETStoDIFFSETS(BitsetSupport prefixBitset, vector<BitsetSupport> equivalenceClassIBitsets);
+		// set<int> formParentDiffsUnionFromPrefixBitset(BitsetSupport prefixBitset);
+		
+		void processEquivalenceClassDEclat(set<int> * parentDiffsUnion, int prefix[], int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<set<int> * > * equivalenceClassDiffsets);
+		set<int> * performDIFFERENCE(set<int> * diffsetI, set<int> * diffsetJ);
+		vector<set<int> * > * convertDIFFSETStoTIDSETS(set<int> * parentDiffsUnion, vector<set<int> * > * equivalenceClassIDiffsets);
+		set<int> * formPrefixTidsetFromParentDiffsUnion(set<int> * parentDiffsUnion);
+		// vector<BitsetSupport> convertDIFFSETStoBITSETS(set<int> parentDiffsUnion, vector<set<int>> equivalenceClassIDiffsets);
+		// BitsetSupport formPrefixBitsetFromParentDiffsUnion(set<int> parentDiffsUnion);
+		
+		// void printStats();
+		// void save(int[] prefix, int prefixLength, int suffixItem, int support);
+
 		// BufferedWriter writer = null; 
 		// Itemsets frequentItemsets;
-		int itemsetCount;
-		int algo;
-		int rec[4];
-		int getN;
-
-
 		// int INTSIZE = 32; //bits
 		//long startTime;
 		//long endTime;
@@ -27,29 +51,7 @@ class algoFramework {
 		algoFramework(int algo);
 		void runAlgo(string outputFile, transactionDatabase * database, double minsupp);
 		
-		// void constructTIDSETS(vector<int> * equivalenceClassItems);
-		// void constructBITSETS(List<Integer> equivalenceClassItems);
-		// void constructDIFFSETS(List<Integer> equivalenceClassItems);
-		// void processEquivalenceClassEclat(Set<Integer> prefixTidset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassTidsets);
-		// Set<Integer> performINTERSECTION(Set<Integer> tidsetI, Set<Integer> tidsetJ);
-		// List<Set<Integer>> convertTIDSETStoDIFFSETS(Set<Integer> prefixTidset, List<Set<Integer>> equivalenceClassITidsets);
-		// Set<Integer> formParentDiffsUnionFromPrefixTidset(Set<Integer> prefixTidset);
-		// List<BitSetSupport> convertTIDSETStoBITSETS(List<Set<Integer>> equivalenceClassITidsets);
-		// BitSetSupport formPrefixBitsetFromPrefixTidset(Set<Integer> prefixTidset);
-		// void processEquivalenceClassViper(BitSetSupport prefixBitset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<BitSetSupport> equivalenceClassBitsets);
-		// BitSetSupport performAND(BitSetSupport bitsetI, BitSetSupport bitsetJ)
-		// List<Set<Integer>> convertBITSETStoTIDSETS(List<BitSetSupport> equivalenceClassIBitsets);
-		// Set<Integer> formPrefixTidsetFromPrefixBitsets(BitSetSupport prefixBitset);
-		// List<Set<Integer>> convertBITSETStoDIFFSETS(BitSetSupport prefixBitset, List<BitSetSupport> equivalenceClassIBitsets);
-		// Set<Integer> formParentDiffsUnionFromPrefixBitset(BitSetSupport prefixBitset);
-		// void processEquivalenceClassDEclat(Set<Integer> parentDiffsUnion, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassDiffsets)
-		// Set<Integer> performDIFFERENCE(Set<Integer> diffsetI, Set<Integer> diffsetJ);
-		// List<Set<Integer>> convertDIFFSETStoTIDSETS(Set<Integer> parentDiffsUnion, List<Set<Integer>> equivalenceClassIDiffsets);
-		// Set<Integer> formPrefixTidsetFromParentDiffsUnion(Set<Integer> parentDiffsUnion);
-		// List<BitSetSupport> convertDIFFSETStoBITSETS(Set<Integer> parentDiffsUnion, List<Set<Integer>> equivalenceClassIDiffsets);
-		// BitSetSupport formPrefixBitsetFromParentDiffsUnion(Set<Integer> parentDiffsUnion);
-		// void printStats();
-		// void save(int[] prefix, int prefixLength, int suffixItem, int support);
+		
 };
 
 
