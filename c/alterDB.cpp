@@ -4,6 +4,7 @@
 #include <cstdlib>
 #include <cstdio>
 #include <cstring>
+#include <chrono>
 #include <unistd.h>
 
 #include "transactionDatabase.h"
@@ -28,6 +29,8 @@ int main(int argc, char * argv[]) {
 
 	string filepath = getFilepath("../datasets/mushrooms.txt");
 
+	chrono::system_clock::time_point startTime = chrono::system_clock::now();
+
 	transactionDatabase * database = new transactionDatabase();
 	database->loadFile(filepath);
 
@@ -36,8 +39,15 @@ int main(int argc, char * argv[]) {
 	}
 	else {
 		algoFramework * algo = new algoFramework(atoi(argv[1]));		
-		algo->runAlgo("out.put", database, 0.3);
+		algo->runAlgo("out.put", database, 0.7);
+	
+		delete algo;
 	}
 
+
+	chrono::system_clock::time_point endTime = chrono::system_clock::now();
+	chrono::duration<double> diffTime = endTime - startTime;
+
+	cout << " Time taken : " << diffTime.count() << " s\n\n" << endl;
 
 }

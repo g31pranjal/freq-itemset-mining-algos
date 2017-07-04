@@ -4,46 +4,30 @@
 #include <iostream>
 #include <map>
 #include <set>
+#include <chrono>
 #include <boost/dynamic_bitset.hpp>
 
 using namespace std;
 
+volatile int sink;
 
 int main() {
-
-	boost::dynamic_bitset<> * x = new boost::dynamic_bitset<>(10);
-	boost::dynamic_bitset<> * y = new boost::dynamic_bitset<>(10);
 	
-	(*x)[0] = 1;
-	(*x)[3] = 1;
-	(*x)[4] = 1;
-	(*x)[6] = 1;
-	(*x)[9] = 1;
+	for (auto size = 1ull; size < 1000000000ull; size *= 100) {
+		
+		chrono::_V2::system_clock::time_point start = chrono::system_clock::now();
+		
+		vector<int> v(size, 42);
+		sink = accumulate(v.begin(), v.end(), 0u); // make sure it's a side effect
+		
+		chrono::_V2::system_clock::time_point  end = std::chrono::system_clock::now();
 
-	int j=0;
+		chrono::duration<double> diff = end-start;
 
-	for(int i = x->find_first(); i >= 0; i = x->find_next(i)) {
-		cout << (j++) << " : " << i << endl;
+		cout << "Time to fill and iterate a vector of " << size << " ints : " << diff.count() << " s\n";
+
 	}
 
-	
-	boost::dynamic_bitset<> * z = new boost::dynamic_bitset<>((*x)&(*y));
-
-	delete x;
-	delete y;
-	delete z;
-
-	string s;
-	to_string(*x,s);
-
-	cout << s;
-
-	// bitset<10> * a = new bitset<10>(string("1010101010") );
-
-	// bitset<10> * b = new bitset<10>(string("0101010101") );
-
-	// bitset<10> * s = new bitset<10>( (*a)&(*b) );
-
-	// cout << s->to_string();
-
 }
+
+// chrono::_V2::system_clock::time_point 

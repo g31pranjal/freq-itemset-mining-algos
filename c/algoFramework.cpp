@@ -104,7 +104,6 @@ void algoFramework::constructTIDSETS(vector<int> * equivalenceClassItems) {
 	
 		// populate the vector of set ints corresponding to the sorted frequent 1-itemsets. 		
 		for(int i=0;i<equivalenceClassItems->size();i++) {
-			cout << equivalenceClassItems->at(i) << endl;
 			equivalenceClassTidsets->push_back(verticalDB->at(equivalenceClassItems->at(i)));
 			verticalDB->at(equivalenceClassItems->at(i)) = NULL; 
 		} 
@@ -115,8 +114,12 @@ void algoFramework::constructTIDSETS(vector<int> * equivalenceClassItems) {
 
 		delete this->database;
 
-		this->processEquivalenceClassEclat(enot ,new int[1000], 0,-N, equivalenceClassItems, equivalenceClassTidsets);
-}
+		int * prefixArray = new int[1000];
+
+		this->processEquivalenceClassEclat(enot ,prefixArray, 0, N, equivalenceClassItems, equivalenceClassTidsets);
+
+		delete prefixArray;
+}	
 
 
 void algoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
@@ -144,10 +147,13 @@ void algoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
 		enot->set(i);
 	}
 
-	delete database;
-
-	this->processEquivalenceClassViper(enot, new int[1000], 0, N, equivalenceClassItems, equivalenceClassBitsets);
+	delete this->database;
 	
+	int * prefixArray = new int[1000];
+
+	this->processEquivalenceClassViper(enot, prefixArray, 0, N, equivalenceClassItems, equivalenceClassBitsets);
+	
+	delete prefixArray;
 }
 
 
@@ -170,17 +176,21 @@ void algoFramework::constructDIFFSETS(vector<int> * equivalenceClassItems) {
 	
 	delete this->database;
 
-	this->processEquivalenceClassDEclat(new set<int>(), new int[1000], 0, N, equivalenceClassItems, equivalenceClassDiffsets);
+	int * prefixArray = new int[1000];
+
+	this->processEquivalenceClassDEclat(new set<int>(), prefixArray, 0, N, equivalenceClassItems, equivalenceClassDiffsets);
+
+	delete prefixArray;
 }
 
 
-void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int prefix[], int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<set<int> * > * equivalenceClassTidsets) {
+void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int * prefix, int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<set<int> * > * equivalenceClassTidsets) {
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> ECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
-	cout << "Prefix : " << endl;
+	cout << "Prefix : " ;
 	for(int i=0;i<prefixLength;i++)
-		cout << prefix[i] << ", " << endl;
+		cout << prefix[i] << ", " ;
 	cout << endl;
 	
 	rec[1]++;
@@ -193,6 +203,13 @@ void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int pr
 		set<int> * tidset = equivalenceClassTidsets->at(0);
 		int support = tidset->size();
 		// this.save(prefix, prefixLength, item, support);
+
+		delete prefixTidset;
+		delete equivalenceClassItems;
+		for(int d=0;d<equivalenceClassTidsets->size();d++) 
+			delete equivalenceClassTidsets->at(d);
+		delete equivalenceClassTidsets;
+
 		return;
 	}
 
@@ -216,6 +233,14 @@ void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int pr
 			prefix[prefixLength] = itemI;
 			// this.save(prefix, newPrefixLength, itemJ, supportIJ);
 		}
+
+		delete tidsetIJ;
+		delete prefixTidset;
+		delete equivalenceClassItems;
+		for(int d=0;d<equivalenceClassTidsets->size();d++) 
+			delete equivalenceClassTidsets->at(d);
+		delete equivalenceClassTidsets;
+
 		return;
 	}
 
@@ -248,6 +273,9 @@ void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int pr
 				equivalenceClassISuffixItems->push_back(suffixJ);
 				equivalenceClassITidsets->push_back(tidsetIJ);
 			}
+			else {
+				delete tidsetIJ;
+			}
 		}
 		
 		if(equivalenceClassISuffixItems->size() > 0) {
@@ -269,7 +297,8 @@ void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int pr
 
 			if(algo == 1) {
 				
-				this->processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+				set<int> * tidsetIClone = new set<int>(tidsetI->begin(), tidsetI->end());
+				this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 
 			}
 			else {
@@ -302,16 +331,18 @@ void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int pr
 					else {
 
 						// cout << "ECLAT" << endl;
-						
-						this->processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+				
+						set<int> * tidsetIClone = new set<int>(tidsetI->begin(), tidsetI->end());
+						this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 					}
 				}
 				else {
 					if(EAvg <= ECLATthreshold){
 						
 						// cout << "DECLAT" << endl;
-						
-						this->processEquivalenceClassEclat(tidsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+						set<int> * tidsetIClone = new set<int>(tidsetI->begin(), tidsetI->end());
+						this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+					
 					}
 					else if(EAvg <= DECLATthreshold){
 						
@@ -333,7 +364,18 @@ void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int pr
 				}
 			}			
 		}
+		else {
+			delete equivalenceClassISuffixItems;
+			delete equivalenceClassITidsets;
+		}
 	}
+
+	delete prefixTidset;
+	delete equivalenceClassItems;
+	for(int d=0;d<equivalenceClassTidsets->size();d++) 
+		delete equivalenceClassTidsets->at(d);
+	delete equivalenceClassTidsets;
+
 }
 
 
@@ -417,7 +459,7 @@ boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromPrefixTidset(set<in
 }
 
 
-void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefixBitset, int prefix[], int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<boost::dynamic_bitset<> * > * equivalenceClassBitsets) {
+void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefixBitset, int * prefix, int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<boost::dynamic_bitset<> * > * equivalenceClassBitsets) {
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
@@ -435,6 +477,13 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 		int item = equivalenceClassItems->at(0);
 		boost::dynamic_bitset<> * bitset = equivalenceClassBitsets->at(0);
 		// save(prefix, prefixLength, item, bitset.support);
+
+		delete prefixBitset;
+		delete equivalenceClassItems;
+		for(int d=0;d<equivalenceClassBitsets->size();d++) 
+			delete equivalenceClassBitsets->at(d);
+		delete equivalenceClassBitsets;
+
 		return;
 	}
 
@@ -458,6 +507,14 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 			prefix[prefixLength] = itemI;
 			// save(prefix, newPrefixLength, itemJ, supportIJ);
 		}
+
+		delete bitsetIJ;
+		delete prefixBitset;
+		delete equivalenceClassItems;
+		for(int d=0;d<equivalenceClassBitsets->size();d++) 
+			delete equivalenceClassBitsets->at(d);
+		delete equivalenceClassBitsets;
+
 		return;
 	}
 
@@ -490,6 +547,9 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 				equivalenceClassISuffixItems->push_back(suffixJ);
 				equivalenceClassIBitsets->push_back(bitsetIJ);
 			}
+			else {
+				delete bitsetIJ;
+			}
 		}
 		
 		if(equivalenceClassISuffixItems->size() > 0) {
@@ -499,7 +559,8 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 			
 			if(algo == 2) {
 
-				this->processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+				boost::dynamic_bitset<> * bitsetIClone = new boost::dynamic_bitset<>(*bitsetI);
+				this->processEquivalenceClassViper(bitsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
 
 			}
 			else {
@@ -550,8 +611,8 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 					else if(EAvg <= DECLATthreshold){
 						
 						// System.out.println("VIPER");
-						
-						this->processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+						boost::dynamic_bitset<> * bitsetIClone = new boost::dynamic_bitset<>(*bitsetI);
+						this->processEquivalenceClassViper(bitsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
 					}
 					else{
 						
@@ -565,7 +626,17 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 				}
 			}
 		}
+		else {
+			delete equivalenceClassISuffixItems;
+			delete equivalenceClassIBitsets;
+		}
 	}
+
+	delete prefixBitset;
+	delete equivalenceClassItems;
+	for(int d=0;d<equivalenceClassBitsets->size();d++) 
+		delete equivalenceClassBitsets->at(d);
+	delete equivalenceClassBitsets;
 
 }
 
@@ -636,7 +707,7 @@ set<int> * algoFramework::formParentDiffsUnionFromPrefixBitset(boost::dynamic_bi
 }
 
 
-void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, int prefix[], int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<set<int> * > * equivalenceClassDiffsets) {
+void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, int * prefix, int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<set<int> * > * equivalenceClassDiffsets) {
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> DECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
@@ -655,6 +726,13 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 		set<int> * diffset = equivalenceClassDiffsets->at(0);
 		int support = prefixSupport - diffset->size();
 		// save(prefix, prefixLength, item, support);
+
+		delete parentDiffsUnion;
+		delete equivalenceClassItems;
+		for(int d=0;d<equivalenceClassDiffsets->size();d++) 
+			delete equivalenceClassDiffsets->at(d);
+		delete equivalenceClassDiffsets;
+
 		return;
 	}
 
@@ -677,8 +755,18 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 			int newPrefixLength = prefixLength+1;
 			prefix[prefixLength] = itemI;
 			// save(prefix, newPrefixLength, itemJ, supportIJ);
-		
 		}
+		else {
+			delete diffsetIJ;
+		}
+
+		delete diffsetIJ;
+		delete parentDiffsUnion;
+		delete equivalenceClassItems;
+		for(int d=0;d<equivalenceClassDiffsets->size();d++) 
+			delete equivalenceClassDiffsets->at(d);
+		delete equivalenceClassDiffsets;
+
 		return;
 	}
 
@@ -801,7 +889,18 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 				}
 			}
 		}
+		else {
+			delete equivalenceClassISuffixItems;
+			delete equivalenceClassIDiffsets;
+		}
 	}	
+
+	delete parentDiffsUnion;
+	delete equivalenceClassItems;
+	for(int d=0;d<equivalenceClassDiffsets->size();d++) 
+		delete equivalenceClassDiffsets->at(d);
+	delete equivalenceClassDiffsets;
+
 }
 
 
