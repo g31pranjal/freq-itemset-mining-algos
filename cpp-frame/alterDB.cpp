@@ -27,7 +27,7 @@ string getFilepath(char filename[]) {
 
 int main(int argc, char * argv[]) {
 
-	string filepath = getFilepath("../datasets/mushrooms.txt");
+	string filepath = getFilepath("../datasets/pumsb.txt");
 
 	chrono::system_clock::time_point tp1 = chrono::system_clock::now();
 
@@ -41,7 +41,7 @@ int main(int argc, char * argv[]) {
 	}
 	else {
 		algoFramework * algo = new algoFramework(atoi(argv[1]));		
-		algo->runAlgo("out.put", database, 0.5);
+		algo->runAlgo("out.put", database, 0.75);
 	
 		delete algo;
 	}
