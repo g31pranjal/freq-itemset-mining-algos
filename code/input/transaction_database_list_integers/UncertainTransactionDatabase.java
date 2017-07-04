@@ -88,6 +88,10 @@ public class UncertainTransactionDatabase{
 //        }
     }
 
+    public Map<Integer, Set<TidAndProb>> getVerticalDB(){
+        return this.verticalDB;
+    }
+
     private void processTransactions(String itemsString[]) {
         // We assume that there is no empty line
 
@@ -140,6 +144,7 @@ public class UncertainTransactionDatabase{
     public int size() {
         return transactions.size();
     }
+    public int getN(){return transactions.size();}
 
     /**
      * Get the list of transactions.
