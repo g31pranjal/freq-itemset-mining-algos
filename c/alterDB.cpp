@@ -36,7 +36,7 @@ int main(int argc, char * argv[]) {
 	}
 	else {
 		algoFramework * algo = new algoFramework(atoi(argv[1]));		
-		algo->runAlgo("out.put", database, 0.8);
+		algo->runAlgo("out.put", database, 0.3);
 	}
 
 

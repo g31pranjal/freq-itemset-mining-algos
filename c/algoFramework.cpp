@@ -1,7 +1,8 @@
 #include <cmath>
 #include <algorithm>
 #include <iostream>
-
+#include <boost/dynamic_bitset.hpp>
+	
 #include "algoFramework.h"
 #include "transactionDatabase.h"
 
@@ -12,11 +13,13 @@ static int INTSIZE = 32;
 
 algoFramework::algoFramework() {
 	this->algo = 0;
+	rec[0] = rec[1] = rec[2] = rec[3] = 0;
 }
 
 
 algoFramework::algoFramework(int algo) {
 	this->algo = algo;
+	rec[0] = rec[1] = rec[2] = rec[3] = 0;
 }
 
 
@@ -88,6 +91,8 @@ void algoFramework::runAlgo(string outputFile, transactionDatabase * database, d
 			}	
 		}
 	}
+
+	this->printStats();
 }
 
 
@@ -110,11 +115,38 @@ void algoFramework::constructTIDSETS(vector<int> * equivalenceClassItems) {
 
 		delete this->database;
 
-		// this->processEquivalenceClassEclat(enot ,new int[1000], 0,->atN, equivalenceClassItems, equivalenceClassTidsets);
+		this->processEquivalenceClassEclat(enot ,new int[1000], 0,-N, equivalenceClassItems, equivalenceClassTidsets);
 }
 
 
 void algoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
+
+	vector<boost::dynamic_bitset<> * > * equivalenceClassBitsets = new vector<boost::dynamic_bitset<> * >();
+
+	// populate the list of set integers corresponding to the sorted frequent 1-itemsets. 		
+	for(int i=0;i<equivalenceClassItems->size();i++) {
+		int item = equivalenceClassItems->at(i);
+		boost::dynamic_bitset<> * bs = new boost::dynamic_bitset<> (N);
+		set<int> * tidset = verticalDB->at(item);
+		for(set<int>::iterator i = tidset->begin();i != tidset->end();i++) {
+			bs->set(*i);
+		}
+		equivalenceClassBitsets->push_back(bs);
+	}
+
+	// System.out.println("\nfrequent 1-itemset (using BITSET)\n");
+	// for(int i=0;i<equivalenceClassItems.size();i++) {
+	// 	System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassBitsets.get(i));
+	// }
+
+	boost::dynamic_bitset<> * enot = new boost::dynamic_bitset<>(N);
+	for(int i=0;i<N;i++) {
+		enot->set(i);
+	}
+
+	delete database;
+
+	this->processEquivalenceClassViper(enot, new int[1000], 0, N, equivalenceClassItems, equivalenceClassBitsets);
 	
 }
 
@@ -138,7 +170,7 @@ void algoFramework::constructDIFFSETS(vector<int> * equivalenceClassItems) {
 	
 	delete this->database;
 
-	// this.processEquivalenceClassDEclat(new Hashset<int>(), new int[1000], 0,->atN, equivalenceClassItems, equivalenceClassDiffsets);
+	this->processEquivalenceClassDEclat(new set<int>(), new int[1000], 0, N, equivalenceClassItems, equivalenceClassDiffsets);
 }
 
 
@@ -285,10 +317,10 @@ void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int pr
 						
 						// cout << "VIPER" << endl;
 						
-						// BitsetSupport prefixBitset = formPrefixBitsetFromPrefixTidset(tidsetI);
-						// vector<BitsetSupport> equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
+						boost::dynamic_bitset<> * prefixBitset = formPrefixBitsetFromPrefixTidset(tidsetI);
+						vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
 						
-						// this.processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+						this->processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
 					}
 					else{
 						
@@ -354,265 +386,254 @@ set<int> * algoFramework::formParentDiffsUnionFromPrefixTidset(set<int> * prefix
 }
 
 
-// vector<BitsetSupport> convertTIDSETStoBITSETS(vector<set<int>> equivalenceClassITidsets) {
+vector<boost::dynamic_bitset<> *> * algoFramework::convertTIDSETStoBITSETS(vector<set<int> * > * equivalenceClassITidsets) {
 	
-// 	vector<BitsetSupport> equivalenceClassIBitsets = new Arrayvector<BitsetSupport>();
+	vector<boost::dynamic_bitset<> *> * equivalenceClassIBitsets = new vector<boost::dynamic_bitset<> * >();
 
-// 	for(set<int> tidset : equivalenceClassITidsets) {
-// 		BitsetSupport bs = new BitsetSupport();
-// 		for(int tid : tidset) {
-// 			bs.bitset.set(tid);
-// 			bs.support++;
-// 		}
-// 		equivalenceClassIBitsets.add(bs);
-// 	}
+	for(int i=0;i<equivalenceClassITidsets->size();i++) {
+		set<int> * tidset = equivalenceClassITidsets->at(i);
+		boost::dynamic_bitset<> * bs = new boost::dynamic_bitset<>(N);
+		for(set<int>::iterator i = tidset->begin(); i != tidset->end() ; i++ ) {
+			int tid = *i;
+			bs->set(tid);
+		}
+		equivalenceClassIBitsets->push_back(bs);
+	}
 
-// 	return equivalenceClassIBitsets;
-// }
+	return equivalenceClassIBitsets;
+}
 
 
-// BitsetSupport formPrefixBitsetFromPrefixTidset(set<int> prefixTidset) {
+boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromPrefixTidset(set<int> * prefixTidset) {
 	
-// 	BitsetSupport prefixBitset = new BitsetSupport();
+	boost::dynamic_bitset<> * prefixBitset = new boost::dynamic_bitset<>(N);
 
-// 	for(int tid : prefixTidset) {
-// 		prefixBitset.bitset.set(tid);
-// 		prefixBitset.support++;
-// 	}
+	for(set<int>::iterator i = prefixTidset->begin(); i != prefixTidset->end() ; i++ ) {
+		int tid = *i;
+		prefixBitset->set(tid);
+	}
 
-// 	return prefixBitset;
-// }
-
-
-// void algoFramework::processEquivalenceClassViper(BitsetSupport prefixBitset, int[] prefix, int prefixLength, int prefixSupport, vector<int> equivalenceClassItems, vector<BitsetSupport> equivalenceClassBitsets) throws IOException {
+	return prefixBitset;
+}
 
 
-// 	System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-// 	System.out.print("Prefix : ");
-// 	for(int i=0;i<prefixLength;i++)
-// 		System.out.print(prefix[i] + ", ");
-// 	System.out.println();
-// 	MemoryLogger->atInstance().checkMemory();
+void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefixBitset, int prefix[], int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<boost::dynamic_bitset<> * > * equivalenceClassBitsets) {
 
-// 	rec[2]++;
+	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
+
+	cout << "Prefix : " << endl;
+	for(int i=0;i<prefixLength;i++)
+		cout << prefix[i] << ", ";
+	cout << endl;
 	
-// 	int length = prefixLength+1;
+	rec[2]++;
 	
-// 	if(equivalenceClassItems.size() == 1) {
+	int length = prefixLength+1;
+	
+	if(equivalenceClassItems->size() == 1) {
 		
-// 		int item = equivalenceClassItems->at(0);
-// 		BitsetSupport bitset = equivalenceClassBitsets->at(0);
-// 		save(prefix, prefixLength, item, bitset.support);
-// 		return;
-// 	}
+		int item = equivalenceClassItems->at(0);
+		boost::dynamic_bitset<> * bitset = equivalenceClassBitsets->at(0);
+		// save(prefix, prefixLength, item, bitset.support);
+		return;
+	}
 
-// 	if(equivalenceClassItems.size() == 2) {
+	if(equivalenceClassItems->size() == 2) {
 		
-// 		int itemI = equivalenceClassItems->at(0);
-// 		BitsetSupport bitsetI = equivalenceClassBitsets->at(0);
-// 		int supportI = bitsetI.support;
-// 		save(prefix, prefixLength, itemI, supportI);
+		int itemI = equivalenceClassItems->at(0);
+		boost::dynamic_bitset<> * bitsetI = equivalenceClassBitsets->at(0);
+		int supportI = bitsetI->count();
+		// save(prefix, prefixLength, itemI, supportI);
 		
-// 		int itemJ = equivalenceClassItems->at(1);
-// 		BitsetSupport bitsetJ = equivalenceClassBitsets->at(1);
-// 		int supportJ = bitsetJ.support;
-// 		save(prefix, prefixLength, itemJ, supportJ);
+		int itemJ = equivalenceClassItems->at(1);
+		boost::dynamic_bitset<> * bitsetJ = equivalenceClassBitsets->at(1);
+		int supportJ = bitsetJ->count();
+		// save(prefix, prefixLength, itemJ, supportJ);
 		
-// 		BitsetSupport bitsetIJ = this.performAND(bitsetI, bitsetJ);
-// 		int supportIJ = bitsetIJ.support;
+		boost::dynamic_bitset<> * bitsetIJ = this->performAND(bitsetI, bitsetJ);
+		int supportIJ = bitsetIJ->count();
 		
-// 		if(supportIJ >= minSupRelative) {
-// 			int newPrefixLength = prefixLength+1;
-// 			prefix[prefixLength] = itemI;
-// 			save(prefix, newPrefixLength, itemJ, supportIJ);
-// 		}
-// 		return;
-// 	}
+		if(supportIJ >= minSupRelative) {
+			int newPrefixLength = prefixLength+1;
+			prefix[prefixLength] = itemI;
+			// save(prefix, newPrefixLength, itemJ, supportIJ);
+		}
+		return;
+	}
 
 	
-// 	for(int i=0; i< equivalenceClassItems.size(); i++) {
+	for(int i=0; i< equivalenceClassItems->size(); i++) {
 		
-// 		int ETotal = 0;
-// 		int DTotal = 0;
+		int ETotal = 0;
+		int DTotal = 0;
 
-// 		int suffixI = equivalenceClassItems->at(i);
-// 		BitsetSupport bitsetI = equivalenceClassBitsets->at(i);
-// 		int supportI = bitsetI.support;
-// 		this.save(prefix, prefixLength, suffixI, supportI);
+		int suffixI = equivalenceClassItems->at(i);
+		boost::dynamic_bitset<> * bitsetI = equivalenceClassBitsets->at(i);
+		int supportI = bitsetI->count();
+		// this.save(prefix, prefixLength, suffixI, supportI);
 		
-// 		vector<int> equivalenceClassISuffixItems= new Arrayvector<int>();
-// 		vector<BitsetSupport> equivalenceClassIBitsets = new Arrayvector<BitsetSupport>();
+		vector<int> * equivalenceClassISuffixItems= new vector<int>();
+		vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = new vector<boost::dynamic_bitset<> * >();
 
-// 		for(int j=i+1; j < equivalenceClassItems.size(); j++) {
+		for(int j=i+1; j < equivalenceClassItems->size(); j++) {
 			
-// 			int suffixJ = equivalenceClassItems->at(j);
-// 			BitsetSupport bitsetJ = equivalenceClassBitsets->at(j);
-// 			int supportJ = bitsetJ.support;
+			int suffixJ = equivalenceClassItems->at(j);
+			boost::dynamic_bitset<> * bitsetJ = equivalenceClassBitsets->at(j);
+			int supportJ = bitsetJ->count();
 			
-// 			BitsetSupport bitsetIJ = this.performAND(bitsetI, bitsetJ);
-// 			int supportIJ = bitsetIJ.support;
+			boost::dynamic_bitset<> * bitsetIJ = this->performAND(bitsetI, bitsetJ);
+			int supportIJ = bitsetIJ->count();
 
-// 			if(supportIJ >= minSupRelative) {
-// 				ETotal += supportIJ;
-// 				DTotal += (supportI - supportIJ);
-// 				equivalenceClassISuffixItems.add(suffixJ);
-// 				equivalenceClassIBitsets.add(bitsetIJ);
-// 			}
-// 		}
+			if(supportIJ >= minSupRelative) {
+				ETotal += supportIJ;
+				DTotal += (supportI - supportIJ);
+				equivalenceClassISuffixItems->push_back(suffixJ);
+				equivalenceClassIBitsets->push_back(bitsetIJ);
+			}
+		}
 		
-// 		if(equivalenceClassISuffixItems.size() > 0) {
+		if(equivalenceClassISuffixItems->size() > 0) {
 
-// 			prefix[prefixLength] = suffixI;
-// 			int newPrefixLength = prefixLength+1;
+			prefix[prefixLength] = suffixI;
+			int newPrefixLength = prefixLength+1;
 			
-// 			if(algo == 2) {
+			if(algo == 2) {
 
-// 				this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+				this->processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
 
-// 			}
-// 			else {
+			}
+			else {
 
-// 				double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
-// 				double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
+				double DAvg = DTotal / (double)equivalenceClassISuffixItems->size();
+				double EAvg = ETotal / (double)equivalenceClassISuffixItems->size();
 				
-// 				int ECLATthreshold = (int)->atN*(1.0/INTSIZE) );
-// 				int ECLATstart = 0;
-// 				int DECLATthreshold  = supportI - ECLATthreshold;
-// 				int DECLATstart  = supportI;
+				int ECLATthreshold = (int)N*(1.0/INTSIZE);
+				int ECLATstart = 0;
+				int DECLATthreshold  = supportI - ECLATthreshold;
+				int DECLATstart  = supportI;
 
-// 				// System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
-// 				// System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
-// 				// System.out.println("E(avg) : "+EAvg);
-// 				// System.out.println("D(avg) : "+DAvg);
+				// System.out.println("ECLAT thr. : "+ECLATthreshold+" , "+ "DECLAT thr. : "+DECLATthreshold);
+				// System.out.println("ECLAT str. : "+ECLATstart+" , "+ "DECLAT str. : "+DECLATstart);
+				// System.out.println("E(avg) : "+EAvg);
+				// System.out.println("D(avg) : "+DAvg);
 
-// 				if(DECLATthreshold <= ECLATthreshold) {
-// 					double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
-// 					// System.out.println("POINT OF DIFF : " + PointOfDiff);
-// 					if(EAvg > PointOfDiff){
+				if(DECLATthreshold <= ECLATthreshold) {
+					double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
+					// System.out.println("POINT OF DIFF : " + PointOfDiff);
+					if(EAvg > PointOfDiff){
 						
-// 						// System.out.println("DECLAT");
+						// cout << "DECLAT" << endl;
 					
-// 						vector<set<int>> equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
-// 						set<int> parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
-// 						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						vector<set<int> * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
+						set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+						this->processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 
-// 						// this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
-
-// 					}
-// 					else {
+					}
+					else {
 						
-// 						// System.out.println("ECLAT");
+						// cout << "ECLAT" << endl;
 					
-// 						vector<set<int>> equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
-// 						set<int> prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
-// 						processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-// 					}
-// 				}
-// 				else {
-// 					if(EAvg <= ECLATthreshold){
+						vector<set<int> * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
+						set<int> * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+						this->processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+					}
+				}
+				else {
+					if(EAvg <= ECLATthreshold){
 						
-// 						// System.out.println("ECLAT");
+						// System.out.println("ECLAT");
 						
-// 						vector<set<int>> equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
-// 						set<int> prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
-// 						processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-// 					}
-// 					else if(EAvg <= DECLATthreshold){
+						vector<set<int> * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
+						set<int> * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+						this->processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+					}
+					else if(EAvg <= DECLATthreshold){
 						
-// 						// System.out.println("VIPER");
+						// System.out.println("VIPER");
 						
-// 						this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
-// 					}
-// 					else{
+						this->processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+					}
+					else{
 						
-// 						// System.out.println("DECLAT");
+						// System.out.println("DECLAT");
 						
-// 						vector<set<int>> equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
-// 						set<int> parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
-// 						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						vector<set<int> * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
+						set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+						this->processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 						
-// 						// this.processEquivalenceClassViper(bitsetI, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+					}
+				}
+			}
+		}
+	}
 
-// 					}
-// 				}
-
-// 			}
-			
-// 		}
-// 	}
-
-// 	MemoryLogger->atInstance().checkMemory();
-
-// }
+}
 
 
-// public class BitsetSupport{
-// 	Bitset bitset = new Bitset();
-// 	int support;
-// }
-
-
-// BitsetSupport performAND(BitsetSupport bitsetI, BitsetSupport bitsetJ) {
+boost::dynamic_bitset<> * algoFramework::performAND(boost::dynamic_bitset<> * bitsetI, boost::dynamic_bitset<> * bitsetJ) {
 	
-// 	BitsetSupport bitsetIJ = new BitsetSupport();
-// 	bitsetIJ.bitset = (Bitset)bitsetI.bitset.clone();
-// 	bitsetIJ.bitset.and(bitsetJ.bitset);
-// 	bitsetIJ.support = bitsetIJ.bitset.cardinality();
-
-// 	return bitsetIJ;
-// }
+	boost::dynamic_bitset<> * bitsetIJ = new boost::dynamic_bitset<>( (*bitsetI)&(*bitsetJ) );
+	return bitsetIJ;
+}
 
 
-// vector<set<int>> convertBITSETStoTIDSETS(vector<BitsetSupport> equivalenceClassIBitsets) {
+vector<set<int> * > * algoFramework::convertBITSETStoTIDSETS(vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets) {
 	
-// 	vector<set<int>> equivalenceClassITidsets = new Arrayvector<set<int>>();
+	vector<set<int> * > * equivalenceClassITidsets = new vector<set<int> * >();
 
-// 	for( BitsetSupport bitset : equivalenceClassIBitsets ) {
-// 		set<int> tidset = new Hashset<int>();
-// 		for(int i=bitset.bitset.nextsetBit(0); i >= 0; i = bitset.bitset.nextsetBit(i+1)) {
-// 			tidset.add(i);
-// 		}
-// 		equivalenceClassITidsets.add(tidset);
-// 	}
-// 	return equivalenceClassITidsets;
-// }
+	for(int i=0;i<equivalenceClassIBitsets->size();i++) {
+		boost::dynamic_bitset<> * bitst = equivalenceClassIBitsets->at(i); 
+		set<int> * tidset = new set<int>();
 
-
-// set<int> formPrefixTidsetFromPrefixBitsets(BitsetSupport prefixBitset) {
-// 	set<int> prefixTidset = new Hashset<int>();
-// 	for(int i = prefixBitset.bitset.nextsetBit(0); i >= 0; i = prefixBitset.bitset.nextsetBit(i+1)) {
-// 		prefixTidset.add(i);
-// 	}
-// 	return prefixTidset;
-// }
+		for(int i = bitst->find_first(); i >= 0; i = bitst->find_next(i)) {
+			tidset->insert(i);
+		}
+		
+		equivalenceClassITidsets->push_back(tidset);
+	}
+	return equivalenceClassITidsets;
+}
 
 
-// vector<set<int>> convertBITSETStoDIFFSETS(BitsetSupport prefixBitset, vector<BitsetSupport> equivalenceClassIBitsets) {
+set<int> * algoFramework::formPrefixTidsetFromPrefixBitsets(boost::dynamic_bitset<> * prefixBitset) {
 	
-// 	vector<set<int>> equivalenceClassIDiffsets = new Arrayvector<set<int>>();
+	set<int> * prefixTidset = new set<int>();
+
+	for(int i = prefixBitset->find_first(); i >= 0; i = prefixBitset->find_next(i)) {
+		prefixTidset->insert(i);
+	}
+
+	return prefixTidset;
+}
+
+
+vector<set<int> * > * algoFramework::convertBITSETStoDIFFSETS(boost::dynamic_bitset<> * prefixBitset, vector<boost::dynamic_bitset<> *> * equivalenceClassIBitsets) {
 	
-// 	for(BitsetSupport bitset : equivalenceClassIBitsets) {
-// 		set<int> diffset = new Hashset<int>();
-// 		for(int i = prefixBitset.bitset.nextsetBit(0); i>= 0; i = prefixBitset.bitset.nextsetBit(i+1))
-// 			if(!bitset.bitset->at(i))
-// 				diffset.add(i);
-// 		equivalenceClassIDiffsets.add(diffset);
-// 	}
+	vector<set<int> * > * equivalenceClassIDiffsets = new vector<set<int> * >();
+	
+	for(int i=0; i < equivalenceClassIBitsets->size(); i++) {
+		boost::dynamic_bitset<> * bitset = equivalenceClassIBitsets->at(i);
+		set<int> * diffset = new set<int>();
+		for(int i = prefixBitset->find_first(); i >= 0; i = prefixBitset->find_next(i))
+			if(!bitset->test(i))
+				diffset->insert(i);
+		equivalenceClassIDiffsets->push_back(diffset);
+	}
 
-// 	return equivalenceClassIDiffsets;
-// }
+	return equivalenceClassIDiffsets;
+}
 
 
-// set<int> formParentDiffsUnionFromPrefixBitset(BitsetSupport prefixBitset) {
+set<int> * algoFramework::formParentDiffsUnionFromPrefixBitset(boost::dynamic_bitset<> * prefixBitset) {
 
-// 	set<int> parentDiffsUnion = new Hashset<int>();
-// 	for(int i=0;i->atN;i++) {
-// 		if(!prefixBitset.bitset->at(i))
-// 			parentDiffsUnion.add(i);
-// 	}
+	set<int> * parentDiffsUnion = new set<int>();
+	for(int i=0;i>N;i++) {
+		if(!prefixBitset->test(i))
+			parentDiffsUnion->insert(i);
+	}
 
-// 	return parentDiffsUnion;
-// }
+	return parentDiffsUnion;
+}
 
 
 void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, int prefix[], int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<set<int> * > * equivalenceClassDiffsets) {
@@ -766,9 +787,10 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 						
 						// cout << "VIPER" << endl;
 						
-						// vector<BitsetSupport> equivalenceClassIBitsets = convertDIFFSETStoBITSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
-						// BitsetSupport prefixBitset = formPrefixBitsetFromParentDiffsUnion(newParentDiffsUnion);
-						// this.processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+						vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = convertDIFFSETStoBITSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
+						boost::dynamic_bitset<> * prefixBitset = formPrefixBitsetFromParentDiffsUnion(newParentDiffsUnion);
+						
+						this->processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
 					}
 					else{
 						
@@ -827,48 +849,47 @@ set<int> * algoFramework::formPrefixTidsetFromParentDiffsUnion(set<int> * parent
 }
 
 
-// vector<BitsetSupport> convertDIFFSETStoBITSETS(set<int> parentDiffsUnion, vector<set<int>> equivalenceClassIDiffsets) {
+vector<boost::dynamic_bitset<> * > * algoFramework::convertDIFFSETStoBITSETS(set<int> * parentDiffsUnion, vector<set<int> * > * equivalenceClassIDiffsets) {
 
-// 	vector<BitsetSupport> equivalenceClassIBitsets = new Arrayvector<BitsetSupport>();
+	vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = new vector<boost::dynamic_bitset<> * >();
 
-// 	for(set<int> diffset : equivalenceClassIDiffsets) {
-// 		BitsetSupport bs = new BitsetSupport();
-// 		for(int i=0;i->atN;i++) {
-// 			if(!parentDiffsUnion.contains(i) && !diffset.contains(i)) {
-// 				bs.bitset.set(i);
-// 				bs.support++;
-// 			}
-// 		}
-// 		equivalenceClassIBitsets.add(bs);
-// 	}
+	for(int i=0;i<equivalenceClassIDiffsets->size();i++) {
+		set<int> * diffset = equivalenceClassIDiffsets->at(i);
+		boost::dynamic_bitset<> * bs = new boost::dynamic_bitset<>(N);
+		for(int i=0;i>N;i++) {
+			if(parentDiffsUnion->find(i) == parentDiffsUnion->end() && diffset->find(i) == diffset->end()) {
+				bs->set(i);
+			}
+		}
+		equivalenceClassIBitsets->push_back(bs);
+	}
 
-// 	return equivalenceClassIBitsets;
-// }
-
-
-// BitsetSupport formPrefixBitsetFromParentDiffsUnion(set<int> parentDiffsUnion) {
-
-// 	BitsetSupport prefixBitset = new BitsetSupport();
-// 	for(int i=0;i->atN;i++) {
-// 		if(!parentDiffsUnion.contains(i)) {
-// 			prefixBitset.bitset.set(i);
-// 			prefixBitset.support++;
-// 		}
-// 	}
-
-// 	return prefixBitset;
-// }
+	return equivalenceClassIBitsets;
+}
 
 
-// public void printStats() {
-// 	long temps = endTime - startTime;
-// 	System.out.println("\n\n===================================================");
-// 	System.out.println(" Transactions count from database : " +->atN);
-// 	System.out.println(" Total time ~ " + temps + " ms");
-// 	System.out.println(" Maximum memory usage : "+ MemoryLogger->atInstance()->atMaxMemory() + " mb");
-// 	System.out.println(" Usage : ECLAT " +rec[1]+" VIPER "+rec[2]+" DECLAT "+rec[3]);
-// 	System.out.println("===================================================");
-// }
+boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromParentDiffsUnion(set<int> * parentDiffsUnion) {
+
+	boost::dynamic_bitset<> * prefixBitset = new boost::dynamic_bitset<>(N);
+	for(int i=0;i>N;i++) {
+		if(parentDiffsUnion->find(i) == parentDiffsUnion->end()) {
+			prefixBitset->set(i);
+		}
+	}
+
+	return prefixBitset;
+}
+
+
+void algoFramework::printStats() {
+	// long temps = endTime - startTime;
+	cout << "\n\n===================================================" << endl;
+	cout << " Transactions count from database : " << N << endl;
+	// cout << " Total time ~ " + temps + " ms"); << endl;
+	// cout << " Maximum memory usage : "+ MemoryLogger->atInstance()->atMaxMemory() + " mb"); << endl;
+	cout << " Usage : ECLAT "  << rec[1] << " VIPER " << rec[2] << " DECLAT " << rec[3] << endl;
+	cout << "===================================================" << endl;
+}
 
 // private void save(int[] prefix, int prefixLength, int suffixItem, int support) throws IOException {
 	
