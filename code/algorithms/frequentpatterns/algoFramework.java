@@ -32,8 +32,9 @@ public class algoFramework {
 	protected long endTime;
 	protected int algo;
 	protected int[] rec;
+	protected int getN;
 
-	protected int INTSIZE = 1000; //bits
+	protected int INTSIZE = 32; //bits
 
 	// 1 : ECLAT, 2 : VIPER, 3 : DECLAT, 0 : VARIABLE
 
@@ -51,10 +52,12 @@ public class algoFramework {
 	public void runAlgo(String outputFile, TransactionDatabase database, double minsupp) throws IOException {
 
 		MemoryLogger.getInstance().reset();
+
 		startTime = System.currentTimeMillis();
 
 		this.database = database;
-		this.minSupRelative = (int) Math.ceil(minsupp * database.getN());
+		this.getN = database.getN();
+		this.minSupRelative = (int) Math.ceil(minsupp * getN);
 		this.verticalDB = database.getVerticalDB();
 
 		writer = new BufferedWriter(new FileWriter(outputFile));
@@ -87,28 +90,30 @@ public class algoFramework {
 				}
 			});
 
+			System.out.println(oneFrequentItems);
+
 			/* 
 			 *	logic to decide the algorithm to begin with 
 				we can work with some kind of problistic model to determine, with some success, the startting algorithm
 			*/
 
-			Integer ECLATthreshold  = (int)(database.getN()*(1.0/INTSIZE));
-			Integer DECLATthreshold = (int)(database.getN()*(31.0/INTSIZE));
+			Integer ECLATthreshold  = (int)(getN*(1.0/INTSIZE));
+			Integer DECLATthreshold = (int)(getN*(31.0/INTSIZE));
 
 			System.out.println("\nECLAT threshold : " + ECLATthreshold + ", DECLAT threshold : " + DECLATthreshold);
 			System.out.println("Average value : " + avgTidsetSize);
 
 			if(algo == 0) {
 				if(avgTidsetSize <= ECLATthreshold ) {
-					System.out.println("ECLAT");
+					// System.out.println("ECLAT");
 					this.constructTIDSETS(oneFrequentItems);
 				}
 				else if(avgTidsetSize <= DECLATthreshold){
-					System.out.println("VIPER");
+					// System.out.println("VIPER");
 					this.constructBITSETS(oneFrequentItems);
 				}
 				else{
-					System.out.println("DECLAT");
+					// System.out.println("DECLAT");
 					this.constructDIFFSETS(oneFrequentItems);
 				}
 			}
@@ -125,11 +130,12 @@ public class algoFramework {
 			}
 		}
 
-		MemoryLogger.getInstance().checkMemory();
 		endTime = System.currentTimeMillis();
 		writer.close();
 
+		MemoryLogger.getInstance().checkMemory();
 		this.printStats();
+
 	}
 
 
@@ -148,10 +154,13 @@ public class algoFramework {
 		// }
 
 		Set<Integer> enot = new HashSet<Integer>();
-		for(int i=0;i<database.getN();i++) 
+		for(int i=0;i<getN;i++) 
 			enot.add(i);
 
-		this.processEquivalenceClassEclat(enot ,new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassTidsets);
+		this.database = null;
+		this.verticalDB = null;
+
+		this.processEquivalenceClassEclat(enot ,new int[1000], 0, getN, equivalenceClassItems, equivalenceClassTidsets);
 	}
 
 
@@ -176,12 +185,15 @@ public class algoFramework {
 		// }
 
 		BitSetSupport enot = new BitSetSupport();
-		for(int i=0;i<database.getN();i++) {
+		for(int i=0;i<getN;i++) {
 			enot.bitset.set(i);
 			enot.support++;
 		}
 
-		this.processEquivalenceClassViper(enot, new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassBitsets);
+		this.database = null;
+		this.verticalDB = null;
+
+		this.processEquivalenceClassViper(enot, new int[1000], 0, getN, equivalenceClassItems, equivalenceClassBitsets);
 	}
 
 
@@ -193,7 +205,7 @@ public class algoFramework {
 		for(Integer item : equivalenceClassItems) {
 			Set<Integer> tidset = verticalDB.get(item);
 			Set<Integer> diffset = new HashSet<Integer>();
-			for(int i=0;i<database.getN();i++) {
+			for(int i=0;i<getN;i++) {
 				if(!tidset.contains(i)) {
 					diffset.add(i);
 				}
@@ -207,17 +219,22 @@ public class algoFramework {
 		// 	System.out.println(equivalenceClassItems.get(i)+ " : "+equivalenceClassDiffsets.get(i));
 		// }
 
-		this.processEquivalenceClassDEclat(new HashSet<Integer>(), new int[1000], 0, database.getN(), equivalenceClassItems, equivalenceClassDiffsets);
+		this.database = null;
+		this.verticalDB = null;
+
+		this.processEquivalenceClassDEclat(new HashSet<Integer>(), new int[1000], 0, getN, equivalenceClassItems, equivalenceClassDiffsets);
 	}
 
 
 	private void processEquivalenceClassEclat(Set<Integer> prefixTidset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassTidsets) throws IOException {
 
+
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> ECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-		System.out.println("Prefix : ");
+		System.out.print("Prefix : ");
 		for(int i=0;i<prefixLength;i++)
 			System.out.print(prefix[i] + ", ");
 		System.out.println();
+		MemoryLogger.getInstance().checkMemory();
 
 		rec[1]++;
 
@@ -317,7 +334,7 @@ public class algoFramework {
 					double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
 					double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
 					
-					int ECLATthreshold = (int)(database.getN()*(1.0/INTSIZE) );
+					int ECLATthreshold = (int)(getN*(1.0/INTSIZE) );
 					int ECLATstart = 0;
 					int DECLATthreshold  = supportI - ECLATthreshold;
 					int DECLATstart  = supportI;
@@ -375,6 +392,9 @@ public class algoFramework {
 				
 			}
 		}
+
+		MemoryLogger.getInstance().checkMemory();
+
 	}
 
 
@@ -415,7 +435,7 @@ public class algoFramework {
 	Set<Integer> formParentDiffsUnionFromPrefixTidset(Set<Integer> prefixTidset) {
 
 		Set<Integer> parentDiffsUnion = new HashSet<Integer>();
-		for(int i=0;i<database.getN();i++) {
+		for(int i=0;i<getN;i++) {
 			if(!prefixTidset.contains(i))
 				parentDiffsUnion.add(i);
 		}
@@ -456,11 +476,13 @@ public class algoFramework {
 
 	private void processEquivalenceClassViper(BitSetSupport prefixBitset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<BitSetSupport> equivalenceClassBitsets) throws IOException {
 
+
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-		System.out.println("Prefix : ");
+		System.out.print("Prefix : ");
 		for(int i=0;i<prefixLength;i++)
 			System.out.print(prefix[i] + ", ");
 		System.out.println();
+		MemoryLogger.getInstance().checkMemory();
 
 		rec[2]++;
 		
@@ -543,7 +565,7 @@ public class algoFramework {
 					double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
 					double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
 					
-					int ECLATthreshold = (int)(database.getN()*(1.0/INTSIZE) );
+					int ECLATthreshold = (int)(getN*(1.0/INTSIZE) );
 					int ECLATstart = 0;
 					int DECLATthreshold  = supportI - ECLATthreshold;
 					int DECLATstart  = supportI;
@@ -608,6 +630,9 @@ public class algoFramework {
 				
 			}
 		}
+
+		MemoryLogger.getInstance().checkMemory();
+
 	}
 
 
@@ -671,7 +696,7 @@ public class algoFramework {
 	Set<Integer> formParentDiffsUnionFromPrefixBitset(BitSetSupport prefixBitset) {
 	
 		Set<Integer> parentDiffsUnion = new HashSet<Integer>();
-		for(int i=0;i<database.getN();i++) {
+		for(int i=0;i<getN;i++) {
 			if(!prefixBitset.bitset.get(i))
 				parentDiffsUnion.add(i);
 		}
@@ -682,11 +707,13 @@ public class algoFramework {
 
 	private void processEquivalenceClassDEclat(Set<Integer> parentDiffsUnion, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<Integer>> equivalenceClassDiffsets) throws IOException {
 
+
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>> DECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
-		System.out.println("Prefix : ");
+		System.out.print("Prefix : ");
 		for(int i=0;i<prefixLength;i++)
 			System.out.print(prefix[i] + ", ");
 		System.out.println();
+		MemoryLogger.getInstance().checkMemory();
 
 		rec[3]++;
 		
@@ -696,7 +723,7 @@ public class algoFramework {
 			
 			int item = equivalenceClassItems.get(0);
 			Set<Integer> diffset = equivalenceClassDiffsets.get(0);
-			int support = prefixSupport = diffset.size();
+			int support = prefixSupport - diffset.size();
 			save(prefix, prefixLength, item, support);
 			return;
 		}
@@ -779,7 +806,7 @@ public class algoFramework {
 
 				// ------------------------------------------------------------------------------------------------------
 
-				if(algo == 1) {
+				if(algo == 3) {
 
 					this.processEquivalenceClassDEclat(newParentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 
@@ -789,7 +816,7 @@ public class algoFramework {
 					double DAvg = DTotal / (double)equivalenceClassISuffixItems.size();
 					double EAvg = ETotal / (double)equivalenceClassISuffixItems.size();
 					
-					int ECLATthreshold = (int)(database.getN()*(1.0/INTSIZE) );
+					int ECLATthreshold = (int)(getN*(1.0/INTSIZE) );
 					int ECLATstart = 0;
 					int DECLATthreshold  = supportI - ECLATthreshold;
 					int DECLATstart  = supportI;
@@ -845,6 +872,9 @@ public class algoFramework {
 				}
 			}
 		}
+		
+		MemoryLogger.getInstance().checkMemory();
+
 	}
 
 
@@ -866,7 +896,7 @@ public class algoFramework {
 
 		for(Set<Integer> diffset : equivalenceClassIDiffsets) {
 			Set<Integer> tid = new HashSet<Integer>();
-			for(int i=0;i<database.getN();i++) {
+			for(int i=0;i<getN;i++) {
 				if(!parentDiffsUnion.contains(i) && !diffset.contains(i))
 					tid.add(i);
 			}
@@ -880,7 +910,7 @@ public class algoFramework {
 	Set<Integer> formPrefixTidsetFromParentDiffsUnion(Set<Integer> parentDiffsUnion) {
 
 		Set<Integer> prefixTidset = new HashSet<Integer>();
-		for(int i=0;i<database.getN();i++) {
+		for(int i=0;i<getN;i++) {
 			if(!parentDiffsUnion.contains(i))
 				prefixTidset.add(i);
 		}
@@ -895,7 +925,7 @@ public class algoFramework {
 
 		for(Set<Integer> diffset : equivalenceClassIDiffsets) {
 			BitSetSupport bs = new BitSetSupport();
-			for(int i=0;i<database.getN();i++) {
+			for(int i=0;i<getN;i++) {
 				if(!parentDiffsUnion.contains(i) && !diffset.contains(i)) {
 					bs.bitset.set(i);
 					bs.support++;
@@ -911,7 +941,7 @@ public class algoFramework {
 	BitSetSupport formPrefixBitsetFromParentDiffsUnion(Set<Integer> parentDiffsUnion) {
 
 		BitSetSupport prefixBitset = new BitSetSupport();
-		for(int i=0;i<database.getN();i++) {
+		for(int i=0;i<getN;i++) {
 			if(!parentDiffsUnion.contains(i)) {
 				prefixBitset.bitset.set(i);
 				prefixBitset.support++;
@@ -925,7 +955,7 @@ public class algoFramework {
 	public void printStats() {
 		long temps = endTime - startTime;
 		System.out.println("\n\n===================================================");
-		System.out.println(" Transactions count from database : " + database.getN());
+		System.out.println(" Transactions count from database : " + getN);
 		System.out.println(" Total time ~ " + temps + " ms");
 		System.out.println(" Maximum memory usage : "+ MemoryLogger.getInstance().getMaxMemory() + " mb");
 		System.out.println(" Usage : ECLAT " +rec[1]+" VIPER "+rec[2]+" DECLAT "+rec[3]);
