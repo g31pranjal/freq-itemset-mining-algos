@@ -5,6 +5,7 @@
 #include "transactionDatabase.h"
 #include <boost/dynamic_bitset.hpp>
 #include <chrono>
+#include <fstream>
 
 class algoFramework {
 
@@ -13,6 +14,7 @@ class algoFramework {
 		transactionDatabase * database;
 		map<int, set<int> * > * verticalDB;
 		int itemsetCount, algo, rec[4], N, M;
+		ofstream writer; 
 
 		void constructTIDSETS(vector<int> * equivalenceClassItems);
 		void constructBITSETS(vector<int> * equivalenceClassItems);
@@ -40,16 +42,14 @@ class algoFramework {
 		boost::dynamic_bitset<> * formPrefixBitsetFromParentDiffsUnion(set<int> * parentDiffsUnion);
 		
 		void printStats();
-		// void save(int[] prefix, int prefixLength, int suffixItem, int support);
+		void save(int * prefix, int prefixLength, int suffixItem, int support);
 
-		// BufferedWriter writer = null; 
-		// Itemsets frequentItemsets;
 		// int INTSIZE = 32; //bits
 		
 	public :
 		algoFramework();
 		algoFramework(int algo);
-		void runAlgo(string outputFile, transactionDatabase * database, double minsupp);
+		void runAlgo(char * outputFile, transactionDatabase * database, double minsupp);
 		
 		
 };
