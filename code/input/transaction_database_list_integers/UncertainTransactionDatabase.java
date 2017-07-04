@@ -19,7 +19,7 @@ public class UncertainTransactionDatabase{
     private final Set<Integer> allItems = new HashSet<Integer>();
     // this is the list of transactions in the database
     private final List<UncertainItemset> transactions = new ArrayList<UncertainItemset>();
-    private final Map<Integer, Set<TidAndProb>> verticalDB = new HashMap<Integer, Set<TidAndProb>>();
+    private final Map<Integer, Set<TidAndProb>> verticalDB goes= new HashMap<Integer, Set<TidAndProb>>();
 
     /**
      * Load a transaction database from a file.
