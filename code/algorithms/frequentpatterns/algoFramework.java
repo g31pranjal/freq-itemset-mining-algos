@@ -90,6 +90,8 @@ public class algoFramework {
 				}
 			});
 
+			System.out.println(oneFrequentItems);
+
 			/* 
 			 *	logic to decide the algorithm to begin with 
 				we can work with some kind of problistic model to determine, with some success, the startting algorithm
@@ -133,7 +135,6 @@ public class algoFramework {
 
 		MemoryLogger.getInstance().checkMemory();
 		this.printStats();
-
 
 	}
 
@@ -722,7 +723,7 @@ public class algoFramework {
 			
 			int item = equivalenceClassItems.get(0);
 			Set<Integer> diffset = equivalenceClassDiffsets.get(0);
-			int support = prefixSupport = diffset.size();
+			int support = prefixSupport - diffset.size();
 			save(prefix, prefixLength, item, support);
 			return;
 		}
