@@ -28,106 +28,59 @@ public class UncertainAlgoFramework{
     protected Map<Integer, Set<TidAndProb>> verticalDB;
     protected BufferedWriter writer = null;
 //    protected Itemsets frequentItemsets;
-//    protected int itemsetCount;
-//    protected long startTime;
+    protected int itemsetCount;
+    protected long startTime;
 //    protected long endTime;
 //    protected int algo;
-//    protected int[] rec;
-//    protected int getN;
+    protected int[] rec;
+    protected int getN;
 
     public UncertainAlgoFramework(){
-
+        rec = new int[4];
     }
 
     public void runAlgo(String outputFile, UncertainTransactionDatabase database, double minsupp) throws IOException{
-        System.out.println("The minsup is : "+ minsupp);
-        database.printVerticalDB();
-
 
         MemoryLogger.getInstance().reset();
         startTime = System.currentTimeMillis();
 
+        System.out.println("The minsup is : "+ minsupp);
+        database.printVerticalDB();
+
         this.database = database;
         this.getN = database.getN();
-        this.minSupRelative = (int) Math.ceil(minsupp * getN);
-        this.verticalDB = database.getVerticalDB(-classpath ~/Desktop/repo/umdblab/);
 
+        System.out.println("the number of transactions in the database : "+getN);
+        this.minSupRelative = (int) Math.ceil(minsupp * gitN);
+        verticalDB = database.getVerticalDB();
         writer = new BufferedWriter(new FileWriter(outputFile));
-
         itemsetCount = 0;
 
         List<Integer> oneFrequentItems = new ArrayList<Integer>();
         Long totalInOneFrequent = 0l;
 
-        // get the list of frequent 1-itemsets.
-        for(Entry<Integer, Set<Integer>> entry : verticalDB.entrySet()) {
-            Set<Integer> tidset = entry.getValue();
-            int support = tidset.size();
-            int item = entry.getKey();
-            if(support >= minSupRelative) {
-                oneFrequentItems.add(item);
-                totalInOneFrequent += tidset.size();
-            }
-        }
-
-        if(oneFrequentItems.size() > 0) {
-
-            Integer avgTidsetSize = (int)(totalInOneFrequent / oneFrequentItems.size());
-
-            // sort the list of frequent 1-itemsets.
-            Collections.sort(oneFrequentItems, new Comparator<Integer>() {
-                @Override
-                public int compare(Integer arg0, Integer arg1) {
-                    return verticalDB.get(arg0).size() - verticalDB.get(arg1).size();
-                }
-            });
-
-			/*
-			 *	logic to decide the algorithm to begin with
-				we can work with some kind of problistic model to determine, with some success, the startting algorithm
-			*/
-
-            Integer ECLATthreshold  = (int)(getN*(1.0/INTSIZE));
-            Integer DECLATthreshold = (int)(getN*(31.0/INTSIZE));
-
-            System.out.println("\nECLAT threshold : " + ECLATthreshold + ", DECLAT threshold : " + DECLATthreshold);
-            System.out.println("Average value : " + avgTidsetSize);
-
-            if(algo == 0) {
-                if(avgTidsetSize <= ECLATthreshold ) {
-                    // System.out.println("ECLAT");
-                    this.constructTIDSETS(oneFrequentItems);
-                }
-                else if(avgTidsetSize <= DECLATthreshold){
-                    // System.out.println("VIPER");
-                    this.constructBITSETS(oneFrequentItems);
-                }
-                else{
-                    // System.out.println("DECLAT");
-                    this.constructDIFFSETS(oneFrequentItems);
-                }
-            }
-            else {
-                if(algo == 1) {
-                    this.constructTIDSETS(oneFrequentItems);
-                }
-                else if(algo == 2){
-                    this.constructBITSETS(oneFrequentItems);
-                }
-                else if(algo == 3){
-                    this.constructDIFFSETS(oneFrequentItems);
-                }
-            }
-        }
-
-        endTime = System.currentTimeMillis();
-        writer.close();
-
-        MemoryLogger.getInstance().checkMemory();
-        this.printStats();
-
+        // get the list of frequent 1-itemset
     }
 }
+
+// I guess prefixTidset is not used???
+//private void processEquivalenceClassUVEclat(Set<Integer> prefixTidset, int[] prefix, int prefixLength, int prefixSupport, List<Integer> equivalenceClassItems, List<Set<TidAndProb> equivalenceClassTidsets>) throws IOException{
+//    System.out.println(">>>>>>>>>>>>>>>> Eclat <<<<<<<<<<<<<<<<");
+//    System.out.print("Prefix : ");
+//    for (int i = 0; i < prefixLength; i ++){
+//        System.out.print(prefix[i] + ", ");
+//    }
+//    System.out.println();
+//    MemoryLogger.getInstance().checkMemory();
+//
+//    rec[1]++;
+//
+//    int length = prefixLength + 1;
+//
+//    if (equivalenceClassItems.size() == 1) {
+//        int item = equivalenceClassItems.get(0);
+//    }
+//}
 
 
 //public class algoFramework {
