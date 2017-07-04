@@ -20,8 +20,6 @@ public class TransactionDatabase {
 	private final List<List<Integer>> horizontalDB = new ArrayList<List<Integer>>();
 	private final Map<Integer, Set<Integer>> verticalDB = new HashMap<Integer, Set<Integer>>();
 	
-
-
 	public void loadFile(String path) throws IOException {
 		
 		String thisLine; 
