@@ -144,11 +144,13 @@ void UTransactionDatabase::dismantleHorizontalDatabase(){
 						delete horizontalDB->at(i)->at(j);
 					}
 				}
+				delete horizontalDB->at(i);
 			}
 		}
 		delete horizontalDB;
 		horizontalDB = NULL;
 	}
+
 }
 
 void UTransactionDatabase::dismantleItems(){
@@ -159,21 +161,27 @@ void UTransactionDatabase::dismantleItems(){
 }
 
 void UTransactionDatabase::dismantleVerticalDatabase(){
-	// if (verticalDB != NULL){
-	// 	for (map<int, set<TidAndProb *> *>::iterator i = verticalDB->begin(); i != verticalDB->end(); i++){
-	// 		if (i->second != NULL){
-	// 			for (set<TidAndProb *>::iterator j = i->second->begin(); j != i->second->end(); j++){
-	// 				if (*j != NULL){
-	// 					i->second->erase(j);
-	// 				}
-	// 			}
-	// 			delete i->second;
-	// 		}
-	// 	}
+	if (verticalDB != NULL){
+		for (map<int, set<TidAndProb *> *>::iterator i = verticalDB->begin(); i != verticalDB->end();i++){
+			if (i->second != NULL){
+				for (set<TidAndProb *>::iterator j = i->second->begin(); j != i->second->end(); j++){
+					if (*j != NULL){
+						delete *j;
+						i->second->erase(j);
+					}
+				}
+				delete i->second;
+			}
+			verticalDB->erase(i);
+			
+		}
 
-	// 	delete verticalDB;
-	// 	verticalDB = NULL;
-	// }
+		verticalDB->clear();
+		delete verticalDB;
+		verticalDB = NULL;
+	}
+
+
 }
 
 
