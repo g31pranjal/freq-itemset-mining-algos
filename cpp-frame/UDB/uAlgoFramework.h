@@ -9,7 +9,7 @@
 class uAlgoFramework
 {
 	private:
-		int minSupRelative;
+		double minSupRelative;
 		UTransactionDatabase * database;
 		map<int, set<TidAndProb *> *> * verticalDB;
 		int itemsetCount, algo, rec[4], N, M;

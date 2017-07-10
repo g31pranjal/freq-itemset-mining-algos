@@ -34,12 +34,18 @@ void uAlgoFramework::runAlgo(char * outputFile, UTransactionDatabase * database,
 	this->database = database;
 	this->N = database->getN();
 	this->M = database->getM();
-	this->minSupRelative = minsupp * N;
+	this->minSupRelative = minsupp * (double)N;
 	this->verticalDB = database->getVerticalDatabase();
 	this->writer.open(outputFile);
 
 	itemsetCount = 0;
-	long totalInOneFrequent = 0l;
+	double totalInOneFrequent = 0l;
+
+	
+	//cout << fixed;
+	cout <<"\nMinimum relative support is :" << minSupRelative << "\n" << endl;
+	//cout.unsetf(ios_base::floatfield);
+	
 
 	vector<int> * oneFrequentItems = new vector<int>();
 
@@ -48,5 +54,11 @@ void uAlgoFramework::runAlgo(char * outputFile, UTransactionDatabase * database,
 		double expectedSup = calculateSup(tidset);
 		int item = i->first;
 		cout <<"item: #"<< item << " Expected support: " << expectedSup <<endl;
+		if (expectedSup >= minSupRelative){
+			oneFrequentItems->push_back(item);
+			totalInOneFrequent += expectedSup;
+		}
 	}
+
+	cout << totalInOneFrequent << endl;
 }
