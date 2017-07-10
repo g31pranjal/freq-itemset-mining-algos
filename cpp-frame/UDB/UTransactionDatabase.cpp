@@ -184,4 +184,8 @@ void UTransactionDatabase::dismantleVerticalDatabase(){
 
 }
 
+map<int, set<TidAndProb *> *> * UTransactionDatabase::getVerticalDatabase(){
+	return this->verticalDB;
+}
+
 

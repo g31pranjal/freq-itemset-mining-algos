@@ -3,12 +3,21 @@
 #include <iostream>
 #include <boost/dynamic_bitset.hpp>
 	
-#include "algoFramework.h"
-#include "transactionDatabase.h"
+#include "uAlgoFramework.h"
+#include "UTransactionDatabase.h"
+#include "TidAndProb.h"
 
 using namespace std;
 
-static in INTSIZE = 32;
+static int INTSIZE = 32;
+
+double calculateSup(set<TidAndProb *> * tidset){
+	double val = 0;
+	for (set<TidAndProb *>::iterator i = tidset->begin(); i!= tidset->end(); i++){
+		val += (*i)->getProbability();
+	}
+	return val;
+}
 
 uAlgoFramework::uAlgoFramework(){
 	this->algo = 0;
@@ -18,4 +27,26 @@ uAlgoFramework::uAlgoFramework(){
 uAlgoFramework::uAlgoFramework(int algo){
 	this->algo = algo;
 	rec[0] = rec[1] = rec[2] = rec[3] = 0;	
+}
+
+void uAlgoFramework::runAlgo(char * outputFile, UTransactionDatabase * database, double minsupp){
+
+	this->database = database;
+	this->N = database->getN();
+	this->M = database->getM();
+	this->minSupRelative = minsupp * N;
+	this->verticalDB = database->getVerticalDatabase();
+	this->writer.open(outputFile);
+
+	itemsetCount = 0;
+	long totalInOneFrequent = 0l;
+
+	vector<int> * oneFrequentItems = new vector<int>();
+
+	for( map<int, set<TidAndProb *> *>::iterator i = verticalDB->begin(); i != verticalDB->end(); i++){
+		set<TidAndProb *> *tidset = i->second;
+		double expectedSup = calculateSup(tidset);
+		int item = i->first;
+		cout <<"item: #"<< item << " Expected support: " << expectedSup <<endl;
+	}
 }

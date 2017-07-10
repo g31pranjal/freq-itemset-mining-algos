@@ -1,4 +1,5 @@
 #include "UTransactionDatabase.h"
+#include "uAlgoFramework.h"
 
 #include <vector>
 #include <iostream>
@@ -30,6 +31,8 @@ int main(int argc, char const *argv[])
 	database->loadFile(filepath);
 	//database->printHorizontalDatabase();
 	database->printVerticalDatabase();
+	uAlgoFramework * algo = new uAlgoFramework();
+	algo->runAlgo(NULL, database, 0.01);
 	delete database;
 	return 0;
 }

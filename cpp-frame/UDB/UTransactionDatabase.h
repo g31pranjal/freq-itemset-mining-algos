@@ -28,6 +28,7 @@ class UTransactionDatabase{
 		void printVerticalDatabase();
 		int getN();
 		int getM();
+		map<int, set<TidAndProb *> *> * getVerticalDatabase();
 		void dismantleHorizontalDatabase();
 		void dismantleItems();
 		void dismantleVerticalDatabase();
