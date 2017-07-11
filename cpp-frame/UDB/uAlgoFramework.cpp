@@ -61,4 +61,39 @@ void uAlgoFramework::runAlgo(char * outputFile, UTransactionDatabase * database,
 	}
 
 	cout << totalInOneFrequent << endl;
+
+	if (oneFrequentItems->size() > 0) {
+		double avgTidsetSize =  (totalInOneFrequent / oneFrequentItems->size());
+		cout << "The avg length for one item set is : " << avgTidsetSize << endl;
+		sort(oneFrequentItems->begin(), oneFrequentItems->end(), [this] (int arg0, int arg1) {
+                        return this->verticalDB->at(arg0)->size() < this->verticalDB->at(arg1)->size();
+                });
+	}
+
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
