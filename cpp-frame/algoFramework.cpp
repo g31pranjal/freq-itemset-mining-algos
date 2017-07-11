@@ -457,7 +457,7 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
-	cout << "Prefix : " << endl;
+	cout << "Prefix : " ;
 	for(int i=0;i<prefixLength;i++)
 		cout << prefix[i] << ", ";
 	cout << endl;
@@ -722,7 +722,7 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> DECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
-	cout << "Prefix : " << endl;
+	cout << "Prefix : ";
 	for(int i=0;i<prefixLength;i++)
 		cout << prefix[i] << ", ";
 	cout << endl;
@@ -730,6 +730,7 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 	rec[3]++;
 	
 	int length = prefixLength+1;
+
 	
 	if(equivalenceClassItems->size() == 1) {
 		
@@ -746,6 +747,7 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 
 		return;
 	}
+
 
 	if(equivalenceClassItems->size() == 2) {
 		
@@ -766,9 +768,6 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 			int newPrefixLength = prefixLength+1;
 			prefix[prefixLength] = itemI;
 			save(prefix, newPrefixLength, itemJ, supportIJ);
-		}
-		else {
-			delete diffsetIJ;
 		}
 
 		delete diffsetIJ;
@@ -816,11 +815,14 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 				delete diffsetIJ;
 			}
 		}
+
 		
 		if(equivalenceClassISuffixItems->size() > 0) {
 
 			prefix[prefixLength] = suffixI;
 			int newPrefixLength = prefixLength+1;
+
+
 			
 			if(algo == 3) {
 
