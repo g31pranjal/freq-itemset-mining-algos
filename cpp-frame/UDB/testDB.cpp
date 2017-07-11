@@ -24,15 +24,19 @@ string getFilepath(char filename[]) {
 
 }
 
-int main(int argc, char const *argv[])
-{
+int main(int argc, char const *argv[]) {
+
 	string filepath = getFilepath("../../datasets/uncertainSample.txt");
+	
 	UTransactionDatabase * database = new UTransactionDatabase();
 	database->loadFile(filepath);
-	//database->printHorizontalDatabase();
+
 	database->printVerticalDatabase();
+	
 	uAlgoFramework * algo = new uAlgoFramework();
-	algo->runAlgo(NULL, database, 0.01);
+	// algo->runAlgo(NULL, database, 0.01);
 	delete database;
+	delete algo;
+	
 	return 0;
 }
