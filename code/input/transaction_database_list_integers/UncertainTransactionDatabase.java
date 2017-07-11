@@ -13,12 +13,13 @@ import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+
 public class UncertainTransactionDatabase{
     // this is the set of items in the database
     private final Set<Integer> allItems = new HashSet<Integer>();
     // this is the list of transactions in the database
     private final List<UncertainItemset> transactions = new ArrayList<UncertainItemset>();
-    private final Map<Integer, Set<TidAndProb>> verticalDB = new HashMap<Integer, Set<TidAndProb>>();
+    private final Map<Integer, Set<TidAndProb>> verticalDB goes= new HashMap<Integer, Set<TidAndProb>>();
 
     /**
      * Load a transaction database from a file.
@@ -41,7 +42,7 @@ public class UncertainTransactionDatabase{
                     continue;
                 }
 
-                // process the transaction
+                // process the transactionpackage code.algorithms.frequentpatterns;
                 processTransactions(thisLine.split(" "));
             }
         } catch (Exception e) {
@@ -59,7 +60,7 @@ public class UncertainTransactionDatabase{
         for (int i = 0; i < transactions.size(); i++) {
             //get the current transaction
             UncertainItemset currTransaction = transactions.get(i);
-            // for each item in current transaction
+            // for each item in current transactionpackage code.algorithms.frequentpatterns;
             System.out.print("Current Transaction: "+(i)+" number of items is: "+ currTransaction.size()+" Items are: ");
             for (int j = 0; j < currTransaction.size(); j++ ) {
                 Integer item = currTransaction.get(j).getId();
@@ -74,17 +75,21 @@ public class UncertainTransactionDatabase{
             }
             System.out.println();
         }
-        System.out.println("testing..........................");
-        System.out.println(verticalDB.size());
+//        System.out.println("testing..........................");
+//        System.out.println(verticalDB.size());
 //        for (int i = 0; i < verticalDB.size(); i++) {
 //            System.out.print("Item#: "+i+" ");
 //            System.out.println(verticalDB.get(i));
 //        }
-        for (Map.Entry<Integer, Set<TidAndProb>> entry:verticalDB.entrySet()) {
-            Integer itemID = entry.getKey();
-            System.out.print("Item#: "+itemID+" ");
-            System.out.println(entry.getValue());
-        }
+//        for (Map.Entry<Integer, Set<TidAndProb>> entry:verticalDB.entrySet()) {
+//            Integer itemID = entry.getKey();
+//            System.out.print("Item#: "+itemID+" ");
+//            System.out.println(entry.getValue());
+//        }
+    }
+
+    public Map<Integer, Set<TidAndProb>> getVerticalDB(){
+        return this.verticalDB;
     }
 
     private void processTransactions(String itemsString[]) {
@@ -139,6 +144,7 @@ public class UncertainTransactionDatabase{
     public int size() {
         return transactions.size();
     }
+    public int getN(){return transactions.size();}
 
     /**
      * Get the list of transactions.
@@ -154,6 +160,17 @@ public class UncertainTransactionDatabase{
      */
     public Set<Integer> getAllItems() {
         return allItems;
+    }
+
+    public void printVerticalDB(){
+        System.out.print("The Vertical Database.......................... # of items: ");
+        System.out.println(verticalDB.size());
+
+        for (Map.Entry<Integer, Set<TidAndProb>> entry:verticalDB.entrySet()) {
+            Integer itemID = entry.getKey();
+            System.out.print("Item#: "+itemID+" ");
+            System.out.println(entry.getValue());
+        }
     }
 
 }

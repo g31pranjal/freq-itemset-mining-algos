@@ -7,8 +7,8 @@ public class UItem{
     private final double probability;
 
     public UItem(int id, double probability){
-        this.id = id;
-        this.probability = probability;
+        this->id = id;
+        this->probability = probability;
     }
 
     public int getId(){
