@@ -8,4 +8,3 @@ clean:
 	rm -rf *.out
 	rm -rf switch
 	rm -rf out*
-	rm -rf massif*

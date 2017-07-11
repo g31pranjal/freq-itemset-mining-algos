@@ -1,0 +1,377 @@
+--------------------------------------------------------------------------------
+Command:            ./switch 0
+Massif arguments:   (none)
+ms_print arguments: massif.out.13490
+--------------------------------------------------------------------------------
+
+
+    MB
+39.37^   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     |   #                                                                    
+     | ::#                                                                    
+     | : #::::@@::::@@:::@::::::::::::::::::::@@:::::::::@::::@::::@:::::::::@
+     | : #::: @ ::: @ :::@: :: :: :::: ::: :::@ :: : : : @: : @:: :@:: : : : @
+     | : #::: @ ::: @ :::@: :: :: :::: ::: :::@ :: : : : @: : @:: :@:: : : : @
+   0 +----------------------------------------------------------------------->Gi
+     0                                                                   114.6
+
+Number of snapshots: 51
+ Detailed snapshots: [2 (peak), 6, 10, 14, 30, 36, 39, 43, 49]
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  0              0                0                0             0            0
+  1  2,138,231,057        8,482,752        6,474,229     2,008,523            0
+  2  5,259,570,658       41,282,360       30,081,133    11,201,227            0
+72.87% (30,081,133B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->57.06% (23,553,680B) 0x407FEC: __gnu_cxx::new_allocator<std::_Rb_tree_node<int> >::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->57.06% (23,553,680B) 0x407D27: std::allocator_traits<std::allocator<std::_Rb_tree_node<int> > >::allocate(std::allocator<std::_Rb_tree_node<int> >&, unsigned long) (alloc_traits.h:491)
+|   ->57.06% (23,553,680B) 0x4079DF: std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_get_node() (stl_tree.h:491)
+|     ->57.06% (23,553,680B) 0x407528: std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_create_node<int const&>(int const&) (stl_tree.h:545)
+|       ->57.06% (23,553,680B) 0x406F7D: std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node::operator()<int const&>(int const&) const (stl_tree.h:459)
+|         ->57.06% (23,553,680B) 0x40632E: std::_Rb_tree_iterator<int> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_<int const&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, int const&, std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_Alloc_node&) (stl_tree.h:1509)
+|           ->57.06% (23,553,680B) 0x404ECD: std::pair<std::_Rb_tree_iterator<int>, bool> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_unique<int const&>(int const&) (stl_tree.h:1870)
+|             ->57.06% (23,553,680B) 0x40426C: std::set<int, std::less<int>, std::allocator<int> >::insert(int const&) (stl_set.h:485)
+|               ->55.62% (22,962,320B) 0x403433: transactionDatabase::loadFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (transactionDatabase.cpp:65)
+|               | ->55.62% (22,962,320B) 0x40299B: main (alterDB.cpp:35)
+|               |   
+|               ->01.43% (591,360B) 0x403610: transactionDatabase::addTransaction(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (transactionDatabase.cpp:84)
+|                 ->01.43% (591,360B) 0x403206: transactionDatabase::loadFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (transactionDatabase.cpp:44)
+|                   ->01.43% (591,360B) 0x40299B: main (alterDB.cpp:35)
+|                     
+->07.63% (3,151,872B) 0x4075EC: __gnu_cxx::new_allocator<int>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->07.63% (3,151,872B) 0x40704B: std::allocator_traits<std::allocator<int> >::allocate(std::allocator<int>&, unsigned long) (alloc_traits.h:491)
+|   ->07.63% (3,151,872B) 0x4065A6: std::_Vector_base<int, std::allocator<int> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->07.63% (3,151,872B) 0x40509A: void std::vector<int, std::allocator<int> >::_M_emplace_back_aux<int const&>(int const&) (vector.tcc:412)
+|       ->07.63% (3,151,872B) 0x404491: std::vector<int, std::allocator<int> >::push_back(int const&) (stl_vector.h:923)
+|         ->07.63% (3,151,872B) 0x4035FA: transactionDatabase::addTransaction(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (transactionDatabase.cpp:83)
+|           ->07.63% (3,151,872B) 0x403206: transactionDatabase::loadFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (transactionDatabase.cpp:44)
+|             ->07.63% (3,151,872B) 0x40299B: main (alterDB.cpp:35)
+|               
+->03.27% (1,349,688B) 0x403580: transactionDatabase::addTransaction(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (transactionDatabase.cpp:79)
+| ->03.27% (1,349,688B) 0x403206: transactionDatabase::loadFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (transactionDatabase.cpp:44)
+|   ->03.27% (1,349,688B) 0x40299B: main (alterDB.cpp:35)
+|     
+->01.72% (709,632B) 0x407EF3: __gnu_cxx::new_allocator<std::_Rb_tree_node<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->01.72% (709,632B) 0x407CC4: std::allocator_traits<std::allocator<std::_Rb_tree_node<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > > >::allocate(std::allocator<std::_Rb_tree_node<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >&, unsigned long) (alloc_traits.h:491)
+|   ->01.72% (709,632B) 0x4078C7: std::_Rb_tree<int, std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*>, std::_Select1st<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, std::less<int>, std::allocator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::_M_get_node() (stl_tree.h:491)
+|     ->01.72% (709,632B) 0x4074AC: std::_Rb_tree_node<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >* std::_Rb_tree<int, std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*>, std::_Select1st<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, std::less<int>, std::allocator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::_M_create_node<std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*> >(std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*>&&) (stl_tree.h:545)
+|       ->01.72% (709,632B) 0x406DFF: std::_Rb_tree_node<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >* std::_Rb_tree<int, std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*>, std::_Select1st<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, std::less<int>, std::allocator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::_Alloc_node::operator()<std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*> >(std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*>&&) const (stl_tree.h:459)
+|         ->01.72% (709,632B) 0x405F9A: std::_Rb_tree_iterator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > std::_Rb_tree<int, std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*>, std::_Select1st<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, std::less<int>, std::allocator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::_M_insert_<std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*>, std::_Rb_tree<int, std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*>, std::_Select1st<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, std::less<int>, std::allocator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::_Alloc_node>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*>&&, std::_Rb_tree<int, std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*>, std::_Select1st<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, std::less<int>, std::allocator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::_Alloc_node&) (stl_tree.h:1509)
+|           ->01.72% (709,632B) 0x404CD7: std::pair<std::_Rb_tree_iterator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, bool> std::_Rb_tree<int, std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*>, std::_Select1st<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, std::less<int>, std::allocator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::_M_insert_unique<std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*> >(std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*>&&) (stl_tree.h:1870)
+|             ->01.72% (709,632B) 0x4040CA: std::pair<std::_Rb_tree_iterator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> >, bool> std::map<int, std::set<int, std::less<int>, std::allocator<int> >*, std::less<int>, std::allocator<std::pair<int const, std::set<int, std::less<int>, std::allocator<int> >*> > >::insert<std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*>, void>(std::pair<int, std::set<int, std::less<int>, std::allocator<int> >*>&&) (stl_map.h:621)
+|               ->01.72% (709,632B) 0x4033DA: transactionDatabase::loadFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (transactionDatabase.cpp:60)
+|                 ->01.72% (709,632B) 0x40299B: main (alterDB.cpp:35)
+|                   
+->01.72% (709,632B) 0x403369: transactionDatabase::loadFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (transactionDatabase.cpp:59)
+| ->01.72% (709,632B) 0x40299B: main (alterDB.cpp:35)
+|   
+->01.27% (524,288B) 0x4076A2: __gnu_cxx::new_allocator<std::vector<int, std::allocator<int> >*>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->01.27% (524,288B) 0x407120: std::allocator_traits<std::allocator<std::vector<int, std::allocator<int> >*> >::allocate(std::allocator<std::vector<int, std::allocator<int> >*>&, unsigned long) (alloc_traits.h:491)
+|   ->01.27% (524,288B) 0x406786: std::_Vector_base<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->01.27% (524,288B) 0x4052CC: void std::vector<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::_M_emplace_back_aux<std::vector<int, std::allocator<int> >* const&>(std::vector<int, std::allocator<int> >* const&) (vector.tcc:412)
+|       ->01.27% (524,288B) 0x4044FD: std::vector<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::push_back(std::vector<int, std::allocator<int> >* const&) (stl_vector.h:923)
+|         ->01.27% (524,288B) 0x40363D: transactionDatabase::addTransaction(std::vector<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >, std::allocator<std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> > > >) (transactionDatabase.cpp:86)
+|           ->01.27% (524,288B) 0x403206: transactionDatabase::loadFile(std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >) (transactionDatabase.cpp:44)
+|             ->01.27% (524,288B) 0x40299B: main (alterDB.cpp:35)
+|               
+->00.20% (82,341B) in 1+ places, all below ms_print's threshold (01.00%)
+
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  3  7,920,476,475        7,235,760        7,211,578        24,182            0
+  4  9,414,261,541        7,242,768        7,218,578        24,190            0
+  5 11,748,577,343        7,235,760        7,211,578        24,182            0
+  6 15,138,160,895        7,249,816        7,225,610        24,206            0
+99.67% (7,225,610B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->97.09% (7,039,032B) 0x412756: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->97.09% (7,039,032B) 0x412464: std::allocator_traits<std::allocator<unsigned long> >::allocate(std::allocator<unsigned long>&, unsigned long) (alloc_traits.h:491)
+|   ->97.09% (7,039,032B) 0x411ED8: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->96.90% (7,024,968B) 0x411014: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:557)
+|     | ->96.90% (7,024,968B) 0x4103A7: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:676)
+|     |   ->96.90% (7,024,968B) 0x40F181: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:405)
+|     |     ->96.90% (7,024,968B) 0x40E4F3: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:617)
+|     |       ->96.80% (7,017,936B) 0x408B19: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:139)
+|     |       | ->96.80% (7,017,936B) 0x4087EA: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:79)
+|     |       |   ->96.80% (7,017,936B) 0x402A2C: main (alterDB.cpp:44)
+|     |       |     
+|     |       ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     |       
+|     ->00.19% (14,064B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.57% (113,874B) in 27 places, all below massif's threshold (1.00%)
+| 
+->01.00% (72,704B) 0x4EBAEFE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+  ->01.00% (72,704B) 0x40106B8: call_init.part.0 (dl-init.c:72)
+    ->01.00% (72,704B) 0x40107C9: _dl_init (dl-init.c:30)
+      ->01.00% (72,704B) 0x4000C68: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+        ->01.00% (72,704B) 0x0: ???
+          ->01.00% (72,704B) 0xFFF000095: ???
+            ->01.00% (72,704B) 0xFFF00009E: ???
+              
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+  7 17,359,751,379        7,242,768        7,218,578        24,190            0
+  8 19,068,639,254        7,249,816        7,225,610        24,206            0
+  9 21,290,229,652        7,242,768        7,218,578        24,190            0
+ 10 24,397,675,497        7,242,768        7,218,578        24,190            0
+99.67% (7,218,578B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->97.09% (7,032,000B) 0x412756: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->97.09% (7,032,000B) 0x412464: std::allocator_traits<std::allocator<unsigned long> >::allocate(std::allocator<unsigned long>&, unsigned long) (alloc_traits.h:491)
+|   ->97.09% (7,032,000B) 0x411ED8: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->96.99% (7,024,968B) 0x411014: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:557)
+|     | ->96.99% (7,024,968B) 0x4103A7: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:676)
+|     |   ->96.99% (7,024,968B) 0x40F181: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:405)
+|     |     ->96.99% (7,024,968B) 0x40E4F3: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:617)
+|     |       ->96.90% (7,017,936B) 0x408B19: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:139)
+|     |       | ->96.90% (7,017,936B) 0x4087EA: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:79)
+|     |       |   ->96.90% (7,017,936B) 0x402A2C: main (alterDB.cpp:44)
+|     |       |     
+|     |       ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     |       
+|     ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.57% (113,874B) in 27 places, all below massif's threshold (1.00%)
+| 
+->01.00% (72,704B) 0x4EBAEFE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+  ->01.00% (72,704B) 0x40106B8: call_init.part.0 (dl-init.c:72)
+    ->01.00% (72,704B) 0x40107C9: _dl_init (dl-init.c:30)
+      ->01.00% (72,704B) 0x4000C68: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+        ->01.00% (72,704B) 0x0: ???
+          ->01.00% (72,704B) 0xFFF000095: ???
+            ->01.00% (72,704B) 0xFFF00009E: ???
+              
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 11 27,791,101,113        7,235,760        7,211,578        24,182            0
+ 12 29,972,581,979        7,242,808        7,218,610        24,198            0
+ 13 31,426,926,962        7,242,768        7,218,578        24,190            0
+ 14 34,093,192,799        7,235,760        7,211,578        24,182            0
+99.67% (7,211,578B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->97.09% (7,024,968B) 0x412756: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->97.09% (7,024,968B) 0x412464: std::allocator_traits<std::allocator<unsigned long> >::allocate(std::allocator<unsigned long>&, unsigned long) (alloc_traits.h:491)
+|   ->97.09% (7,024,968B) 0x411ED8: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->97.09% (7,024,968B) 0x411014: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:557)
+|     | ->97.09% (7,024,968B) 0x4103A7: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:676)
+|     |   ->97.09% (7,024,968B) 0x40F181: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:405)
+|     |     ->97.09% (7,024,968B) 0x40E4F3: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:617)
+|     |       ->96.99% (7,017,936B) 0x408B19: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:139)
+|     |       | ->96.99% (7,017,936B) 0x4087EA: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:79)
+|     |       |   ->96.99% (7,017,936B) 0x402A2C: main (alterDB.cpp:44)
+|     |       |     
+|     |       ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     |       
+|     ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.57% (113,906B) in 27 places, all below massif's threshold (1.00%)
+| 
+->01.00% (72,704B) 0x4EBAEFE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+  ->01.00% (72,704B) 0x40106B8: call_init.part.0 (dl-init.c:72)
+    ->01.00% (72,704B) 0x40107C9: _dl_init (dl-init.c:30)
+      ->01.00% (72,704B) 0x4000C68: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+        ->01.00% (72,704B) 0x0: ???
+          ->01.00% (72,704B) 0xFFF000095: ???
+            ->01.00% (72,704B) 0xFFF00009E: ???
+              
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 15 35,775,382,561        7,242,768        7,218,578        24,190            0
+ 16 37,878,103,491        7,249,816        7,225,610        24,206            0
+ 17 40,821,933,605        7,249,816        7,225,610        24,206            0
+ 18 42,924,682,846        7,235,760        7,211,578        24,182            0
+ 19 45,447,956,422        7,249,816        7,225,610        24,206            0
+ 20 48,812,341,829        7,249,816        7,225,610        24,206            0
+ 21 50,494,534,489        7,249,816        7,225,610        24,206            0
+ 22 52,597,283,401        7,235,760        7,211,578        24,182            0
+ 23 54,279,475,258        7,249,816        7,225,610        24,206            0
+ 24 57,072,843,096        7,242,768        7,218,578        24,190            0
+ 25 59,025,014,023        7,242,768        7,218,578        24,190            0
+ 26 61,465,249,844        7,242,768        7,218,578        24,190            0
+ 27 63,417,508,845        7,242,768        7,218,578        24,190            0
+ 28 65,857,832,381        7,242,768        7,218,578        24,190            0
+ 29 67,810,071,193        7,242,768        7,218,578        24,190            0
+ 30 69,762,257,086        7,235,760        7,211,578        24,182            0
+99.67% (7,211,578B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->97.09% (7,024,968B) 0x412756: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->97.09% (7,024,968B) 0x412464: std::allocator_traits<std::allocator<unsigned long> >::allocate(std::allocator<unsigned long>&, unsigned long) (alloc_traits.h:491)
+|   ->97.09% (7,024,968B) 0x411ED8: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->97.09% (7,024,968B) 0x411014: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:557)
+|     | ->97.09% (7,024,968B) 0x4103A7: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:676)
+|     |   ->97.09% (7,024,968B) 0x40F181: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:405)
+|     |     ->97.09% (7,024,968B) 0x40E4F3: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:617)
+|     |       ->96.99% (7,017,936B) 0x408B19: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:139)
+|     |       | ->96.99% (7,017,936B) 0x4087EA: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:79)
+|     |       |   ->96.99% (7,017,936B) 0x402A2C: main (alterDB.cpp:44)
+|     |       |     
+|     |       ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     |       
+|     ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.57% (113,906B) in 31 places, all below massif's threshold (1.00%)
+| 
+->01.00% (72,704B) 0x4EBAEFE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+  ->01.00% (72,704B) 0x40106B8: call_init.part.0 (dl-init.c:72)
+    ->01.00% (72,704B) 0x40107C9: _dl_init (dl-init.c:30)
+      ->01.00% (72,704B) 0x4000C68: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+        ->01.00% (72,704B) 0x0: ???
+          ->01.00% (72,704B) 0xFFF000095: ???
+            ->01.00% (72,704B) 0xFFF00009E: ???
+              
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 31 72,202,519,516        7,242,768        7,218,578        24,190            0
+ 32 74,154,768,446        7,235,760        7,211,578        24,182            0
+ 33 77,571,088,832        7,242,768        7,218,578        24,190            0
+ 34 81,205,530,191        7,242,768        7,218,578        24,190            0
+ 35 84,569,959,248        7,242,768        7,218,578        24,190            0
+ 36 87,934,438,988        7,235,760        7,211,578        24,182            0
+99.67% (7,211,578B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->97.09% (7,024,968B) 0x412756: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->97.09% (7,024,968B) 0x412464: std::allocator_traits<std::allocator<unsigned long> >::allocate(std::allocator<unsigned long>&, unsigned long) (alloc_traits.h:491)
+|   ->97.09% (7,024,968B) 0x411ED8: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->97.09% (7,024,968B) 0x411014: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:557)
+|     | ->97.09% (7,024,968B) 0x4103A7: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:676)
+|     |   ->97.09% (7,024,968B) 0x40F181: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:405)
+|     |     ->97.09% (7,024,968B) 0x40E4F3: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:617)
+|     |       ->96.99% (7,017,936B) 0x408B19: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:139)
+|     |       | ->96.99% (7,017,936B) 0x4087EA: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:79)
+|     |       |   ->96.99% (7,017,936B) 0x402A2C: main (alterDB.cpp:44)
+|     |       |     
+|     |       ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     |       
+|     ->00.00% (0B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.57% (113,906B) in 32 places, all below massif's threshold (1.00%)
+| 
+->01.00% (72,704B) 0x4EBAEFE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+  ->01.00% (72,704B) 0x40106B8: call_init.part.0 (dl-init.c:72)
+    ->01.00% (72,704B) 0x40107C9: _dl_init (dl-init.c:30)
+      ->01.00% (72,704B) 0x4000C68: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+        ->01.00% (72,704B) 0x0: ???
+          ->01.00% (72,704B) 0xFFF000095: ???
+            ->01.00% (72,704B) 0xFFF00009E: ???
+              
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 37 90,457,803,164        7,242,768        7,218,578        24,190            0
+ 38 93,822,359,063        7,235,760        7,211,578        24,182            0
+ 39 96,345,685,323        7,242,768        7,218,578        24,190            0
+99.67% (7,218,578B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->97.09% (7,032,000B) 0x412756: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->97.09% (7,032,000B) 0x412464: std::allocator_traits<std::allocator<unsigned long> >::allocate(std::allocator<unsigned long>&, unsigned long) (alloc_traits.h:491)
+|   ->97.09% (7,032,000B) 0x411ED8: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->96.99% (7,024,968B) 0x411014: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:557)
+|     | ->96.99% (7,024,968B) 0x4103A7: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:676)
+|     |   ->96.99% (7,024,968B) 0x40F181: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:405)
+|     |     ->96.99% (7,024,968B) 0x40E4F3: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:617)
+|     |       ->96.90% (7,017,936B) 0x408B19: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:139)
+|     |       | ->96.90% (7,017,936B) 0x4087EA: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:79)
+|     |       |   ->96.90% (7,017,936B) 0x402A2C: main (alterDB.cpp:44)
+|     |       |     
+|     |       ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     |       
+|     ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.57% (113,874B) in 34 places, all below massif's threshold (1.00%)
+| 
+->01.00% (72,704B) 0x4EBAEFE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+  ->01.00% (72,704B) 0x40106B8: call_init.part.0 (dl-init.c:72)
+    ->01.00% (72,704B) 0x40107C9: _dl_init (dl-init.c:30)
+      ->01.00% (72,704B) 0x4000C68: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+        ->01.00% (72,704B) 0x0: ???
+          ->01.00% (72,704B) 0xFFF000095: ???
+            ->01.00% (72,704B) 0xFFF00009E: ???
+              
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 40 98,027,915,212        7,242,768        7,218,578        24,190            0
+ 41 100,551,273,066        7,235,760        7,211,578        24,182            0
+ 42 103,074,636,699        7,235,760        7,211,578        24,182            0
+ 43 104,756,847,478        7,249,816        7,225,610        24,206            0
+99.67% (7,225,610B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->97.09% (7,039,032B) 0x412756: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->97.09% (7,039,032B) 0x412464: std::allocator_traits<std::allocator<unsigned long> >::allocate(std::allocator<unsigned long>&, unsigned long) (alloc_traits.h:491)
+|   ->97.09% (7,039,032B) 0x411ED8: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->96.90% (7,024,968B) 0x411014: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:557)
+|     | ->96.90% (7,024,968B) 0x4103A7: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:676)
+|     |   ->96.90% (7,024,968B) 0x40F181: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:405)
+|     |     ->96.90% (7,024,968B) 0x40E4F3: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:617)
+|     |       ->96.80% (7,017,936B) 0x408B19: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:139)
+|     |       | ->96.80% (7,017,936B) 0x4087EA: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:79)
+|     |       |   ->96.80% (7,017,936B) 0x402A2C: main (alterDB.cpp:44)
+|     |       |     
+|     |       ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     |       
+|     ->00.19% (14,064B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.57% (113,874B) in 34 places, all below massif's threshold (1.00%)
+| 
+->01.00% (72,704B) 0x4EBAEFE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+  ->01.00% (72,704B) 0x40106B8: call_init.part.0 (dl-init.c:72)
+    ->01.00% (72,704B) 0x40107C9: _dl_init (dl-init.c:30)
+      ->01.00% (72,704B) 0x4000C68: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+        ->01.00% (72,704B) 0x0: ???
+          ->01.00% (72,704B) 0xFFF000095: ???
+            ->01.00% (72,704B) 0xFFF00009E: ???
+              
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 44 107,280,171,685        7,235,760        7,211,578        24,182            0
+ 45 108,962,445,298        7,235,760        7,211,578        24,182            0
+ 46 112,326,889,356        7,271,616        7,243,194        28,422            0
+ 47 115,691,393,487        7,235,760        7,211,578        24,182            0
+ 48 118,214,700,457        7,235,760        7,211,578        24,182            0
+ 49 121,579,183,101        7,249,816        7,225,610        24,206            0
+99.67% (7,225,610B) (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+->97.09% (7,039,032B) 0x412756: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+| ->97.09% (7,039,032B) 0x412464: std::allocator_traits<std::allocator<unsigned long> >::allocate(std::allocator<unsigned long>&, unsigned long) (alloc_traits.h:491)
+|   ->97.09% (7,039,032B) 0x411ED8: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:170)
+|     ->96.90% (7,024,968B) 0x411014: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:557)
+|     | ->96.90% (7,024,968B) 0x4103A7: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:676)
+|     |   ->96.90% (7,024,968B) 0x40F181: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:405)
+|     |     ->96.90% (7,024,968B) 0x40E4F3: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:617)
+|     |       ->96.80% (7,017,936B) 0x408B19: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:139)
+|     |       | ->96.80% (7,017,936B) 0x4087EA: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:79)
+|     |       |   ->96.80% (7,017,936B) 0x402A2C: main (alterDB.cpp:44)
+|     |       |     
+|     |       ->00.10% (7,032B) in 1+ places, all below ms_print's threshold (01.00%)
+|     |       
+|     ->00.19% (14,064B) in 1+ places, all below ms_print's threshold (01.00%)
+|     
+->01.57% (113,874B) in 36 places, all below massif's threshold (1.00%)
+| 
+->01.00% (72,704B) 0x4EBAEFE: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.21)
+  ->01.00% (72,704B) 0x40106B8: call_init.part.0 (dl-init.c:72)
+    ->01.00% (72,704B) 0x40107C9: _dl_init (dl-init.c:30)
+      ->01.00% (72,704B) 0x4000C68: ??? (in /lib/x86_64-linux-gnu/ld-2.23.so)
+        ->01.00% (72,704B) 0x0: ???
+          ->01.00% (72,704B) 0xFFF000095: ???
+            ->01.00% (72,704B) 0xFFF00009E: ???
+              
+--------------------------------------------------------------------------------
+  n        time(i)         total(B)   useful-heap(B) extra-heap(B)    stacks(B)
+--------------------------------------------------------------------------------
+ 50 123,033,534,750        7,242,768        7,218,578        24,190            0
