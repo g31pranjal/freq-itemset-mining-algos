@@ -2,7 +2,6 @@
 #include "TidAndProb.h"
 #include "UItem.h"
 
-
 #include <fstream>
 #include <sstream>
 #include <string>
@@ -22,7 +21,7 @@ vector<string> stringSplit(string str, string sep){
 	current = strtok(cstr, sep.c_str());
 	while(current != NULL){
 		arr.push_back(current);
-		current=strtok(NULL,sep.c_str());
+		current = strtok(NULL,sep.c_str());
 	}
 	return arr;
 }
@@ -68,11 +67,10 @@ void UTransactionDatabase::loadFile(string path){
 			if (verticalDB->find(itemID) == verticalDB->end()){
 				st = new set<TidAndProb *>();
 				verticalDB->insert(make_pair(itemID, st));
-			}else{
+			} else
 				st = verticalDB->at(itemID);
-			}
+
 			TidAndProb * newPair = new TidAndProb(transactionID, probability);
-			
 			st->insert(newPair);
 		}
 	}
@@ -85,15 +83,15 @@ void UTransactionDatabase::loadFile(string path){
 
 
 void UTransactionDatabase::addTransaction(vector<string> itemsString){
+	
 	vector<UItem *> * itemset = new vector<UItem *>();
-		
-
+	
 	for (int i = 0; i < itemsString.size(); ++i){
 		vector<string> arr = stringSplit(itemsString.at(i), "(");
 		int itemID = stoi(arr.at(0));
 		double probability = stod( arr.at(1).substr(0,arr.at(1).size() -1) );
 
-		UItem *curr = new UItem(itemID, probability);
+		UItem * curr = new UItem(itemID, probability);
 		itemset->push_back(curr);
 		items->insert(itemID); 
 	}
@@ -101,6 +99,7 @@ void UTransactionDatabase::addTransaction(vector<string> itemsString){
 }
 
 void UTransactionDatabase::printHorizontalDatabase() {
+	
 	cout << "\n... Transaction Database :: (horizontal)\n";
 	int count = 0;
 
@@ -153,38 +152,31 @@ void UTransactionDatabase::dismantleHorizontalDatabase(){
 
 }
 
-void UTransactionDatabase::dismantleItems(){
+void UTransactionDatabase::dismantleItems() {
 	if (items != NULL){
 		delete items;
 		items = NULL;
 	}
 }
 
-void UTransactionDatabase::dismantleVerticalDatabase(){
+void UTransactionDatabase::dismantleVerticalDatabase() {
 	if (verticalDB != NULL){
 		for (map<int, set<TidAndProb *> *>::iterator i = verticalDB->begin(); i != verticalDB->end();i++){
 			if (i->second != NULL){
 				for (set<TidAndProb *>::iterator j = i->second->begin(); j != i->second->end(); j++){
 					if (*j != NULL){
 						delete *j;
-						i->second->erase(j);
 					}
 				}
 				delete i->second;
 			}
-			verticalDB->erase(i);
-			
 		}
-
-		verticalDB->clear();
 		delete verticalDB;
 		verticalDB = NULL;
 	}
-
-
 }
 
-map<int, set<TidAndProb *> *> * UTransactionDatabase::getVerticalDatabase(){
+map<int, set<TidAndProb *> *> * UTransactionDatabase::getVerticalDatabase() {
 	return this->verticalDB;
 }
 
