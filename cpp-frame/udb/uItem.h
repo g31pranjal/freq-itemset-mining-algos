@@ -4,13 +4,13 @@
 
 using namespace std;
 
-class UItem{
+class uItem{
 	private:
 		int itemID;
 		double probability;
 	public:
-		UItem(int itemID, double probability);
-		~ UItem();
+		uItem(int itemID, double probability);
+		~ uItem();
 		int getItemID();
 		double getProbability();
 };

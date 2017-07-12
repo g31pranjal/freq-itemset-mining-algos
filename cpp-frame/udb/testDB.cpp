@@ -7,8 +7,8 @@
 #include <chrono>
 #include <unistd.h>
 
-#include "transactionDatabase.h"
-#include "algoFramework.h"
+#include "uTransactionDatabase.h"
+#include "uAlgoFramework.h"
 
 using namespace std;
 
@@ -24,23 +24,25 @@ string getFilepath(char filename[]) {
 
 }
 
-int main(int argc, char * argv[]) {
+int main(int argc, char const *argv[]) {
 
-	string filepath = getFilepath("../datasets/mushrooms.txt");
+	string filepath = getFilepath("../../datasets/uncertainSample.txt");
 
 	chrono::system_clock::time_point tp1 = chrono::system_clock::now();
-
-	transactionDatabase * database = new transactionDatabase();
+	
+	uTransactionDatabase * database = new uTransactionDatabase();
 	database->loadFile(filepath);
 
-	chrono::system_clock::time_point tp2 = chrono::system_clock::now();
+	database->printVerticalDatabase();
 
+	chrono::system_clock::time_point tp2 = chrono::system_clock::now();
+	
 	if(argc != 2) {
 		cout << "Too few or too many arguments. Aborting ...\n";
 	}
 	else {
-		algoFramework * algo = new algoFramework(atoi(argv[1]));		
-		algo->runAlgo("out.put", database, 0.5);
+		uAlgoFramework * algo = new uAlgoFramework(atoi(argv[1]));		
+		algo->runAlgo("out.put", database, 0.1);
 	
 		delete algo;
 	}

@@ -1,13 +1,13 @@
 #ifndef TIDANDPROB_H
 #define TIDANDPROB_H
 
-class TidAndProb{
+class tidAndProb{
 	private:
 		int tid;
 		double probability;
 	public:
-		TidAndProb(int tid, double probability);
-		~ TidAndProb();
+		tidAndProb(int tid, double probability);
+		~ tidAndProb();
 		int getTid();
 		double getProbability();
 };
