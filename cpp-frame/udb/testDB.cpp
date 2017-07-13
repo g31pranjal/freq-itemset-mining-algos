@@ -27,14 +27,14 @@ string getFilepath(char filename[]) {
 
 int main(int argc, char const *argv[]) {
 
-	// string filepath = getFilepath("../../datasets/uncertainSample.txt");
+	 string filepath = getFilepath("../../datasets/uncertainSample.txt");
 
 	// chrono::system_clock::time_point tp1 = chrono::system_clock::now();
 	
-	// uTransactionDatabase * database = new uTransactionDatabase();
-	// database->loadFile(filepath);
+	 uTransactionDatabase * database = new uTransactionDatabase();
+	 database->loadFile(filepath);
 
-	// database->printVerticalDatabase();
+	 database->printVerticalDatabase();
 
 	// chrono::system_clock::time_point tp2 = chrono::system_clock::now();
 	
@@ -56,12 +56,12 @@ int main(int argc, char const *argv[]) {
 	// cout << " Time taken to the database: " << diff1.count() << " s\n";
 	// cout << " Time taken to run the algorithm: " << diff2.count() << " s\n\n" << endl;
 
-	uTidset * set = new uTidset();
-	set->insert(1, 0.01);
-	set->insert(1,0.02);
-	set->insert(2,0.02);
-	set->insert(3,0.02);
-	set->insert(4,0.02);
-	set->print();
+//	uTidset * set = new uTidset();
+//	set->insert(1, 0.01);
+//	set->insert(1,0.02);
+//	set->insert(2,0.02);
+//	set->insert(3,0.02);
+//	set->insert(4,0.02);
+//	set->print();
 
 }

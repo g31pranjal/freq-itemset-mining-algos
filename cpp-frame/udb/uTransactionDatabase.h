@@ -4,6 +4,7 @@
 
 #include "uItem.h"
 #include "tidAndProb.h"
+#include "uTidset.h"
 
 #include <set>
 #include <vector>
@@ -16,7 +17,7 @@ class uTransactionDatabase{
 	private :
 		set<int> * items;
 		vector<vector<uItem*> *> * horizontalDB;
-		map<int, set<tidAndProb *> *> *verticalDB;
+		map<int, uTidset * > *verticalDB;
 		int N,M;
 
 	public :
@@ -28,7 +29,7 @@ class uTransactionDatabase{
 		void printVerticalDatabase();
 		int getN();
 		int getM();
-		map<int, set<tidAndProb *> *> * getVerticalDatabase();
+		map<int, uTidset *> * getVerticalDatabase();
 		void dismantleHorizontalDatabase();
 		void dismantleItems();
 		void dismantleVerticalDatabase();

@@ -2,6 +2,7 @@
 #define UALGOFRAMEWORK
 
 #include "uTransactionDatabase.h"
+#include "uTidset.h"
 #include <boost/dynamic_bitset.hpp>
 #include <chrono>
 #include <fstream>
@@ -11,7 +12,7 @@ class uAlgoFramework
 	private:
 		double minSupRelative;
 		uTransactionDatabase * database;
-		map<int, set<tidAndProb *> *> * verticalDB;
+		map<int, uTidset *> * verticalDB;
 		int itemsetCount, algo, rec[4], N, M;
 		ofstream writer;
 
