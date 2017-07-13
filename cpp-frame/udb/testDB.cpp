@@ -35,7 +35,7 @@ int main(int argc, char const *argv[]) {
 	 database->loadFile(filepath);
 
 	 database->printVerticalDatabase();
-
+	 delete database;
 	// chrono::system_clock::time_point tp2 = chrono::system_clock::now();
 	
 	// if(argc != 2) {
