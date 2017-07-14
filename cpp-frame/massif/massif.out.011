@@ -1,0 +1,1219 @@
+desc: --massif-out-file=./massif/massif.out.011
+cmd: ./switch 0 0.11
+time_unit: i
+#-----------
+snapshot=0
+#-----------
+time=0
+mem_heap_B=0
+mem_heap_extra_B=0
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=1
+#-----------
+time=180008839
+mem_heap_B=550972
+mem_heap_extra_B=81580
+mem_stacks_B=0
+heap_tree=detailed
+n5: 550972 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 425612 0x406472: __gnu_cxx::new_allocator<int>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n1: 425612 0x405A2F: std::_Vector_base<int, std::allocator<int> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 425612 0x40471A: void std::vector<int, std::allocator<int> >::_M_emplace_back_aux<int const&>(int const&) (vector.tcc:404)
+    n1: 425612 0x403C5F: std::vector<int, std::allocator<int> >::push_back(int const&) (stl_vector.h:911)
+     n1: 425612 0x402E96: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:83)
+      n1: 425612 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+       n0: 425612 0x4022D1: main (alterDB.cpp:34)
+ n1: 79824 0x402E41: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:79)
+  n1: 79824 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+   n0: 79824 0x4022D1: main (alterDB.cpp:34)
+ n1: 32768 0x406596: __gnu_cxx::new_allocator<std::vector<int, std::allocator<int> >*>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n1: 32768 0x405BDD: std::_Vector_base<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 32768 0x40493C: void std::vector<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::_M_emplace_back_aux<std::vector<int, std::allocator<int> >* const&>(std::vector<int, std::allocator<int> >* const&) (vector.tcc:404)
+    n1: 32768 0x403CD9: std::vector<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::push_back(std::vector<int, std::allocator<int> >* const&) (stl_vector.h:911)
+     n1: 32768 0x402EFF: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:86)
+      n1: 32768 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+       n0: 32768 0x4022D1: main (alterDB.cpp:34)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n1: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE48FE: std::basic_ifstream<char, std::char_traits<char> >::basic_ifstream(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x402A08: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:40)
+     n0: 8192 0x4022D1: main (alterDB.cpp:34)
+ n0: 4576 in 8 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=2
+#-----------
+time=366316912
+mem_heap_B=1104666
+mem_heap_extra_B=164334
+mem_stacks_B=0
+heap_tree=detailed
+n4: 1104666 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 863168 0x406472: __gnu_cxx::new_allocator<int>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n1: 863168 0x405A2F: std::_Vector_base<int, std::allocator<int> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 863168 0x40471A: void std::vector<int, std::allocator<int> >::_M_emplace_back_aux<int const&>(int const&) (vector.tcc:404)
+    n1: 863168 0x403C5F: std::vector<int, std::allocator<int> >::push_back(int const&) (stl_vector.h:911)
+     n1: 863168 0x402E96: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:83)
+      n1: 863168 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+       n0: 863168 0x4022D1: main (alterDB.cpp:34)
+ n1: 161832 0x402E41: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:79)
+  n1: 161832 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+   n0: 161832 0x4022D1: main (alterDB.cpp:34)
+ n1: 65536 0x406596: __gnu_cxx::new_allocator<std::vector<int, std::allocator<int> >*>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n1: 65536 0x405BDD: std::_Vector_base<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 65536 0x40493C: void std::vector<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::_M_emplace_back_aux<std::vector<int, std::allocator<int> >* const&>(std::vector<int, std::allocator<int> >* const&) (vector.tcc:404)
+    n1: 65536 0x403CD9: std::vector<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::push_back(std::vector<int, std::allocator<int> >* const&) (stl_vector.h:911)
+     n1: 65536 0x402EFF: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:86)
+      n1: 65536 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+       n0: 65536 0x4022D1: main (alterDB.cpp:34)
+ n0: 14130 in 9 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=3
+#-----------
+time=595082455
+mem_heap_B=3164489
+mem_heap_extra_B=899303
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=4
+#-----------
+time=798017942
+mem_heap_B=5513081
+mem_heap_extra_B=1838359
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=5
+#-----------
+time=933309042
+mem_heap_B=7045801
+mem_heap_extra_B=2450999
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=6
+#-----------
+time=1128071079
+mem_heap_B=9178297
+mem_heap_extra_B=3303527
+mem_stacks_B=0
+heap_tree=peak
+n5: 9178297 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 7747480 0x406C02: __gnu_cxx::new_allocator<std::_Rb_tree_node<int> >::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n1: 7747480 0x4068EC: std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_get_node() (stl_tree.h:370)
+   n1: 7747480 0x4062EB: std::_Rb_tree_node<int>* std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_create_node<int const&>(int const&) (stl_tree.h:403)
+    n1: 7747480 0x4057F7: std::_Rb_tree_iterator<int> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_<int const&>(std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, int const&) (stl_tree.h:1023)
+     n1: 7747480 0x40456A: std::pair<std::_Rb_tree_iterator<int>, bool> std::_Rb_tree<int, int, std::_Identity<int>, std::less<int>, std::allocator<int> >::_M_insert_unique<int const&>(int const&) (stl_tree.h:1382)
+      n2: 7747480 0x403AAB: std::set<int, std::less<int>, std::allocator<int> >::insert(int const&) (stl_set.h:463)
+       n1: 7742720 0x402CDB: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:65)
+        n0: 7742720 0x4022D1: main (alterDB.cpp:34)
+       n0: 4760 in 1 place, below massif's threshold (1.00%)
+ n1: 1077248 0x406472: __gnu_cxx::new_allocator<int>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n1: 1077248 0x405A2F: std::_Vector_base<int, std::allocator<int> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 1077248 0x40471A: void std::vector<int, std::allocator<int> >::_M_emplace_back_aux<int const&>(int const&) (vector.tcc:404)
+    n1: 1077248 0x403C5F: std::vector<int, std::allocator<int> >::push_back(int const&) (stl_vector.h:911)
+     n1: 1077248 0x402E96: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:83)
+      n1: 1077248 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+       n0: 1077248 0x4022D1: main (alterDB.cpp:34)
+ n1: 201984 0x402E41: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:79)
+  n1: 201984 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+   n0: 201984 0x4022D1: main (alterDB.cpp:34)
+ n1: 131072 0x406596: __gnu_cxx::new_allocator<std::vector<int, std::allocator<int> >*>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n1: 131072 0x405BDD: std::_Vector_base<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 131072 0x40493C: void std::vector<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::_M_emplace_back_aux<std::vector<int, std::allocator<int> >* const&>(std::vector<int, std::allocator<int> >* const&) (vector.tcc:404)
+    n1: 131072 0x403CD9: std::vector<std::vector<int, std::allocator<int> >*, std::allocator<std::vector<int, std::allocator<int> >*> >::push_back(std::vector<int, std::allocator<int> >* const&) (stl_vector.h:911)
+     n1: 131072 0x402EFF: transactionDatabase::addTransaction(std::vector<std::string, std::allocator<std::string> >) (transactionDatabase.cpp:86)
+      n1: 131072 0x402AF0: transactionDatabase::loadFile(std::string) (transactionDatabase.cpp:44)
+       n0: 131072 0x4022D1: main (alterDB.cpp:34)
+ n0: 20513 in 10 places, all below massif's threshold (1.00%)
+#-----------
+snapshot=7
+#-----------
+time=1369468827
+mem_heap_B=177247
+mem_heap_extra_B=3145
+mem_stacks_B=0
+heap_tree=detailed
+n5: 177247 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 156288 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 156288 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 98208 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 98208 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 98208 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 98208 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 87648 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 87648 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 87648 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n2: 72864 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n2: 59136 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n2: 46464 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n2: 35904 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+              n2: 26400 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+               n2: 17952 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+                n2: 10560 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+                 n1: 5280 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                  n1: 5280 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                   n0: 5280 0x4023CE: main (alterDB.cpp:46)
+                 n2: 5280 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+                  n1: 3168 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                   n1: 3168 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                    n0: 3168 0x4023CE: main (alterDB.cpp:46)
+                  n2: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+                   n1: 2112 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                    n1: 2112 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                     n0: 2112 0x4023CE: main (alterDB.cpp:46)
+                   n0: 0 in 1 place, below massif's threshold (1.00%)
+                n1: 7392 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                 n1: 7392 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                  n0: 7392 0x4023CE: main (alterDB.cpp:46)
+               n1: 8448 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                n1: 8448 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                 n0: 8448 0x4023CE: main (alterDB.cpp:46)
+              n1: 9504 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+               n1: 9504 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                n0: 9504 0x4023CE: main (alterDB.cpp:46)
+             n1: 10560 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+              n1: 10560 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+               n0: 10560 0x4023CE: main (alterDB.cpp:46)
+            n1: 12672 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+             n1: 12672 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+              n0: 12672 0x4023CE: main (alterDB.cpp:46)
+           n1: 13728 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 13728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 13728 0x4023CE: main (alterDB.cpp:46)
+          n1: 14784 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 14784 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 14784 0x4023CE: main (alterDB.cpp:46)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 10560 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n2: 9504 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n2: 8448 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+          n2: 7392 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n2: 6336 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n2: 5280 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n2: 4224 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+              n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+               n1: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+                n0: 2112 in 2 places, all below massif's threshold (1.00%)
+               n0: 1056 in 1 place, below massif's threshold (1.00%)
+              n0: 1056 in 1 place, below massif's threshold (1.00%)
+             n0: 1056 in 1 place, below massif's threshold (1.00%)
+            n0: 1056 in 1 place, below massif's threshold (1.00%)
+           n0: 1056 in 1 place, below massif's threshold (1.00%)
+          n0: 1056 in 1 place, below massif's threshold (1.00%)
+         n0: 1056 in 1 place, below massif's threshold (1.00%)
+        n0: 1056 in 1 place, below massif's threshold (1.00%)
+       n0: 0 in 1 place, below massif's threshold (1.00%)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n0: 6111 in 22 places, all below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n2: 2656 0x409FC5: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+  n2: 2656 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+   n1: 2208 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+    n0: 2208 in 2 places, all below massif's threshold (1.00%)
+   n0: 448 in 1 place, below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+#-----------
+snapshot=8
+#-----------
+time=1640143377
+mem_heap_B=163857
+mem_heap_extra_B=2879
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=9
+#-----------
+time=1867924221
+mem_heap_B=150453
+mem_heap_extra_B=2635
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=10
+#-----------
+time=2019765480
+mem_heap_B=116199
+mem_heap_extra_B=1961
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=11
+#-----------
+time=2228533073
+mem_heap_B=122733
+mem_heap_extra_B=2067
+mem_stacks_B=0
+heap_tree=detailed
+n6: 122733 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 104544 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 104544 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+   n1: 46464 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 46464 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 46464 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 46464 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 41184 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 41184 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 41184 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n2: 26400 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n2: 16896 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n1: 8448 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+             n1: 8448 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+              n0: 8448 0x4023CE: main (alterDB.cpp:46)
+            n2: 8448 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n1: 6336 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+              n1: 6336 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+               n0: 6336 0x4023CE: main (alterDB.cpp:46)
+             n2: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+              n1: 2112 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+               n1: 2112 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                n0: 2112 0x4023CE: main (alterDB.cpp:46)
+              n0: 0 in 1 place, below massif's threshold (1.00%)
+           n1: 9504 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 9504 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 9504 0x4023CE: main (alterDB.cpp:46)
+          n1: 14784 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 14784 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 14784 0x4023CE: main (alterDB.cpp:46)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 4224 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n1: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+          n0: 2112 in 2 places, all below massif's threshold (1.00%)
+         n0: 1056 in 1 place, below massif's threshold (1.00%)
+        n0: 1056 in 1 place, below massif's threshold (1.00%)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n0: 3021 in 21 places, all below massif's threshold (1.00%)
+ n1: 1728 0x407AFE: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+  n1: 1728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 1728 0x4023CE: main (alterDB.cpp:46)
+ n2: 1248 0x409FC5: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+  n1: 1248 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+   n0: 1248 in 2 places, all below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+#-----------
+snapshot=12
+#-----------
+time=2475262903
+mem_heap_B=151541
+mem_heap_extra_B=2603
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=13
+#-----------
+time=2764920801
+mem_heap_B=148260
+mem_heap_extra_B=2588
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=14
+#-----------
+time=2982130346
+mem_heap_B=145050
+mem_heap_extra_B=2494
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=15
+#-----------
+time=3271749669
+mem_heap_B=113897
+mem_heap_extra_B=1879
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=16
+#-----------
+time=3488978888
+mem_heap_B=143729
+mem_heap_extra_B=2431
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=17
+#-----------
+time=3682044074
+mem_heap_B=144977
+mem_heap_extra_B=2479
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=18
+#-----------
+time=3918825740
+mem_heap_B=158261
+mem_heap_extra_B=2747
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=19
+#-----------
+time=4108242907
+mem_heap_B=143861
+mem_heap_extra_B=2475
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=20
+#-----------
+time=4250304722
+mem_heap_B=143945
+mem_heap_extra_B=2535
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=21
+#-----------
+time=4439723803
+mem_heap_B=140549
+mem_heap_extra_B=2475
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=22
+#-----------
+time=4629120654
+mem_heap_B=158244
+mem_heap_extra_B=2780
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=23
+#-----------
+time=4818527797
+mem_heap_B=139549
+mem_heap_extra_B=2419
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=24
+#-----------
+time=4960589587
+mem_heap_B=134941
+mem_heap_extra_B=2339
+mem_stacks_B=0
+heap_tree=detailed
+n6: 134941 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 116160 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 116160 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+   n1: 58080 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 58080 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 58080 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 58080 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 50688 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 50688 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 50688 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n2: 36960 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n2: 26400 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n2: 17952 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n2: 11616 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+              n2: 6336 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+               n1: 4224 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                n1: 4224 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                 n0: 4224 0x4023CE: main (alterDB.cpp:46)
+               n2: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+                n1: 2112 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                 n1: 2112 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                  n0: 2112 0x4023CE: main (alterDB.cpp:46)
+                n0: 0 in 1 place, below massif's threshold (1.00%)
+              n1: 5280 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+               n1: 5280 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                n0: 5280 0x4023CE: main (alterDB.cpp:46)
+             n1: 6336 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+              n1: 6336 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+               n0: 6336 0x4023CE: main (alterDB.cpp:46)
+            n1: 8448 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+             n1: 8448 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+              n0: 8448 0x4023CE: main (alterDB.cpp:46)
+           n1: 10560 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 10560 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 10560 0x4023CE: main (alterDB.cpp:46)
+          n1: 13728 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 13728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 13728 0x4023CE: main (alterDB.cpp:46)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 6336 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n2: 5280 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n2: 4224 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+          n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n1: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n0: 2112 in 2 places, all below massif's threshold (1.00%)
+           n0: 1056 in 1 place, below massif's threshold (1.00%)
+          n0: 1056 in 1 place, below massif's threshold (1.00%)
+         n0: 1056 in 1 place, below massif's threshold (1.00%)
+        n0: 1056 in 1 place, below massif's threshold (1.00%)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n0: 3325 in 21 places, all below massif's threshold (1.00%)
+ n1: 1728 0x407AFE: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+  n1: 1728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 1728 0x4023CE: main (alterDB.cpp:46)
+ n2: 1536 0x409FC5: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+  n1: 1536 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+   n0: 1536 in 2 places, all below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+#-----------
+snapshot=25
+#-----------
+time=5150011403
+mem_heap_B=138473
+mem_heap_extra_B=2327
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=26
+#-----------
+time=5386771199
+mem_heap_B=126105
+mem_heap_extra_B=2087
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=27
+#-----------
+time=5528836854
+mem_heap_B=115165
+mem_heap_extra_B=1843
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=28
+#-----------
+time=5718262208
+mem_heap_B=136004
+mem_heap_extra_B=2300
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=29
+#-----------
+time=5907685672
+mem_heap_B=97276
+mem_heap_extra_B=1540
+mem_stacks_B=0
+heap_tree=detailed
+n5: 97276 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 80256 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 80256 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n1: 1056 0x407C2A: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:150)
+        n1: 1056 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 1056 0x4023CE: main (alterDB.cpp:46)
+   n1: 22176 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 22176 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 22176 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 22176 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 20064 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 20064 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 20064 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n1: 16896 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 16896 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 16896 0x4023CE: main (alterDB.cpp:46)
+          n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n1: 3168 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 3168 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 3168 0x4023CE: main (alterDB.cpp:46)
+           n0: 0 in 1 place, below massif's threshold (1.00%)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 2112 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n1: 1056 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+         n1: 1056 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+          n0: 1056 0x4023CE: main (alterDB.cpp:46)
+        n2: 1056 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n1: 1056 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+          n1: 1056 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+           n0: 1056 0x4023CE: main (alterDB.cpp:46)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n0: 3100 in 22 places, all below massif's threshold (1.00%)
+ n1: 1728 0x407AFE: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+  n1: 1728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 1728 0x4023CE: main (alterDB.cpp:46)
+#-----------
+snapshot=30
+#-----------
+time=6201581567
+mem_heap_B=131681
+mem_heap_extra_B=2255
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=31
+#-----------
+time=6353415011
+mem_heap_B=144005
+mem_heap_extra_B=2427
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=32
+#-----------
+time=6581155967
+mem_heap_B=160749
+mem_heap_extra_B=2755
+mem_stacks_B=0
+heap_tree=detailed
+n6: 160749 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 140448 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 140448 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 82368 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 82368 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 82368 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 82368 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 74976 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 74976 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 74976 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n2: 55968 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n2: 38016 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n2: 27456 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n2: 17952 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+              n2: 10560 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+               n1: 5280 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                n1: 5280 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                 n0: 5280 0x4023CE: main (alterDB.cpp:46)
+               n2: 5280 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+                n1: 4224 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+                 n1: 4224 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                  n0: 4224 0x4023CE: main (alterDB.cpp:46)
+                n0: 1056 in 1 place, below massif's threshold (1.00%)
+              n1: 7392 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+               n1: 7392 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                n0: 7392 0x4023CE: main (alterDB.cpp:46)
+             n1: 9504 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+              n1: 9504 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+               n0: 9504 0x4023CE: main (alterDB.cpp:46)
+            n1: 10560 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+             n1: 10560 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+              n0: 10560 0x4023CE: main (alterDB.cpp:46)
+           n1: 17952 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 17952 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 17952 0x4023CE: main (alterDB.cpp:46)
+          n1: 19008 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 19008 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 19008 0x4023CE: main (alterDB.cpp:46)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 7392 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n2: 6336 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n2: 5280 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+          n2: 4224 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n1: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n0: 2112 in 2 places, all below massif's threshold (1.00%)
+            n0: 1056 in 1 place, below massif's threshold (1.00%)
+           n0: 1056 in 1 place, below massif's threshold (1.00%)
+          n0: 1056 in 1 place, below massif's threshold (1.00%)
+         n0: 1056 in 1 place, below massif's threshold (1.00%)
+        n0: 1056 in 1 place, below massif's threshold (1.00%)
+       n0: 0 in 1 place, below massif's threshold (1.00%)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n0: 4077 in 21 places, all below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n2: 2304 0x409FC5: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+  n2: 2304 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+   n1: 1728 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+    n0: 1728 in 2 places, all below massif's threshold (1.00%)
+   n0: 576 in 1 place, below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 1728 0x407AFE: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+  n1: 1728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 1728 0x4023CE: main (alterDB.cpp:46)
+#-----------
+snapshot=33
+#-----------
+time=6732992525
+mem_heap_B=136213
+mem_heap_extra_B=2315
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=34
+#-----------
+time=6884813935
+mem_heap_B=121867
+mem_heap_extra_B=2045
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=35
+#-----------
+time=7036650222
+mem_heap_B=113933
+mem_heap_extra_B=1875
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=36
+#-----------
+time=7340295941
+mem_heap_B=121821
+mem_heap_extra_B=2043
+mem_stacks_B=0
+heap_tree=detailed
+n6: 121821 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 103488 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 103488 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+   n1: 45408 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 45408 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 45408 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 45408 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 41184 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 41184 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 41184 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n2: 22176 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n2: 11616 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n2: 6336 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n1: 4224 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+              n1: 4224 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+               n0: 4224 0x4023CE: main (alterDB.cpp:46)
+             n2: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+              n1: 2112 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+               n1: 2112 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                n0: 2112 0x4023CE: main (alterDB.cpp:46)
+              n0: 0 in 1 place, below massif's threshold (1.00%)
+            n1: 5280 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+             n1: 5280 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+              n0: 5280 0x4023CE: main (alterDB.cpp:46)
+           n1: 10560 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 10560 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 10560 0x4023CE: main (alterDB.cpp:46)
+          n1: 19008 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 19008 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 19008 0x4023CE: main (alterDB.cpp:46)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 4224 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n1: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+          n0: 2112 in 2 places, all below massif's threshold (1.00%)
+         n0: 1056 in 1 place, below massif's threshold (1.00%)
+        n0: 1056 in 1 place, below massif's threshold (1.00%)
+       n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n0: 3165 in 21 places, all below massif's threshold (1.00%)
+ n1: 1728 0x407AFE: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+  n1: 1728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 1728 0x4023CE: main (alterDB.cpp:46)
+ n2: 1248 0x409FC5: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+  n1: 1248 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+   n0: 1248 in 2 places, all below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+#-----------
+snapshot=37
+#-----------
+time=7492133116
+mem_heap_B=151669
+mem_heap_extra_B=2619
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=38
+#-----------
+time=7643958370
+mem_heap_B=127253
+mem_heap_extra_B=2123
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=39
+#-----------
+time=7871700012
+mem_heap_B=172617
+mem_heap_extra_B=2935
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=40
+#-----------
+time=8023536726
+mem_heap_B=161605
+mem_heap_extra_B=2715
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=41
+#-----------
+time=8251287942
+mem_heap_B=147228
+mem_heap_extra_B=2492
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=42
+#-----------
+time=8403119997
+mem_heap_B=142761
+mem_heap_extra_B=2359
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=43
+#-----------
+time=8554942245
+mem_heap_B=144989
+mem_heap_extra_B=2451
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=44
+#-----------
+time=8706778010
+mem_heap_B=151637
+mem_heap_extra_B=2603
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=45
+#-----------
+time=9010431480
+mem_heap_B=141557
+mem_heap_extra_B=2411
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=46
+#-----------
+time=9238177878
+mem_heap_B=126175
+mem_heap_extra_B=2025
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=47
+#-----------
+time=9465928742
+mem_heap_B=126205
+mem_heap_extra_B=2115
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=48
+#-----------
+time=9617759145
+mem_heap_B=126212
+mem_heap_extra_B=2108
+mem_stacks_B=0
+heap_tree=detailed
+n6: 126212 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 107712 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 107712 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+   n1: 49632 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 49632 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 49632 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 49632 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 44352 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 44352 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 44352 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n2: 25344 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n1: 12672 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 12672 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 12672 0x4023CE: main (alterDB.cpp:46)
+           n2: 12672 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n1: 6336 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+             n1: 6336 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+              n0: 6336 0x4023CE: main (alterDB.cpp:46)
+            n2: 6336 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n1: 4224 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+              n1: 4224 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+               n0: 4224 0x4023CE: main (alterDB.cpp:46)
+             n2: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+              n1: 2112 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+               n1: 2112 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                n0: 2112 0x4023CE: main (alterDB.cpp:46)
+              n0: 0 in 1 place, below massif's threshold (1.00%)
+          n1: 19008 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 19008 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 19008 0x4023CE: main (alterDB.cpp:46)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 5280 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n2: 4224 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+          n1: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n0: 2112 in 2 places, all below massif's threshold (1.00%)
+          n0: 1056 in 1 place, below massif's threshold (1.00%)
+         n0: 1056 in 1 place, below massif's threshold (1.00%)
+        n0: 1056 in 1 place, below massif's threshold (1.00%)
+       n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n0: 3236 in 21 places, all below massif's threshold (1.00%)
+ n1: 1728 0x407AFE: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+  n1: 1728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 1728 0x4023CE: main (alterDB.cpp:46)
+ n2: 1344 0x409FC5: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+  n1: 1344 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+   n0: 1344 in 2 places, all below massif's threshold (1.00%)
+  n0: 0 in 1 place, below massif's threshold (1.00%)
+#-----------
+snapshot=49
+#-----------
+time=9845496068
+mem_heap_B=170297
+mem_heap_extra_B=2871
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=50
+#-----------
+time=9980795407
+mem_heap_B=150561
+mem_heap_extra_B=2527
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=51
+#-----------
+time=10116089268
+mem_heap_B=146133
+mem_heap_extra_B=2475
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=52
+#-----------
+time=10251389148
+mem_heap_B=165013
+mem_heap_extra_B=2891
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=53
+#-----------
+time=10386687642
+mem_heap_B=145073
+mem_heap_extra_B=2447
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=54
+#-----------
+time=10521983930
+mem_heap_B=130661
+mem_heap_extra_B=2203
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=55
+#-----------
+time=10657283417
+mem_heap_B=130553
+mem_heap_extra_B=2199
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=56
+#-----------
+time=10792578850
+mem_heap_B=112965
+mem_heap_extra_B=1851
+mem_stacks_B=0
+heap_tree=detailed
+n5: 112965 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 95040 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 95040 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+   n1: 36960 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 36960 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 36960 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 36960 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 33792 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 33792 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 33792 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n1: 19008 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 19008 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 19008 0x4023CE: main (alterDB.cpp:46)
+          n2: 14784 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n1: 9504 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 9504 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 9504 0x4023CE: main (alterDB.cpp:46)
+           n2: 5280 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n1: 4224 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+             n1: 4224 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+              n0: 4224 0x4023CE: main (alterDB.cpp:46)
+            n0: 1056 in 1 place, below massif's threshold (1.00%)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 3168 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n1: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n0: 2112 in 2 places, all below massif's threshold (1.00%)
+        n0: 1056 in 1 place, below massif's threshold (1.00%)
+       n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n0: 4005 in 22 places, all below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n1: 1728 0x407AFE: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+  n1: 1728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 1728 0x4023CE: main (alterDB.cpp:46)
+#-----------
+snapshot=57
+#-----------
+time=10927881925
+mem_heap_B=135029
+mem_heap_extra_B=2299
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=58
+#-----------
+time=11063182204
+mem_heap_B=119587
+mem_heap_extra_B=1965
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=59
+#-----------
+time=11198476164
+mem_heap_B=159477
+mem_heap_extra_B=2763
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=60
+#-----------
+time=11333775799
+mem_heap_B=140609
+mem_heap_extra_B=2367
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=61
+#-----------
+time=11469067518
+mem_heap_B=125169
+mem_heap_extra_B=2111
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=62
+#-----------
+time=11604367755
+mem_heap_B=108337
+mem_heap_extra_B=1727
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=63
+#-----------
+time=11739673279
+mem_heap_B=116161
+mem_heap_extra_B=1903
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=64
+#-----------
+time=11874964408
+mem_heap_B=131811
+mem_heap_extra_B=2341
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=65
+#-----------
+time=12010255760
+mem_heap_B=123897
+mem_heap_extra_B=2119
+mem_stacks_B=0
+heap_tree=empty
+#-----------
+snapshot=66
+#-----------
+time=12145546984
+mem_heap_B=119593
+mem_heap_extra_B=2039
+mem_stacks_B=0
+heap_tree=detailed
+n5: 119593 (heap allocation functions) malloc/new/new[], --alloc-fns, etc.
+ n1: 101376 0x410664: __gnu_cxx::new_allocator<unsigned long>::allocate(unsigned long, void const*) (new_allocator.h:104)
+  n2: 101376 0x41028F: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_allocate(unsigned long) (stl_vector.h:168)
+   n1: 58080 0x40F4D4: std::vector<unsigned long, std::allocator<unsigned long> >::_M_default_append(unsigned long) (vector.tcc:549)
+    n1: 58080 0x40EA6F: std::vector<unsigned long, std::allocator<unsigned long> >::resize(unsigned long) (stl_vector.h:667)
+     n1: 58080 0x40DB26: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::init_from_unsigned_long(unsigned long, unsigned long) (dynamic_bitset.hpp:388)
+      n2: 58080 0x40CE85: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(unsigned long, unsigned long, std::allocator<unsigned long> const&) (dynamic_bitset.hpp:600)
+       n1: 57024 0x407B1D: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+        n1: 57024 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+         n0: 57024 0x4023CE: main (alterDB.cpp:46)
+       n0: 1056 in 1 place, below massif's threshold (1.00%)
+   n1: 43296 0x40FD53: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_M_create_storage(unsigned long) (stl_vector.h:181)
+    n1: 43296 0x40EFC7: std::_Vector_base<unsigned long, std::allocator<unsigned long> >::_Vector_base(unsigned long, std::allocator<unsigned long> const&) (stl_vector.h:136)
+     n1: 43296 0x40E2E1: std::vector<unsigned long, std::allocator<unsigned long> >::vector(std::vector<unsigned long, std::allocator<unsigned long> > const&) (stl_vector.h:312)
+      n3: 43296 0x40D269: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >::dynamic_bitset(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:607)
+       n1: 38016 0x40D2C8: boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > boost::operator&<unsigned long, std::allocator<unsigned long> >(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> > const&) (dynamic_bitset.hpp:1646)
+        n2: 38016 0x409FDB: algoFramework::performAND(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*) (algoFramework.cpp:682)
+         n2: 38016 0x4098B6: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:553)
+          n2: 25344 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n2: 13728 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+            n2: 7392 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+             n1: 4224 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+              n1: 4224 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+               n0: 4224 0x4023CE: main (alterDB.cpp:46)
+             n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+              n1: 3168 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+               n1: 3168 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+                n0: 3168 0x4023CE: main (alterDB.cpp:46)
+              n0: 0 in 1 place, below massif's threshold (1.00%)
+            n1: 6336 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+             n1: 6336 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+              n0: 6336 0x4023CE: main (alterDB.cpp:46)
+           n1: 11616 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+            n1: 11616 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+             n0: 11616 0x4023CE: main (alterDB.cpp:46)
+          n1: 12672 0x407CCA: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:159)
+           n1: 12672 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+            n0: 12672 0x4023CE: main (alterDB.cpp:46)
+         n0: 0 in 1 place, below massif's threshold (1.00%)
+       n2: 5280 0x409CF8: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:645)
+        n2: 4224 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+         n2: 3168 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+          n1: 2112 0x409D3B: algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, int*, int, int, std::vector<int, std::allocator<int> >*, std::vector<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*, std::allocator<boost::dynamic_bitset<unsigned long, std::allocator<unsigned long> >*> >*) (algoFramework.cpp:646)
+           n0: 2112 in 2 places, all below massif's threshold (1.00%)
+          n0: 1056 in 1 place, below massif's threshold (1.00%)
+         n0: 1056 in 1 place, below massif's threshold (1.00%)
+        n0: 1056 in 1 place, below massif's threshold (1.00%)
+       n0: 0 in 1 place, below massif's threshold (1.00%)
+ n1: 8192 0x4EE314A: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib64/libstdc++.so.6.0.19)
+  n2: 8192 0x4EE3790: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+   n1: 8192 0x4EE53FE: std::basic_ofstream<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib64/libstdc++.so.6.0.19)
+    n1: 8192 0x407517: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:33)
+     n0: 8192 0x4023CE: main (alterDB.cpp:46)
+   n0: 0 in 1 place, below massif's threshold (1.00%)
+ n0: 4297 in 22 places, all below massif's threshold (1.00%)
+ n1: 4000 0x407C94: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:157)
+  n1: 4000 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 4000 0x4023CE: main (alterDB.cpp:46)
+ n1: 1728 0x407AFE: algoFramework::constructBITSETS(std::vector<int, std::allocator<int> >*) (algoFramework.cpp:142)
+  n1: 1728 0x407827: algoFramework::runAlgo(char*, transactionDatabase*, double) (algoFramework.cpp:82)
+   n0: 1728 0x4023CE: main (alterDB.cpp:46)
+#-----------
+snapshot=67
+#-----------
+time=12280839445
+mem_heap_B=109604
+mem_heap_extra_B=1836
+mem_stacks_B=0
+heap_tree=empty
