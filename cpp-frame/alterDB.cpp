@@ -26,7 +26,7 @@ string getFilepath(char filename[]) {
 
 int main(int argc, char * argv[]) {
 
-	string filepath = getFilepath("../datasets/retail.txt");
+	string filepath = getFilepath("../datasets/mushrooms.txt");
 
 	chrono::system_clock::time_point tp1 = chrono::system_clock::now();
 
@@ -35,12 +35,15 @@ int main(int argc, char * argv[]) {
 
 	chrono::system_clock::time_point tp2 = chrono::system_clock::now();
 
-	if(argc != 2) {
+	if(argc != 3) {
 		cout << "Too few or too many arguments. Aborting ...\n";
+		cout << "Usage: switch <algorithm # (0-3)> <min sup>\n";
 	}
 	else {
+		double minsup = atof(argv[2]);
+		cout << "the minimum support is: "<< minsup << endl;
 		algoFramework * algo = new algoFramework(atoi(argv[1]));		
-		algo->runAlgo("out.put", database, 0.002);
+		algo->runAlgo("out.put", database, minsup);
 	
 		delete algo;
 	}
