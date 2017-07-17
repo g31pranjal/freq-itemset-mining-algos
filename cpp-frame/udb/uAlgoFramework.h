@@ -21,11 +21,11 @@ class uAlgoFramework
 		void constructBITSETS(vector<int> * equivalenceClassItems);
 		//void constructDIFFSETS(vector<int> * equivalenceClassItems);
 		
-		void processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<set<tidAndProb *> * > * equivalenceClassTidsets);
-		set<tidAndProb *> * performINTERSECTION(set<tidAndProb * > * tidsetI, set<tidAndProb * > * tidsetJ);
+		void processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uTidset * > * equivalenceClassTidsets);
+		uTidset * performINTERSECTION(uTidset * tidsetI, uTidset * tidsetJ);
 
 		void printStats();
-		void save(int * prefix, int prefixLength, int suffixItem, int support);
+		void save(int * prefix, int prefixLength, int suffixItem, double support);
 
 	public:
 		uAlgoFramework();

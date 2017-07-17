@@ -1,5 +1,4 @@
 #include "uTransactionDatabase.h"
-#include "tidAndProb.h"
 #include "uItem.h"
 #include "uTidset.h"
 
@@ -61,11 +60,9 @@ void uTransactionDatabase::loadFile(string path){
 	for (int i = 0; i < N; i++){
 		currTransaction = horizontalDB->at(i);
 		for (int j = 0; j < currTransaction->size(); j++){
-			
 			int itemID = currTransaction->at(j)->getItemID();
 			int transactionID = i;
 			double probability = currTransaction->at(j)->getProbability();
-
 			if (verticalDB->find(itemID) == verticalDB->end()){
 				//st = new set<tidAndProb *>();
 				st = new uTidset();
@@ -73,7 +70,6 @@ void uTransactionDatabase::loadFile(string path){
 			} else
 				st = verticalDB->at(itemID);
 
-			//tidAndProb * newPair = new tidAndProb(transactionID, probability);
 			st->insert(transactionID, probability);
 		}
 	}
@@ -122,10 +118,6 @@ void uTransactionDatabase::printVerticalDatabase() {
 	for(map<int, uTidset *>::iterator i = verticalDB->begin(); i != verticalDB->end(); i++){
 		cout << i->first << " : ";
 		st = i->second;
-		//for (set<tidAndProb *>::iterator j = st->begin(); j != st->end() ; j++){
-		//	cout << (*j)->getTid() << "(" << (*j)->getProbability() << ") ";
-		//}
-		//cout << endl;
 		st->print();
 	}
 }
@@ -153,7 +145,6 @@ void uTransactionDatabase::dismantleHorizontalDatabase(){
 		delete horizontalDB;
 		horizontalDB = NULL;
 	}
-
 }
 
 void uTransactionDatabase::dismantleItems() {
@@ -165,16 +156,6 @@ void uTransactionDatabase::dismantleItems() {
 
 void uTransactionDatabase::dismantleVerticalDatabase() {
 	if (verticalDB != NULL){
-		//for (map<int, set<tidAndProb *> *>::iterator i = verticalDB->begin(); i != verticalDB->end();i++){
-		//	if (i->second != NULL){
-		//		for (set<tidAndProb *>::iterator j = i->second->begin(); j != i->second->end(); j++){
-		//			if (*j != NULL){
-		//				delete *j;
-		//			}
-		//		}
-		//		delete i->second;
-		//	}
-		//}
 		for (map<int, uTidset *>::iterator it = verticalDB->begin(); it != verticalDB->end(); it ++){
 			if (it->second != NULL)
 				delete it->second;
@@ -187,5 +168,4 @@ void uTransactionDatabase::dismantleVerticalDatabase() {
 map<int, uTidset *> * uTransactionDatabase::getVerticalDatabase() {
 	return this->verticalDB;
 }
-
 

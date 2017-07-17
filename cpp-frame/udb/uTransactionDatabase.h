@@ -3,7 +3,6 @@
 #define UTRANS_DB
 
 #include "uItem.h"
-#include "tidAndProb.h"
 #include "uTidset.h"
 
 #include <set>
