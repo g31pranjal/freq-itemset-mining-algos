@@ -6,6 +6,7 @@
 #include "uAlgoFramework.h"
 #include "uTransactionDatabase.h"
 #include "uTidset.h"
+#include "uBitset.h"
 
 using namespace std;
 
@@ -118,6 +119,31 @@ void uAlgoFramework::constructTIDSETS(vector<int> * equivalenceClassItems) {
 
 
 void uAlgoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
+	
+	vector<uBitset * > * equivalenceClassBitsets = new vector<uBitset * >();
+
+	// populate the list of set integers corresponding to the sorted frequent 1-itemsets. 		
+	for(int i=0;i<equivalenceClassItems->size();i++) {
+		
+		int item = equivalenceClassItems->at(i);
+		uBitset * bs = new uBitset(N);
+		
+		uTidset * tidset = verticalDB->at(item);
+		map<int, double> * tidMap = tidset->getMap();
+		for(map<int, double>::iterator i = tidMap->begin(); i != tidMap->end(); i++) {
+			bs->insert(i->first, i->second);
+		}
+
+		equivalenceClassBitsets->push_back(bs);
+	}
+
+	delete this->database;
+
+	int * prefixArray = new int[1000];
+
+	this->processEquivalenceClassViper(prefixArray, 0, (double)N, equivalenceClassItems, equivalenceClassBitsets);
+	
+	delete prefixArray;
 
 }
 
@@ -344,7 +370,229 @@ uTidset * uAlgoFramework::performINTERSECTION(uTidset * tidsetI, uTidset * tidse
 }
 
 
+void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uBitset * > * equivalenceClassBitsets) {
 
+	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> VIPER <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
+
+	cout << "Prefix : " ;
+	for(int i=0;i<prefixLength;i++)
+		cout << prefix[i] << ", ";
+	cout << endl;
+	
+	rec[2]++;
+	
+	int length = prefixLength+1;
+	
+	if(equivalenceClassItems->size() == 1) {
+		
+		int item = equivalenceClassItems->at(0);
+		uBitset * bitset = equivalenceClassBitsets->at(0);
+		save(prefix, prefixLength, item, bitset->getSupport());
+
+		delete equivalenceClassItems;
+		// for(int d=0;d<equivalenceClassBitsets->size();d++) 
+		// 	delete equivalenceClassBitsets->at(d);
+		// delete equivalenceClassBitsets;
+
+		return;
+	}
+
+	if(equivalenceClassItems->size() == 2) {
+		
+		int itemI = equivalenceClassItems->at(0);
+		uBitset * bitsetI = equivalenceClassBitsets->at(0);
+		double supportI = bitsetI->getSupport();
+		save(prefix, prefixLength, itemI, supportI);
+		
+		int itemJ = equivalenceClassItems->at(1);
+		uBitset * bitsetJ = equivalenceClassBitsets->at(1);
+		double supportJ = bitsetJ->getSupport();
+		save(prefix, prefixLength, itemJ, supportJ);
+		
+		uBitset * bitsetIJ = this->performAND(bitsetI, bitsetJ);
+		double supportIJ = bitsetIJ->getSupport();
+		
+		if(supportIJ >= minSupRelative) {
+			int newPrefixLength = prefixLength+1;
+			prefix[prefixLength] = itemI;
+			save(prefix, newPrefixLength, itemJ, supportIJ);
+		}
+
+		delete bitsetIJ;
+		delete equivalenceClassItems;
+		// for(int d=0;d<equivalenceClassBitsets->size();d++) 
+		// 	delete equivalenceClassBitsets->at(d);
+		// delete equivalenceClassBitsets;
+
+		return;
+	}
+
+	
+	for(int i=0; i< equivalenceClassItems->size(); i++) {
+		
+		// int ETotal = 0;
+		// int DTotal = 0;
+
+		int suffixI = equivalenceClassItems->at(i);
+		uBitset * bitsetI = equivalenceClassBitsets->at(i);
+		double supportI = bitsetI->getSupport();
+		this->save(prefix, prefixLength, suffixI, supportI);
+		
+		vector<int> * equivalenceClassISuffixItems= new vector<int>();
+		vector<uBitset * > * equivalenceClassIBitsets = new vector<uBitset * >();
+
+		for(int j=i+1; j < equivalenceClassItems->size(); j++) {
+			
+			int suffixJ = equivalenceClassItems->at(j);
+			uBitset * bitsetJ = equivalenceClassBitsets->at(j);
+			int supportJ = bitsetJ->getSupport();
+			
+			uBitset * bitsetIJ = this->performAND(bitsetI, bitsetJ);
+			double supportIJ = bitsetIJ->getSupport();
+
+			if(supportIJ >= minSupRelative) {
+				// ETotal += supportIJ;
+				// DTotal += (supportI - supportIJ);
+				equivalenceClassISuffixItems->push_back(suffixJ);
+				equivalenceClassIBitsets->push_back(bitsetIJ);
+			}
+			else {
+				delete bitsetIJ;
+			}
+		}
+		
+		if(equivalenceClassISuffixItems->size() > 0) {
+
+			prefix[prefixLength] = suffixI;
+			int newPrefixLength = prefixLength+1;
+			
+			if(algo == 2) {
+
+				this->processEquivalenceClassViper(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+
+			}
+			// else {
+
+			// 	// double DAvg = DTotal / (double)equivalenceClassISuffixItems->size();
+			// 	// double EAvg = ETotal / (double)equivalenceClassISuffixItems->size();
+				
+			// 	// int ECLATthreshold = (int)N*(1.0/INTSIZE);
+			// 	// int ECLATstart = 0;
+			// 	// int DECLATthreshold  = supportI - ECLATthreshold;
+			// 	// int DECLATstart  = supportI;
+
+			// 	int Estore = INTSIZE*(ETotal + supportI);
+			// 	int Dstore = INTSIZE*(equivalenceClassISuffixItems->size()*supportI + N - ETotal - supportI);
+			// 	int Vstore = (double)N*(equivalenceClassISuffixItems->size()+1.0)*BITSIZE;
+
+			// 	// if(DECLATthreshold <= ECLATthreshold) {
+	
+			// 	// 	double PointOfDiff = DECLATthreshold + (ECLATthreshold - DECLATthreshold)/2.0;
+	
+			// 	// 	if(EAvg > PointOfDiff){
+						
+			// 	// 		// cout << "DECLAT" << endl;
+					
+			// 	// 		vector<set<int> * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
+			// 	// 		set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+					
+			// 	// 		for(int i=0;i<equivalenceClassIBitsets->size();i++)
+			// 	// 			delete equivalenceClassIBitsets->at(i);
+			// 	// 		delete equivalenceClassIBitsets;
+
+			// 	// 		this->processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+
+			// 	// 	}
+			// 	// 	else {
+						
+			// 	// 		// cout << "ECLAT" << endl;
+					
+			// 	// 		vector<set<int> * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
+			// 	// 		set<int> * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+					
+			// 	// 		for(int i=0;i<equivalenceClassIBitsets->size();i++)
+			// 	// 			delete equivalenceClassIBitsets->at(i);
+			// 	// 		delete equivalenceClassIBitsets;
+
+			// 	// 		this->processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+			// 	// 	}
+			// 	// }
+			// 	// else {
+				
+			// 		cout << Estore << ", " << Vstore << ", " << Dstore << endl;
+
+			// 		if(Estore <= Dstore && Estore <= Vstore){
+						
+			// 			// cout << "ECLAT" << endl;
+						
+			// 			vector<set<int> * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
+			// 			set<int> * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+					
+			// 			for(int i=0;i<equivalenceClassIBitsets->size();i++)
+			// 				delete equivalenceClassIBitsets->at(i);
+			// 			delete equivalenceClassIBitsets;
+
+			// 			this->processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+			// 		}
+			// 		else if(Vstore <= Estore && Vstore <= Dstore){
+						
+			// 			// cout << "VIPER" << endl;
+	
+			// 			boost::dynamic_bitset<> * bitsetIClone = new boost::dynamic_bitset<>(*bitsetI);
+			// 			this->processEquivalenceClassViper(bitsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+			// 		}
+			// 		else{
+						
+			// 			// cout << "DECLAT" << endl;
+						
+			// 			vector<set<int> * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
+			// 			set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+					
+			// 			for(int i=0;i<equivalenceClassIBitsets->size();i++)
+			// 				delete equivalenceClassIBitsets->at(i);
+			// 			delete equivalenceClassIBitsets;
+
+			// 			this->processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+						
+			// 		}
+			// 	// }
+			// }
+		}
+		else {
+			delete equivalenceClassISuffixItems;
+			delete equivalenceClassIBitsets;
+		}
+	}
+
+	// delete prefixBitset;
+	delete equivalenceClassItems;
+	// for(int d=0;d<equivalenceClassBitsets->size();d++) 
+	// 	delete equivalenceClassBitsets->at(d);
+	// delete equivalenceClassBitsets;
+
+	return;
+
+}
+
+uBitset * uAlgoFramework::performAND(uBitset * bitsetI, uBitset * bitsetJ) {
+	
+	uBitset * bitsetIJ = new uBitset(this->N);
+	// map<int, double> * IMap = tidsetI->getMap();
+	// map<int, double> * JMap = tidsetJ->getMap();
+
+	// if( JMap->size() < IMap->size() ){
+	// 	for(map<int, double>::iterator i = JMap->begin();i != JMap->end();i++) 
+	// 		if(IMap->find(i->first) != IMap->end())
+	// 			tidsetIJ->insert( i->first ,(i->second)*(IMap->at(i->first)) );
+	// }
+	// else {
+	// 	for(map<int, double>::iterator i = IMap->begin();i != IMap->end();i++) 
+	// 		if(JMap->find(i->first) != JMap->end())
+	// 			tidsetIJ->insert( i->first ,(i->second)*(JMap->at(i->first)));
+	// }
+
+	return bitsetIJ;
+}
 
 
 
