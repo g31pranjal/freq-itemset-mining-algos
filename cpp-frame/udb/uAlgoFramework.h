@@ -1,4 +1,5 @@
 #ifndef UALGOFRAMEWORK
+
 #define UALGOFRAMEWORK
 
 #include "uTransactionDatabase.h"
@@ -15,10 +16,15 @@ class uAlgoFramework
 		int itemsetCount, algo, rec[4], N, M;
 		ofstream writer;
 
-		//void constructTIDSETS(vector<int> * equivalenceClassItems);
-		//void constructBITSETS(vector<int> * equivalenceClassItems);
+		void constructTIDSETS(vector<int> * equivalenceClassItems);
+		void constructBITSETS(vector<int> * equivalenceClassItems);
 		//void constructDIFFSETS(vector<int> * equivalenceClassItems);
-		void processEquivalenceClassEclat(set<int> * prefixTidset, int * prefix, int prefixLength, double prefixSupport, vector<tidAndProb *> * equivalenceClassItems, vector<set<int> * > * equivalenceClassTidsets);
+		
+		void processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<set<tidAndProb *> * > * equivalenceClassTidsets);
+		set<tidAndProb *> * performINTERSECTION(set<tidAndProb * > * tidsetI, set<tidAndProb * > * tidsetJ);
+
+		void printStats();
+		void save(int * prefix, int prefixLength, int suffixItem, int support);
 
 	public:
 		uAlgoFramework();
