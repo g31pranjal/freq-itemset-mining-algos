@@ -1,6 +1,7 @@
 #include "uTransactionDatabase.h"
 #include "tidAndProb.h"
 #include "uItem.h"
+#include "uTidset.h"
 
 #include <fstream>
 #include <sstream>
@@ -30,7 +31,7 @@ vector<string> stringSplit(string str, string sep){
 uTransactionDatabase::uTransactionDatabase() {
 	items = new set<int>();
 	horizontalDB = new vector<vector<uItem *> *>();
-	verticalDB = new map<int, set<tidAndProb *> * >();
+	verticalDB = new map<int, uTidset * >();
 }
 
 uTransactionDatabase:: ~ uTransactionDatabase() {
@@ -54,7 +55,8 @@ void uTransactionDatabase::loadFile(string path){
 
 	// convert to vertical data structure
 	vector<uItem *> * currTransaction;
-	set<tidAndProb *> * st;
+	//set<tidAndProb *> * st;
+	uTidset * st;	
 
 	for (int i = 0; i < N; i++){
 		currTransaction = horizontalDB->at(i);
@@ -65,13 +67,14 @@ void uTransactionDatabase::loadFile(string path){
 			double probability = currTransaction->at(j)->getProbability();
 
 			if (verticalDB->find(itemID) == verticalDB->end()){
-				st = new set<tidAndProb *>();
-				verticalDB->insert(make_pair(itemID, st));
+				//st = new set<tidAndProb *>();
+				st = new uTidset();
+				verticalDB->insert(pair<int, uTidset *>(itemID, st));
 			} else
 				st = verticalDB->at(itemID);
 
-			tidAndProb * newPair = new tidAndProb(transactionID, probability);
-			st->insert(newPair);
+			//tidAndProb * newPair = new tidAndProb(transactionID, probability);
+			st->insert(transactionID, probability);
 		}
 	}
 
@@ -113,16 +116,17 @@ void uTransactionDatabase::printHorizontalDatabase() {
 }
 
 void uTransactionDatabase::printVerticalDatabase() {
-	set<tidAndProb *> * st;
+	uTidset * st;
 	cout << "\n... Transaction Database :: (vertical)\n";
 
-	for(map<int, set<tidAndProb *> *>::iterator i = verticalDB->begin(); i != verticalDB->end(); i++){
+	for(map<int, uTidset *>::iterator i = verticalDB->begin(); i != verticalDB->end(); i++){
 		cout << i->first << " : ";
 		st = i->second;
-		for (set<tidAndProb *>::iterator j = st->begin(); j != st->end() ; j++){
-			cout << (*j)->getTid() << "(" << (*j)->getProbability() << ") ";
-		}
-		cout << endl;
+		//for (set<tidAndProb *>::iterator j = st->begin(); j != st->end() ; j++){
+		//	cout << (*j)->getTid() << "(" << (*j)->getProbability() << ") ";
+		//}
+		//cout << endl;
+		st->print();
 	}
 }
 
@@ -161,22 +165,26 @@ void uTransactionDatabase::dismantleItems() {
 
 void uTransactionDatabase::dismantleVerticalDatabase() {
 	if (verticalDB != NULL){
-		for (map<int, set<tidAndProb *> *>::iterator i = verticalDB->begin(); i != verticalDB->end();i++){
-			if (i->second != NULL){
-				for (set<tidAndProb *>::iterator j = i->second->begin(); j != i->second->end(); j++){
-					if (*j != NULL){
-						delete *j;
-					}
-				}
-				delete i->second;
-			}
+		//for (map<int, set<tidAndProb *> *>::iterator i = verticalDB->begin(); i != verticalDB->end();i++){
+		//	if (i->second != NULL){
+		//		for (set<tidAndProb *>::iterator j = i->second->begin(); j != i->second->end(); j++){
+		//			if (*j != NULL){
+		//				delete *j;
+		//			}
+		//		}
+		//		delete i->second;
+		//	}
+		//}
+		for (map<int, uTidset *>::iterator it = verticalDB->begin(); it != verticalDB->end(); it ++){
+			if (it->second != NULL)
+				delete it->second;
 		}
 		delete verticalDB;
 		verticalDB = NULL;
 	}
 }
 
-map<int, set<tidAndProb *> *> * uTransactionDatabase::getVerticalDatabase() {
+map<int, uTidset *> * uTransactionDatabase::getVerticalDatabase() {
 	return this->verticalDB;
 }
 
