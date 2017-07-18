@@ -564,7 +564,6 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 		}
 	}
 
-	// delete prefixBitset;
 	delete equivalenceClassItems;
 	// for(int d=0;d<equivalenceClassBitsets->size();d++) 
 	// 	delete equivalenceClassBitsets->at(d);
@@ -577,19 +576,12 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 uBitset * uAlgoFramework::performAND(uBitset * bitsetI, uBitset * bitsetJ) {
 	
 	uBitset * bitsetIJ = new uBitset(this->N);
-	// map<int, double> * IMap = tidsetI->getMap();
-	// map<int, double> * JMap = tidsetJ->getMap();
+	
+	boost::dynamic_bitset<> * newEligible = new boost::dynamic_bitset<>( (*bitsetI->getEligible())&(*bitsetJ->getEligible()));
 
-	// if( JMap->size() < IMap->size() ){
-	// 	for(map<int, double>::iterator i = JMap->begin();i != JMap->end();i++) 
-	// 		if(IMap->find(i->first) != IMap->end())
-	// 			tidsetIJ->insert( i->first ,(i->second)*(IMap->at(i->first)) );
-	// }
-	// else {
-	// 	for(map<int, double>::iterator i = IMap->begin();i != IMap->end();i++) 
-	// 		if(JMap->find(i->first) != JMap->end())
-	// 			tidsetIJ->insert( i->first ,(i->second)*(JMap->at(i->first)));
-	// }
+	for(int i = newEligible->find_first(); i >= 0; i = newEligible->find_next(i)) {
+		bitsetIJ->insert(i, bitsetI->getProbability(i)*bitsetJ->getProbability(i));
+	}
 
 	return bitsetIJ;
 }
