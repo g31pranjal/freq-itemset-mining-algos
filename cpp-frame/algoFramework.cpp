@@ -337,41 +337,41 @@ void algoFramework::processEquivalenceClassEclat(set<int> * prefixTidset, int * 
 				// }
 				// else {
 
-					cout << Estore << ", " << Vstore << ", " << Dstore << endl;
+				cout << Estore << ", " << Vstore << ", " << Dstore << endl;
 
-					if(Estore <= Dstore && Estore <= Vstore){
-						
-						// cout << "ECLAT" << endl;
+				if(Estore <= Dstore && Estore <= Vstore){
 					
-						set<int> * tidsetIClone = new set<int>(tidsetI->begin(), tidsetI->end());
-						this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
-					else if(Vstore <= Estore && Vstore <= Dstore){
-						
-						// cout << "VIPER" << endl;
-						
-						boost::dynamic_bitset<> * prefixBitset = formPrefixBitsetFromPrefixTidset(tidsetI);
-						vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
-
-						for(int i=0;i<equivalenceClassITidsets->size();i++)
-							delete equivalenceClassITidsets->at(i);
-						delete equivalenceClassITidsets;
-
-						this->processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
-					}
-					else{
-						
-						// System.out.println("DECLAT");
+					// cout << "ECLAT" << endl;
+				
+					set<int> * tidsetIClone = new set<int>(tidsetI->begin(), tidsetI->end());
+					this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+				}
+				else if(Vstore <= Estore && Vstore <= Dstore){
 					
-						vector<set<int> * > * equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
-						set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
-						
-						for(int i=0;i<equivalenceClassITidsets->size();i++)
-							delete equivalenceClassITidsets->at(i);
-						delete equivalenceClassITidsets;
+					// cout << "VIPER" << endl;
+					
+					boost::dynamic_bitset<> * prefixBitset = formPrefixBitsetFromPrefixTidset(tidsetI);
+					vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
 
-						processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-					}
+					for(int i=0;i<equivalenceClassITidsets->size();i++)
+						delete equivalenceClassITidsets->at(i);
+					delete equivalenceClassITidsets;
+
+					this->processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+				}
+				else{
+					
+					// System.out.println("DECLAT");
+				
+					vector<set<int> * > * equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
+					set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
+					
+					for(int i=0;i<equivalenceClassITidsets->size();i++)
+						delete equivalenceClassITidsets->at(i);
+					delete equivalenceClassITidsets;
+
+					processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+				}
 				// }
 			}			
 		}
@@ -623,42 +623,42 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 				// }
 				// else {
 				
-					cout << Estore << ", " << Vstore << ", " << Dstore << endl;
+				cout << Estore << ", " << Vstore << ", " << Dstore << endl;
 
-					if(Estore <= Dstore && Estore <= Vstore){
-						
-						// cout << "ECLAT" << endl;
-						
-						vector<set<int> * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
-						set<int> * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+				if(Estore <= Dstore && Estore <= Vstore){
 					
-						for(int i=0;i<equivalenceClassIBitsets->size();i++)
-							delete equivalenceClassIBitsets->at(i);
-						delete equivalenceClassIBitsets;
-
-						this->processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
-					else if(Vstore <= Estore && Vstore <= Dstore){
-						
-						// cout << "VIPER" << endl;
-	
-						boost::dynamic_bitset<> * bitsetIClone = new boost::dynamic_bitset<>(*bitsetI);
-						this->processEquivalenceClassViper(bitsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
-					}
-					else{
-						
-						// cout << "DECLAT" << endl;
-						
-						vector<set<int> * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
-						set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+					// cout << "ECLAT" << endl;
 					
-						for(int i=0;i<equivalenceClassIBitsets->size();i++)
-							delete equivalenceClassIBitsets->at(i);
-						delete equivalenceClassIBitsets;
+					vector<set<int> * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
+					set<int> * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+				
+					for(int i=0;i<equivalenceClassIBitsets->size();i++)
+						delete equivalenceClassIBitsets->at(i);
+					delete equivalenceClassIBitsets;
 
-						this->processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-						
-					}
+					this->processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+				}
+				else if(Vstore <= Estore && Vstore <= Dstore){
+					
+					// cout << "VIPER" << endl;
+
+					boost::dynamic_bitset<> * bitsetIClone = new boost::dynamic_bitset<>(*bitsetI);
+					this->processEquivalenceClassViper(bitsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+				}
+				else{
+					
+					// cout << "DECLAT" << endl;
+					
+					vector<set<int> * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
+					set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+				
+					for(int i=0;i<equivalenceClassIBitsets->size();i++)
+						delete equivalenceClassIBitsets->at(i);
+					delete equivalenceClassIBitsets;
+
+					this->processEquivalenceClassDEclat(parentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+					
+				}
 				// }
 			}
 		}
@@ -895,42 +895,42 @@ void algoFramework::processEquivalenceClassDEclat(set<int> * parentDiffsUnion, i
 				// }
 				// else {
 
-					cout << Estore << ", " << Vstore << ", " << Dstore << endl;
+				cout << Estore << ", " << Vstore << ", " << Dstore << endl;
 
-					if(Estore <= Dstore && Estore <= Vstore){
-						
-						// cout << "ECLAT" << endl;
-						
-						vector<set<int> * > * equivalenceClassITidsets = convertDIFFSETStoTIDSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
-						set<int> * prefixTidset = formPrefixTidsetFromParentDiffsUnion(newParentDiffsUnion);
+				if(Estore <= Dstore && Estore <= Vstore){
+					
+					// cout << "ECLAT" << endl;
+					
+					vector<set<int> * > * equivalenceClassITidsets = convertDIFFSETStoTIDSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
+					set<int> * prefixTidset = formPrefixTidsetFromParentDiffsUnion(newParentDiffsUnion);
 
-						for(int i=0;i<equivalenceClassIDiffsets->size();i++)
-							delete equivalenceClassIDiffsets->at(i);
-						delete equivalenceClassIDiffsets;
-						delete newParentDiffsUnion;
-						
-						this->processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
-					}
-					else if(Vstore <= Estore && Vstore <= Dstore){
-						
-						// cout << "VIPER" << endl;
-						
-						vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = convertDIFFSETStoBITSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
-						boost::dynamic_bitset<> * prefixBitset = formPrefixBitsetFromParentDiffsUnion(newParentDiffsUnion);
+					for(int i=0;i<equivalenceClassIDiffsets->size();i++)
+						delete equivalenceClassIDiffsets->at(i);
+					delete equivalenceClassIDiffsets;
+					delete newParentDiffsUnion;
+					
+					this->processEquivalenceClassEclat(prefixTidset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+				}
+				else if(Vstore <= Estore && Vstore <= Dstore){
+					
+					// cout << "VIPER" << endl;
+					
+					vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = convertDIFFSETStoBITSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
+					boost::dynamic_bitset<> * prefixBitset = formPrefixBitsetFromParentDiffsUnion(newParentDiffsUnion);
 
-						for(int i=0;i<equivalenceClassIDiffsets->size();i++)
-							delete equivalenceClassIDiffsets->at(i);
-						delete equivalenceClassIDiffsets;
-						delete newParentDiffsUnion;
-						
-						this->processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
-					}
-					else{
-						
-						// cout << "DECLAT" << endl;
-						
-						this->processEquivalenceClassDEclat(newParentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
-					}
+					for(int i=0;i<equivalenceClassIDiffsets->size();i++)
+						delete equivalenceClassIDiffsets->at(i);
+					delete equivalenceClassIDiffsets;
+					delete newParentDiffsUnion;
+					
+					this->processEquivalenceClassViper(prefixBitset, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+				}
+				else{
+					
+					// cout << "DECLAT" << endl;
+					
+					this->processEquivalenceClassDEclat(newParentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
+				}
 				// }
 			}
 		}

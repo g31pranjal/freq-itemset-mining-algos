@@ -18,7 +18,7 @@ class algoFramework {
 
 		void constructTIDSETS(vector<int> * equivalenceClassItems);
 		void constructBITSETS(vector<int> * equivalenceClassItems);
-		// void constructDIFFSETS(vector<int> * equivalenceClassItems);
+		void constructDIFFSETS(vector<int> * equivalenceClassItems);
 
 		void processEquivalenceClassEclat(set<int> * prefixTidset, int * prefix, int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<set<int> * > * equivalenceClassTidsets);
 		set<int> * performINTERSECTION(set<int> * tidsetI, set<int> * tidsetJ);

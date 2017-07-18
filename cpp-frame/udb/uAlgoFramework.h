@@ -9,8 +9,7 @@
 #include <chrono>
 #include <fstream>
 
-class uAlgoFramework
-{
+class uAlgoFramework {
 	private:
 		double minSupRelative;
 		uTransactionDatabase * database;
@@ -20,13 +19,14 @@ class uAlgoFramework
 
 		void constructTIDSETS(vector<int> * equivalenceClassItems);
 		void constructBITSETS(vector<int> * equivalenceClassItems);
-		//void constructDIFFSETS(vector<int> * equivalenceClassItems);
 		
 		void processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uTidset * > * equivalenceClassTidsets);
 		uTidset * performINTERSECTION(uTidset * tidsetI, uTidset * tidsetJ);
+		vector<uBitset * > * convertTIDSETStoBITSETS(vector<uTidset * > * equivalenceClassITidsets);
 
 		void processEquivalenceClassViper(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uBitset * > * equivalenceClassBitsets);
 		uBitset * performAND(uBitset * bitsetI, uBitset * bitsetJ);
+		vector<uTidset * > * convertBITSETStoTIDSETS(vector<uBitset *> * equivalenceClassIBitsets);
 
 		void printStats();
 		void save(int * prefix, int prefixLength, int suffixItem, double support);
