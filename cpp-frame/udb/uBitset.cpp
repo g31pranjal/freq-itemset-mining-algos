@@ -19,6 +19,7 @@ uBitset::~uBitset() {
 	for(int i=0;i<precision;i++) {
 		delete this->bitBucket[i];
 	}
+	delete this->bitBucket;
 }
 
 void uBitset::insert(int tid, double probability) {
