@@ -13,7 +13,7 @@ class algoFramework {
 		int minSupRelative;
 		transactionDatabase * database;
 		unordered_map<int, unordered_set<int> * > * verticalDB;
-		int itemsetCount, algo, rec[4], N, M;
+		int itemsetCount, algo, rec[4], treeEdges[3][3], N, M;
 		ofstream writer; 
 
 		void constructTIDSETS(vector<int> * equivalenceClassItems);

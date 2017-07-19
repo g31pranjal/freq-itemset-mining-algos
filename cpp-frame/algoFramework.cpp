@@ -16,12 +16,18 @@ static double BITSIZE /*bytes*/ = 1.0/8.0;
 algoFramework::algoFramework() {
 	this->algo = 0;
 	rec[0] = rec[1] = rec[2] = rec[3] = 0;
+	treeEdges[0][0] = treeEdges[0][1] = treeEdges[0][2] = 0;
+	treeEdges[1][0] = treeEdges[1][1] = treeEdges[1][2] = 0;
+	treeEdges[2][0] = treeEdges[2][1] = treeEdges[2][2] = 0;
 }
 
 
 algoFramework::algoFramework(int algo) {
 	this->algo = algo;
 	rec[0] = rec[1] = rec[2] = rec[3] = 0;
+	treeEdges[0][0] = treeEdges[0][1] = treeEdges[0][2] = 0;
+	treeEdges[1][0] = treeEdges[1][1] = treeEdges[1][2] = 0;
+	treeEdges[2][0] = treeEdges[2][1] = treeEdges[2][2] = 0;
 }
 
 
@@ -66,9 +72,9 @@ void algoFramework::runAlgo(char * outputFile, transactionDatabase * database, d
 		// int ECLATthreshold  = (int)(N*(1.0/INTSIZE));
 		// int DECLATthreshold = (int)(N*((INTSIZE - 1.0)/INTSIZE));
 
-		int Estore = INTSIZE*(totalInOneFrequent + N);
-		int Dstore = INTSIZE*(oneFrequentItems->size()*N + N - totalInOneFrequent - N);
-		int Vstore = (double)N*(oneFrequentItems->size()+1.0)*BITSIZE;
+		long Estore = INTSIZE*(long)(totalInOneFrequent + N);
+		long Dstore = INTSIZE*(oneFrequentItems->size()*N + N - totalInOneFrequent - N);
+		long Vstore = (double)N*(long)(oneFrequentItems->size()+1.0)*BITSIZE;
 
 		cout << Estore << ", " << Vstore << ", " << Dstore << endl;
 		cout << oneFrequentItems->size() << ", " << N << endl;
@@ -291,6 +297,7 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 			
 			if(algo == 1) {
 				
+				treeEdges[0][0]++;
 				unordered_set<int> * tidsetIClone = new unordered_set<int>(tidsetI->begin(), tidsetI->end());
 				this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 
@@ -344,14 +351,16 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 				if(Estore <= Dstore && Estore <= Vstore){
 					
 					// cout << "ECLAT" << endl;
-				
+					treeEdges[0][0]++;
+
 					unordered_set<int> * tidsetIClone = new unordered_set<int>(tidsetI->begin(), tidsetI->end());
 					this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 				}
 				else if(Vstore <= Estore && Vstore <= Dstore){
 					
 					// cout << "VIPER" << endl;
-					
+					treeEdges[0][1]++;					
+				
 					boost::dynamic_bitset<> * prefixBitset = formPrefixBitsetFromPrefixTidset(tidsetI);
 					vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
 
@@ -364,7 +373,8 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 				else{
 					
 					// System.out.println("DECLAT");
-				
+					treeEdges[0][2]++;
+
 					vector<unordered_set<int> * > * equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
 					unordered_set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
 					
@@ -573,6 +583,8 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 			
 			if(algo == 2) {
 
+				treeEdges[1][1]++;
+
 				boost::dynamic_bitset<> * bitsetIClone = new boost::dynamic_bitset<>(*bitsetI);
 				this->processEquivalenceClassViper(bitsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
 
@@ -630,6 +642,7 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 				if(Estore <= Dstore && Estore <= Vstore){
 					
 					// cout << "ECLAT" << endl;
+					treeEdges[1][0]++;
 					
 					vector<unordered_set<int> * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
 					unordered_set<int> * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
@@ -643,6 +656,7 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 				else if(Vstore <= Estore && Vstore <= Dstore){
 					
 					// cout << "VIPER" << endl;
+					treeEdges[1][1]++;
 
 					boost::dynamic_bitset<> * bitsetIClone = new boost::dynamic_bitset<>(*bitsetI);
 					this->processEquivalenceClassViper(bitsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
@@ -650,7 +664,8 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 				else{
 					
 					// cout << "DECLAT" << endl;
-					
+					treeEdges[1][2]++;
+
 					vector<unordered_set<int> * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
 					unordered_set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
 				
@@ -853,6 +868,8 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 			
 			if(algo == 3) {
 
+				treeEdges[2][2]++;
+
 				this->processEquivalenceClassDEclat(newParentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 
 			}
@@ -902,6 +919,7 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 				if(Estore <= Dstore && Estore <= Vstore){
 					
 					// cout << "ECLAT" << endl;
+					treeEdges[2][0]++;
 					
 					vector<unordered_set<int> * > * equivalenceClassITidsets = convertDIFFSETStoTIDSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
 					unordered_set<int> * prefixTidset = formPrefixTidsetFromParentDiffsUnion(newParentDiffsUnion);
@@ -916,6 +934,7 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 				else if(Vstore <= Estore && Vstore <= Dstore){
 					
 					// cout << "VIPER" << endl;
+					treeEdges[2][1]++;
 					
 					vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = convertDIFFSETStoBITSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
 					boost::dynamic_bitset<> * prefixBitset = formPrefixBitsetFromParentDiffsUnion(newParentDiffsUnion);
@@ -930,7 +949,8 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 				else{
 					
 					// cout << "DECLAT" << endl;
-					
+					treeEdges[2][2]++;
+
 					this->processEquivalenceClassDEclat(newParentDiffsUnion, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIDiffsets);
 				}
 				// }
@@ -1033,6 +1053,9 @@ void algoFramework::printStats() {
 	cout << " Transactions count from database : " << N << endl;
 	cout << " Frequent itemset count : " << itemsetCount << endl;
 	cout << " Usage : ECLAT "  << rec[1] << " VIPER " << rec[2] << " DECLAT " << rec[3] << endl;
+	cout << " E->E : " << treeEdges[0][0] << "\tE->V : " << treeEdges[0][1] << "\tE->D : " << treeEdges[0][2] << endl;
+	cout << " V->E : " << treeEdges[1][0] << "\tV->V : " << treeEdges[1][1] << "\tV->D : " << treeEdges[1][2] << endl;
+	cout << " D->E : " << treeEdges[2][0] << "\tD->V : " << treeEdges[2][1] << "\tD->D : " << treeEdges[2][2] << endl;
 	cout << "===================================================" << endl;
 }
 
