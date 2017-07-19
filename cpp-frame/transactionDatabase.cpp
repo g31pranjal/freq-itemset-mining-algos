@@ -23,9 +23,9 @@ vector<string> stringSplit(string str, string sep){
 
 transactionDatabase::transactionDatabase() {
 
-	items = new set<int>();
+	items = new unordered_set<int>();
 	horizontalDB = new vector<vector<int> * >(); 
-	verticalDB = new map<int, set<int> * >(); 
+	verticalDB = new unordered_map<int, unordered_set<int> * >(); 
 }
 
 transactionDatabase::~ transactionDatabase() {
@@ -50,13 +50,13 @@ void transactionDatabase::loadFile(string path){
 	// convert to vertical datastructure.	
 	
 	vector<int> * txn;
-	set<int> * st;
+	unordered_set<int> * st;
 
 	for (int i = 0; i < this->getN(); i++) {
 		txn = horizontalDB->at(i);
 		for (int j=0;j<txn->size();j++) {
 			if(verticalDB->find(txn->at(j)) == verticalDB->end() ){
-				st = new set<int>();
+				st = new unordered_set<int>();
 				verticalDB->insert(make_pair(txn->at(j), st));
 			}
 			else{
@@ -94,11 +94,11 @@ int transactionDatabase::getN() {
 // 	return horizontalDB;
 // }
 
-map<int, set<int> * > * transactionDatabase::getVerticalDatabase() {
+unordered_map<int, unordered_set<int> * > * transactionDatabase::getVerticalDatabase() {
 	return this->verticalDB;
 }
 	
-// set<int> * transactionDatabase::getItems() {
+// unordered_set<int> * transactionDatabase::getItems() {
 // 	return items;
 // }
 	
@@ -122,12 +122,12 @@ void transactionDatabase::printHorizontalDatabase() {
 }
 
 void transactionDatabase::printVerticalDatabase() {
-	set<int> * st;
+	unordered_set<int> * st;
 	cout << "\n... Transaction Database :: (vertical)\n";
-	for(map<int, set<int> *>::iterator i = verticalDB->begin() ;i != verticalDB->end();i++) {
+	for(unordered_map<int, unordered_set<int> *>::iterator i = verticalDB->begin() ;i != verticalDB->end();i++) {
 		cout << i->first << " : ";
 		st = i->second;
-		for(set<int>::iterator j = st->begin();j != st->end();j++)
+		for(unordered_set<int>::iterator j = st->begin();j != st->end();j++)
 			cout << *j << " ";
 		cout << endl;
 	}
@@ -148,7 +148,7 @@ void transactionDatabase::dismantleHorizontalDatabase() {
 
 void transactionDatabase::dismantleVerticalDatabase() {
 	if(verticalDB != NULL) {
-		for(map<int, set<int> * >::iterator i = verticalDB->begin(); i != verticalDB->end(); i++) {
+		for(unordered_map<int, unordered_set<int> * >::iterator i = verticalDB->begin(); i != verticalDB->end(); i++) {
 			if(i->second != NULL)
 				delete i->second;
 		}

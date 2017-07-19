@@ -2,9 +2,9 @@
 
 #define TRANS_DB
 
-#include <set>
+#include <unordered_set>
 #include <vector>
-#include <map>
+#include <unordered_map>
 #include <string>
 
 using namespace std;
@@ -12,9 +12,9 @@ using namespace std;
 class transactionDatabase {
 
 	private :
-		set<int> * items;
+		unordered_set<int> * items;
 		vector<vector<int> * > * horizontalDB; 
-		map<int, set<int> * > * verticalDB; 
+		unordered_map<int, unordered_set<int> * > * verticalDB; 
 		int N, M;
 
 		void dismantleHorizontalDatabase();
@@ -31,9 +31,9 @@ class transactionDatabase {
 		int getM();
 
 		void dismantleVerticalDatabase();
-		map<int, set<int> * > * getVerticalDatabase();
+		unordered_map<int, unordered_set<int> * > * getVerticalDatabase();
 		// vector<vector<int> * > * getHorizontalDatabase();
-		// set<int> * getItems();
+		// unordered_set<int> * getItems();
 		
 };
 
