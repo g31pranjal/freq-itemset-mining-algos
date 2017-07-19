@@ -8,6 +8,8 @@
 
 using namespace std;
 
+// current ratio is, 32*8 | reduce this to get good results !
+
 static double INTSIZE /*bytes*/ = 32.0; 
 static double BITSIZE /*bytes*/ = 1.0/8.0;
 
