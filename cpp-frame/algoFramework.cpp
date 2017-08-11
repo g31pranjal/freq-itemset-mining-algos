@@ -315,7 +315,7 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 				//  Estore = INTSIZE*(Etotal + supportI)
 				int Estore = INTSIZE*(ETotal + supportI);
 				//  Dstore = INTSIZE*(m*supportI - Etotal + (N-supportI) )
-				int Dstore = INTSIZE*(equivalenceClassISuffixItems->size()*supportI + N - ETotal - supportI);
+				int Dstore = INTSIZE*(DTotal + N - supportI);
 				//  Vstore = N*(m+1)*BITSIZE
 				int Vstore = (double)N*(equivalenceClassISuffixItems->size()+1.0)*BITSIZE;
 
@@ -600,7 +600,7 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 				// int DECLATstart  = supportI;
 
 				int Estore = INTSIZE*(ETotal + supportI);
-				int Dstore = INTSIZE*(equivalenceClassISuffixItems->size()*supportI + N - ETotal - supportI);
+				int Dstore = INTSIZE*(DTotal + N - supportI);
 				int Vstore = (double)N*(equivalenceClassISuffixItems->size()+1.0)*BITSIZE;
 
 				// if(DECLATthreshold <= ECLATthreshold) {
@@ -884,7 +884,7 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 				// int DECLATstart  = supportI;
 
 				int Estore = INTSIZE*(ETotal + supportI);
-				int Dstore = INTSIZE*(equivalenceClassISuffixItems->size()*supportI + N - ETotal - supportI);
+				int Dstore = INTSIZE*(DTotal + N - supportI);
 				int Vstore = (double)N*(equivalenceClassISuffixItems->size()+1.0)*BITSIZE;
 
 				// if(DECLATthreshold <= ECLATthreshold) {

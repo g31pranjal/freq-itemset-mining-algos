@@ -1,12 +1,12 @@
 #include "uTidset.h"
 #include <iostream>
-#include <map>
+#include <unordered_map>
 
 using namespace std;
 
 uTidset::uTidset(){
 	this->support = 0;
-	this->tidAndProbMap = new map<int, double>();
+	this->tidAndProbMap = new unordered_map<int, double>();
 }
 
 uTidset::~uTidset(){
@@ -21,7 +21,7 @@ void uTidset::insert(int tid, double probability){
 }
 
 void uTidset::print(){
-	for (map<int, double>::iterator it = tidAndProbMap->begin(); it != tidAndProbMap->end(); it++){
+	for (unordered_map<int, double>::iterator it = tidAndProbMap->begin(); it != tidAndProbMap->end(); it++){
 		cout << it->first << " (" << it->second <<"), ";
 	}
 	cout << endl << "support: " << support << endl;
@@ -31,6 +31,6 @@ double uTidset::getSupport() {
 	return support;
 }
 
-map<int, double> * uTidset::getMap() {
+unordered_map<int, double> * uTidset::getMap() {
 	return tidAndProbMap;
 }

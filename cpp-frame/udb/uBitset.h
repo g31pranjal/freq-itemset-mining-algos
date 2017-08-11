@@ -6,7 +6,7 @@
 
 using namespace std;
 
-static int precision = 16;
+static int precision = 1;
 
 class uBitset{
 	private:

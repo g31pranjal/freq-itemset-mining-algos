@@ -123,8 +123,8 @@ void uAlgoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
 		uBitset * bs = new uBitset(N);
 		
 		uTidset * tidset = verticalDB->at(item);
-		map<int, double> * tidMap = tidset->getMap();
-		for(map<int, double>::iterator i = tidMap->begin(); i != tidMap->end(); i++) {
+		unordered_map<int, double> * tidMap = tidset->getMap();
+		for(unordered_map<int, double>::iterator i = tidMap->begin(); i != tidMap->end(); i++) {
 			bs->insert(i->first, i->second);
 		}
 
@@ -327,16 +327,16 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 uTidset * uAlgoFramework::performINTERSECTION(uTidset * tidsetI, uTidset * tidsetJ) {
 	
 	uTidset * tidsetIJ = new uTidset();
-	map<int, double> * IMap = tidsetI->getMap();
-	map<int, double> * JMap = tidsetJ->getMap();
+	unordered_map<int, double> * IMap = tidsetI->getMap();
+	unordered_map<int, double> * JMap = tidsetJ->getMap();
 
 	if( JMap->size() < IMap->size() ){
-		for(map<int, double>::iterator i = JMap->begin();i != JMap->end();i++) 
+		for(unordered_map<int, double>::iterator i = JMap->begin();i != JMap->end();i++) 
 			if(IMap->find(i->first) != IMap->end())
 				tidsetIJ->insert( i->first ,(i->second)*(IMap->at(i->first)) );
 	}
 	else {
-		for(map<int, double>::iterator i = IMap->begin();i != IMap->end();i++) 
+		for(unordered_map<int, double>::iterator i = IMap->begin();i != IMap->end();i++) 
 			if(JMap->find(i->first) != JMap->end())
 				tidsetIJ->insert( i->first ,(i->second)*(JMap->at(i->first)));
 	}
@@ -352,10 +352,10 @@ vector<uBitset *> * uAlgoFramework::convertTIDSETStoBITSETS(vector<uTidset * > *
 	for(int i=0;i<equivalenceClassITidsets->size();i++) {
 
 		uTidset * tidset = equivalenceClassITidsets->at(i);
-		map<int, double> * tidMap = tidset->getMap();
+		unordered_map<int, double> * tidMap = tidset->getMap();
 		uBitset * bs = new uBitset(N);
 		
-		for(map<int, double>::iterator i = tidMap->begin(); i != tidMap->end(); i++) {
+		for(unordered_map<int, double>::iterator i = tidMap->begin(); i != tidMap->end(); i++) {
 			bs->insert(i->first, i->second);
 		}
 		equivalenceClassIBitsets->push_back(bs);

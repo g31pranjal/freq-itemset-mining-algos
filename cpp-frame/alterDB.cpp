@@ -26,7 +26,7 @@ string getFilepath(char filename[]) {
 
 int main(int argc, char * argv[]) {
 
-	string filepath = getFilepath("../datasets/pumsb.txt");
+	string filepath = getFilepath("../datasets/bms1.txt");
 
 	chrono::system_clock::time_point tp1 = chrono::system_clock::now();
 
