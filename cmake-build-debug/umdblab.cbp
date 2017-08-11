@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6"/>
+	<Project>
+		<Option title="umdblab"/>
+		<Option makefile_is_custom="1"/>
+		<Option compiler="gcc"/>
+		<Option virtualFolders="CMake Files\;"/>
+		<Build>
+			<Target title="all">
+				<Option working_dir="/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="rebuild_cache">
+				<Option working_dir="/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="edit_cache">
+				<Option working_dir="/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="umdblab">
+				<Option output="/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/umdblab" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 umdblab"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="umdblab/fast">
+				<Option output="/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/umdblab" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 umdblab/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+		</Build>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/algoFramework.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/algoFramework.h">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/alterDB.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/transactionDatabase.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/transactionDatabase.h">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/testDB.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uAlgoFramework.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uAlgoFramework.h">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uBitset.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uBitset.h">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uItem.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uItem.h">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uTidset.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uTidset.h">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uTransactionDatabase.cpp">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/cpp-frame/udb/uTransactionDatabase.h">
+			<Option target="umdblab"/>
+		</Unit>
+		<Unit filename="/home/zhida/Documents/mycode/um0810_2/umdblab/CMakeLists.txt">
+			<Option virtualFolder="CMake Files\"/>
+		</Unit>
+	</Project>
+</CodeBlocks_project_file>

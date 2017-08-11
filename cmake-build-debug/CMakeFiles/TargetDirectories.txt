@@ -1,0 +1,3 @@
+/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/zhida/Documents/mycode/um0810_2/umdblab/cmake-build-debug/CMakeFiles/umdblab.dir
