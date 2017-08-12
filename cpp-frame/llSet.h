@@ -34,6 +34,7 @@ class llSet {
 		void setFirst(llSet_element * nw);
 		void setLast(llSet_element * nw);
 		void addElement(int num);
+		void print();
 };
 
 

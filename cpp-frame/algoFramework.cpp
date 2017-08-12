@@ -879,11 +879,15 @@ void algoFramework::processEquivalenceClassDEclat(llSet * parentDiffsUnion, int 
 		vector<int> * equivalenceClassISuffixItems = new vector<int>();
 		vector<llSet * > * equivalenceClassIDiffsets = new vector<llSet * >();
 
-		// ------ cloning
 		llSet * newParentDiffsUnion = new llSet();
 
 		llSet_element * ptrA = parentDiffsUnion->getFirst();
 		llSet_element * ptrB = diffsetI->getFirst();
+
+		// cout << "parentDiffsUnion : " << endl;
+		// parentDiffsUnion->print();
+		// cout << "diffsetI : " << endl;
+		// diffsetI->print();
 
 		while(ptrA != NULL && ptrB != NULL) {
 			if(ptrA->getValue() < ptrB->getValue()) {
@@ -911,7 +915,8 @@ void algoFramework::processEquivalenceClassDEclat(llSet * parentDiffsUnion, int 
 			ptrB = ptrB->getNext();
 		}
 
-		// newParentDiffsUnion->insert(diffsetI->begin(), diffsetI->end());
+		// cout << "newParentDiffsUnion : " << endl;
+		// newParentDiffsUnion->print();
 
 		for(int j=i+1; j < equivalenceClassItems->size(); j++) {
 			
@@ -1043,6 +1048,7 @@ void algoFramework::processEquivalenceClassDEclat(llSet * parentDiffsUnion, int 
 		delete equivalenceClassDiffsets->at(d);
 	delete equivalenceClassDiffsets;
 
+
 }
 
 
@@ -1053,11 +1059,15 @@ llSet * algoFramework::performDIFFERENCE(llSet * diffsetI, llSet * diffsetJ) {
 	llSet_element * ptrA = diffsetI->getFirst();
 	llSet_element * ptrB = diffsetJ->getFirst();
 	
+	cout << "diffset i" << endl;
+	diffsetI->print();
+	cout << "diffset j" << endl;
+	diffsetJ->print();
+
 	while(ptrB != NULL) {
 
 		if(ptrA != NULL) {
 			if(ptrA->getValue() < ptrB->getValue() ) {
-				diffsetIJ->addElement(ptrB->getValue());
 				ptrA = ptrA->getNext();
 			}
 			else if(ptrA->getValue() > ptrB->getValue() ) {
@@ -1073,9 +1083,11 @@ llSet * algoFramework::performDIFFERENCE(llSet * diffsetI, llSet * diffsetJ) {
 			diffsetIJ->addElement(ptrB->getValue());
 			ptrB = ptrB->getNext();		
 		}
-
-
+	
 	}
+
+	cout << "diffset ij" << endl;
+	diffsetIJ->print();
 
 	// for(unordered_set<int>::iterator i = diffsetJ->begin(); i != diffsetJ->end(); i++){ 
 	// 	int tid = *i;
