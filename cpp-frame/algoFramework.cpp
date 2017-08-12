@@ -45,8 +45,8 @@ void algoFramework::runAlgo(char * outputFile, transactionDatabase * database, d
 	
 	vector<int> * oneFrequentItems = new vector<int>();
 	
-	for( unordered_map<int, unordered_set<int> * >::iterator i = verticalDB->begin() ; i != verticalDB->end();i++ ) {
-		unordered_set<int> * tidset = i->second;
+	for( unordered_map<int, llSet * >::iterator i = verticalDB->begin() ; i != verticalDB->end();i++ ) {
+		llSet * tidset = i->second;
 		int support = tidset->size();
 		int item = i->first;
 		if(support >= minSupRelative) {
@@ -54,7 +54,6 @@ void algoFramework::runAlgo(char * outputFile, transactionDatabase * database, d
 			totalInOneFrequent += tidset->size();
 		}
 	}
-
 
 	if(oneFrequentItems->size() > 0) {
 
@@ -118,7 +117,7 @@ void algoFramework::runAlgo(char * outputFile, transactionDatabase * database, d
 
 void algoFramework::constructTIDSETS(vector<int> * equivalenceClassItems) {
 		
-	vector<unordered_set<int> * > * equivalenceClassTidsets = new vector<unordered_set<int> * >();
+	vector<llSet * > * equivalenceClassTidsets = new vector<llSet * >();
 
 	// populate the vector of set ints corresponding to the sorted frequent 1-itemsets. 		
 	for(int i=0;i<equivalenceClassItems->size();i++) {
@@ -126,9 +125,9 @@ void algoFramework::constructTIDSETS(vector<int> * equivalenceClassItems) {
 		verticalDB->at(equivalenceClassItems->at(i)) = NULL; 
 	} 
 
-	unordered_set<int> * enot = new unordered_set<int>();
+	llSet * enot = new llSet();
 	for(int i=0;i<N;i++) 
-		enot->insert(i);
+		enot->addElement(i);
 
 	delete this->database;
 
@@ -148,9 +147,9 @@ void algoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
 	for(int i=0;i<equivalenceClassItems->size();i++) {
 		int item = equivalenceClassItems->at(i);
 		boost::dynamic_bitset<> * bs = new boost::dynamic_bitset<> (N);
-		unordered_set<int> * tidset = verticalDB->at(item);
-		for(unordered_set<int>::iterator i = tidset->begin();i != tidset->end();i++) {
-			bs->set(*i);
+		llSet * tidset = verticalDB->at(item);
+		for(llSet_element * ele = tidset->getFirst();ele != NULL;ele = ele->getNext()) {
+			bs->set(ele->getValue());
 		}
 		equivalenceClassBitsets->push_back(bs);
 	}
@@ -172,17 +171,27 @@ void algoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
 
 void algoFramework::constructDIFFSETS(vector<int> * equivalenceClassItems) {
 	
-	vector<unordered_set<int> * > * equivalenceClassDiffsets = new vector<unordered_set<int> * >();
+	vector<llSet * > * equivalenceClassDiffsets = new vector<llSet * >();
 
 	// populate the vector of set ints corresponding to the sorted frequent 1-itemsets. 		
 	for(int i=0;i<equivalenceClassItems->size();i++) {
-		unordered_set<int> * tidset = verticalDB->at(equivalenceClassItems->at(i));
-		unordered_set<int> * diffset = new unordered_set<int>();
+		llSet * tidset = verticalDB->at(equivalenceClassItems->at(i));
+		llSet * diffset = new llSet();
+		llSet_element * ptr = tidset->getFirst();
+
 		for(int i=0;i<N;i++) {
-			if(tidset->find(i) == tidset->end()) {
-				diffset->insert(i);
+			
+			if(ptr != NULL) {
+				if(ptr->getValue() > i)
+					diffset->addElement(i);
+				else {
+					ptr = ptr->getNext();
+				}
 			}
+			else 
+				diffset->addElement(i);	
 		}
+
 		equivalenceClassDiffsets->push_back(diffset); 
 	} 
 	
@@ -190,13 +199,13 @@ void algoFramework::constructDIFFSETS(vector<int> * equivalenceClassItems) {
 
 	int * prefixArray = new int[1000];
 
-	this->processEquivalenceClassDEclat(new unordered_set<int>(), prefixArray, 0, N, equivalenceClassItems, equivalenceClassDiffsets);
+	this->processEquivalenceClassDEclat(new llSet(), prefixArray, 0, N, equivalenceClassItems, equivalenceClassDiffsets);
 
 	delete prefixArray;
 }
 
 
-void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTidset, int * prefix, int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<unordered_set<int> * > * equivalenceClassTidsets) {
+void algoFramework::processEquivalenceClassEclat(llSet * prefixTidset, int * prefix, int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<llSet * > * equivalenceClassTidsets) {
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> ECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
@@ -212,7 +221,7 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 	if(equivalenceClassItems->size() == 1) {
 		
 		int item = equivalenceClassItems->at(0);
-		unordered_set<int> * tidset = equivalenceClassTidsets->at(0);
+		llSet * tidset = equivalenceClassTidsets->at(0);
 		int support = tidset->size();
 		this->save(prefix, prefixLength, item, support);
 
@@ -228,16 +237,16 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 	if(equivalenceClassItems->size() == 2) {
 		
 		int itemI = equivalenceClassItems->at(0);
-		unordered_set<int> * tidsetI = equivalenceClassTidsets->at(0);
+		llSet * tidsetI = equivalenceClassTidsets->at(0);
 		int supportI = tidsetI->size();
 		this->save(prefix, prefixLength, itemI, supportI);
 		
 		int itemJ = equivalenceClassItems->at(1);
-		unordered_set<int> * tidsetJ = equivalenceClassTidsets->at(1);
+		llSet * tidsetJ = equivalenceClassTidsets->at(1);
 		int supportJ = tidsetJ->size();
 		this->save(prefix, prefixLength, itemJ, supportJ);
 		
-		unordered_set<int> * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ);
+		llSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ);
 		int supportIJ = tidsetIJ->size();
 		
 		if(supportIJ >= minSupRelative) {
@@ -263,20 +272,20 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 		int DTotal = 0;
 
 		int suffixI = equivalenceClassItems->at(i);
-		unordered_set<int> * tidsetI = equivalenceClassTidsets->at(i);
+		llSet * tidsetI = equivalenceClassTidsets->at(i);
 		int supportI = tidsetI->size();
 		this->save(prefix, prefixLength, suffixI, supportI);
 		
 		vector<int> * equivalenceClassISuffixItems = new vector<int>();
-		vector<unordered_set<int> * > * equivalenceClassITidsets = new vector<unordered_set<int> * >();
+		vector<llSet * > * equivalenceClassITidsets = new vector<llSet * >();
 
 		for(int j=i+1; j < equivalenceClassItems->size(); j++) {
 			
 			int suffixJ = equivalenceClassItems->at(j);
-			unordered_set<int> * tidsetJ = equivalenceClassTidsets->at(j);
+			llSet * tidsetJ = equivalenceClassTidsets->at(j);
 			int supportJ = tidsetJ->size();
 			
-			unordered_set<int> * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ);
+			llSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ);
 			int supportIJ = tidsetIJ->size();
 			
 			if(supportIJ >= minSupRelative) {
@@ -298,7 +307,9 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 			if(algo == 1) {
 				
 				treeEdges[0][0]++;
-				unordered_set<int> * tidsetIClone = new unordered_set<int>(tidsetI->begin(), tidsetI->end());
+				
+				llSet * tidsetIClone = new llSet( tidsetI->getFirst() );
+				
 				this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 
 			}
@@ -353,7 +364,8 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 					// cout << "ECLAT" << endl;
 					treeEdges[0][0]++;
 
-					unordered_set<int> * tidsetIClone = new unordered_set<int>(tidsetI->begin(), tidsetI->end());
+					llSet * tidsetIClone = new llSet(tidsetI->getFirst() );
+
 					this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 				}
 				else if(Vstore <= Estore && Vstore <= Dstore){
@@ -375,8 +387,8 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 					// System.out.println("DECLAT");
 					treeEdges[0][2]++;
 
-					vector<unordered_set<int> * > * equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
-					unordered_set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
+					vector<llSet * > * equivalenceClassIDiffsets = convertTIDSETStoDIFFSETS(tidsetI, equivalenceClassITidsets);
+					llSet * parentDiffsUnion = formParentDiffsUnionFromPrefixTidset(tidsetI);
 					
 					for(int i=0;i<equivalenceClassITidsets->size();i++)
 						delete equivalenceClassITidsets->at(i);
@@ -402,36 +414,60 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 }
 
 
-unordered_set<int> * algoFramework::performINTERSECTION(unordered_set<int> * tidsetI, unordered_set<int> * tidsetJ) {
+llSet * algoFramework::performINTERSECTION(llSet * tidsetI, llSet * tidsetJ) {
 	
-	unordered_set<int> * tidsetIJ = new unordered_set<int>();
-	if(tidsetJ->size() < tidsetI->size()){
-		for(unordered_set<int>::iterator i = tidsetJ->begin();i != tidsetJ->end();i++) 
-			if(tidsetI->find(*i) != tidsetI->end() )
-				tidsetIJ->insert(*i);
-	}
-	else {
-		for(unordered_set<int>::iterator i = tidsetI->begin();i != tidsetI->end();i++) 
-			if(tidsetJ->find(*i) != tidsetJ->end() )
-				tidsetIJ->insert(*i);
+	llSet * tidsetIJ = new llSet();
+
+	llSet_element * ptrA, * ptrB;
+	ptrA = tidsetI->getFirst();
+	ptrB = tidsetJ->getFirst();
+
+	while(ptrA != NULL && ptrB != NULL) {
+		if(ptrA->getValue() < ptrB->getValue()) {
+			ptrA = ptrA->getNext();
+		}
+		else if(ptrA->getValue() > ptrB->getValue()) {
+			ptrB = ptrB->getNext();
+		}
+		else {
+			tidsetIJ->addElement(ptrA->getValue());
+			ptrA = ptrA->getNext();
+			ptrB = ptrB->getNext();
+		}
 	}
 
 	return tidsetIJ;
 }
 
 
-vector<unordered_set<int> * > * algoFramework::convertTIDSETStoDIFFSETS(unordered_set<int> * prefixTidset, vector<unordered_set<int> * > * equivalenceClassITidsets) {
+vector<llSet * > * algoFramework::convertTIDSETStoDIFFSETS(llSet * prefixTidset, vector<llSet * > * equivalenceClassITidsets) {
 	
-	vector<unordered_set<int> * > * equivalenceClassIDiffsets = new vector<unordered_set<int> * >();
+	vector<llSet * > * equivalenceClassIDiffsets = new vector<llSet * >();
 	
 	for(int i=0;i<equivalenceClassITidsets->size();i++) {
-		unordered_set<int> * tidset = equivalenceClassITidsets->at(i);
-		unordered_set<int> * diffset = new unordered_set<int>();
-		for( unordered_set<int>::iterator j = prefixTidset->begin(); j != prefixTidset->end() ; j++ ) {
-			int tid = *j;
-			if( tidset->find(tid) == tidset->end())
-				diffset->insert(tid);
+		llSet * tidset = equivalenceClassITidsets->at(i);
+		llSet * diffset = new llSet();
+		
+		llSet_element * ptr = tidset->getFirst();
+
+		for(llSet_element * ele = prefixTidset->getFirst();ele != NULL;ele = ele->getNext()) {
+			int tid = ele->getValue();
+			if(ptr != NULL) {
+				if(ptr->getValue() < tid)
+					diffset->addElement(tid);
+				else
+					ptr = ptr->getNext();
+			}
+			else
+				diffset->addElement(tid);
 		}
+
+		// for( unordered_set<int>::iterator j = prefixTidset->begin(); j != prefixTidset->end() ; j++ ) {
+		// 	int tid = *j;
+		// 	if( tidset->find(tid) == tidset->end())
+		// 		diffset->insert(tid);
+		// }
+
 		equivalenceClassIDiffsets->push_back(diffset);
 	}
 
@@ -439,29 +475,38 @@ vector<unordered_set<int> * > * algoFramework::convertTIDSETStoDIFFSETS(unordere
 }
 
 
-unordered_set<int> * algoFramework::formParentDiffsUnionFromPrefixTidset(unordered_set<int> * prefixTidset) {
+llSet * algoFramework::formParentDiffsUnionFromPrefixTidset(llSet * prefixTidset) {
 
-	unordered_set<int> * parentDiffsUnion = new unordered_set<int>();
-	
+	llSet * parentDiffsUnion = new llSet();
+	llSet_element * ptr;
+	ptr = prefixTidset->getFirst();
+
 	for(int i=0;i<N;i++) {
-		if( prefixTidset->find(i) == prefixTidset->end() )
-			parentDiffsUnion->insert(i);
+		
+		if(ptr != NULL) {
+			if(ptr->getValue() > i)
+				parentDiffsUnion->addElement(i);
+			else
+				ptr = ptr->getNext();
+		}
+		else
+			parentDiffsUnion->addElement(i);
+
 	}
 
 	return parentDiffsUnion;
 }
 
 
-vector<boost::dynamic_bitset<> *> * algoFramework::convertTIDSETStoBITSETS(vector<unordered_set<int> * > * equivalenceClassITidsets) {
+vector<boost::dynamic_bitset<> *> * algoFramework::convertTIDSETStoBITSETS(vector<llSet * > * equivalenceClassITidsets) {
 	
 	vector<boost::dynamic_bitset<> *> * equivalenceClassIBitsets = new vector<boost::dynamic_bitset<> * >();
 
 	for(int i=0;i<equivalenceClassITidsets->size();i++) {
-		unordered_set<int> * tidset = equivalenceClassITidsets->at(i);
+		llSet * tidset = equivalenceClassITidsets->at(i);
 		boost::dynamic_bitset<> * bs = new boost::dynamic_bitset<>(N);
-		for(unordered_set<int>::iterator i = tidset->begin(); i != tidset->end() ; i++ ) {
-			int tid = *i;
-			bs->set(tid);
+		for( llSet_element * ele = tidset->getFirst(); ele != NULL; ele = ele->getNext() ) {
+			bs->set(ele->getValue());
 		}
 		equivalenceClassIBitsets->push_back(bs);
 	}
@@ -470,13 +515,12 @@ vector<boost::dynamic_bitset<> *> * algoFramework::convertTIDSETStoBITSETS(vecto
 }
 
 
-boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromPrefixTidset(unordered_set<int> * prefixTidset) {
+boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromPrefixTidset(llSet * prefixTidset) {
 	
 	boost::dynamic_bitset<> * prefixBitset = new boost::dynamic_bitset<>(N);
 
-	for(unordered_set<int>::iterator i = prefixTidset->begin(); i != prefixTidset->end() ; i++ ) {
-		int tid = *i;
-		prefixBitset->set(tid);
+	for( llSet_element * ele = prefixTidset->getFirst(); ele != NULL ; ele = ele->getNext() ) {
+		prefixBitset->set(ele->getValue());
 	}
 
 	return prefixBitset;
@@ -644,8 +688,8 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 					// cout << "ECLAT" << endl;
 					treeEdges[1][0]++;
 					
-					vector<unordered_set<int> * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
-					unordered_set<int> * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
+					vector<llSet * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
+					llSet * prefixTidset = formPrefixTidsetFromPrefixBitsets(bitsetI);
 				
 					for(int i=0;i<equivalenceClassIBitsets->size();i++)
 						delete equivalenceClassIBitsets->at(i);
@@ -666,8 +710,8 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 					// cout << "DECLAT" << endl;
 					treeEdges[1][2]++;
 
-					vector<unordered_set<int> * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
-					unordered_set<int> * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
+					vector<llSet * > * equivalenceClassIDiffsets = convertBITSETStoDIFFSETS(bitsetI, equivalenceClassIBitsets);
+					llSet * parentDiffsUnion = formParentDiffsUnionFromPrefixBitset(bitsetI);
 				
 					for(int i=0;i<equivalenceClassIBitsets->size();i++)
 						delete equivalenceClassIBitsets->at(i);
@@ -701,16 +745,16 @@ boost::dynamic_bitset<> * algoFramework::performAND(boost::dynamic_bitset<> * bi
 }
 
 
-vector<unordered_set<int> * > * algoFramework::convertBITSETStoTIDSETS(vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets) {
+vector<llSet * > * algoFramework::convertBITSETStoTIDSETS(vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets) {
 	
-	vector<unordered_set<int> * > * equivalenceClassITidsets = new vector<unordered_set<int> * >();
+	vector<llSet * > * equivalenceClassITidsets = new vector<llSet * >();
 
 	for(int i=0;i<equivalenceClassIBitsets->size();i++) {
 		boost::dynamic_bitset<> * bitst = equivalenceClassIBitsets->at(i); 
-		unordered_set<int> * tidset = new unordered_set<int>();
+		llSet * tidset = new llSet();
 
 		for(int i = bitst->find_first(); i >= 0; i = bitst->find_next(i)) {
-			tidset->insert(i);
+			tidset->addElement(i);
 		}
 		
 		equivalenceClassITidsets->push_back(tidset);
@@ -719,28 +763,28 @@ vector<unordered_set<int> * > * algoFramework::convertBITSETStoTIDSETS(vector<bo
 }
 
 
-unordered_set<int> * algoFramework::formPrefixTidsetFromPrefixBitsets(boost::dynamic_bitset<> * prefixBitset) {
+llSet * algoFramework::formPrefixTidsetFromPrefixBitsets(boost::dynamic_bitset<> * prefixBitset) {
 	
-	unordered_set<int> * prefixTidset = new unordered_set<int>();
+	llSet * prefixTidset = new llSet();
 
 	for(int i = prefixBitset->find_first(); i >= 0; i = prefixBitset->find_next(i)) {
-		prefixTidset->insert(i);
+		prefixTidset->addElement(i);
 	}
 
 	return prefixTidset;
 }
 
 
-vector<unordered_set<int> * > * algoFramework::convertBITSETStoDIFFSETS(boost::dynamic_bitset<> * prefixBitset, vector<boost::dynamic_bitset<> *> * equivalenceClassIBitsets) {
+vector<llSet * > * algoFramework::convertBITSETStoDIFFSETS(boost::dynamic_bitset<> * prefixBitset, vector<boost::dynamic_bitset<> *> * equivalenceClassIBitsets) {
 	
-	vector<unordered_set<int> * > * equivalenceClassIDiffsets = new vector<unordered_set<int> * >();
+	vector<llSet * > * equivalenceClassIDiffsets = new vector<llSet * >();
 	
 	for(int i=0; i < equivalenceClassIBitsets->size(); i++) {
 		boost::dynamic_bitset<> * bitset = equivalenceClassIBitsets->at(i);
-		unordered_set<int> * diffset = new unordered_set<int>();
+		llSet * diffset = new llSet();
 		for(int i = prefixBitset->find_first(); i >= 0; i = prefixBitset->find_next(i))
 			if(!bitset->test(i))
-				diffset->insert(i);
+				diffset->addElement(i);
 		equivalenceClassIDiffsets->push_back(diffset);
 	}
 
@@ -748,19 +792,19 @@ vector<unordered_set<int> * > * algoFramework::convertBITSETStoDIFFSETS(boost::d
 }
 
 
-unordered_set<int> * algoFramework::formParentDiffsUnionFromPrefixBitset(boost::dynamic_bitset<> * prefixBitset) {
+llSet * algoFramework::formParentDiffsUnionFromPrefixBitset(boost::dynamic_bitset<> * prefixBitset) {
 
-	unordered_set<int> * parentDiffsUnion = new unordered_set<int>();
+	llSet * parentDiffsUnion = new llSet();
 	for(int i=0;i>N;i++) {
 		if(!prefixBitset->test(i))
-			parentDiffsUnion->insert(i);
+			parentDiffsUnion->addElement(i);
 	}
 
 	return parentDiffsUnion;
 }
 
 
-void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDiffsUnion, int * prefix, int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<unordered_set<int> * > * equivalenceClassDiffsets) {
+void algoFramework::processEquivalenceClassDEclat(llSet * parentDiffsUnion, int * prefix, int prefixLength, int prefixSupport, vector<int> * equivalenceClassItems, vector<llSet * > * equivalenceClassDiffsets) {
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> DECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
@@ -777,7 +821,7 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 	if(equivalenceClassItems->size() == 1) {
 		
 		int item = equivalenceClassItems->at(0);
-		unordered_set<int> * diffset = equivalenceClassDiffsets->at(0);
+		llSet * diffset = equivalenceClassDiffsets->at(0);
 		int support = prefixSupport - diffset->size();
 		save(prefix, prefixLength, item, support);
 
@@ -794,16 +838,16 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 	if(equivalenceClassItems->size() == 2) {
 		
 		int itemI = equivalenceClassItems->at(0);
-		unordered_set<int> * diffsetI = equivalenceClassDiffsets->at(0);
+		llSet * diffsetI = equivalenceClassDiffsets->at(0);
 		int supportI = prefixSupport - diffsetI->size();
 		save(prefix, prefixLength, itemI, supportI);
 		
 		int itemJ = equivalenceClassItems->at(1);
-		unordered_set<int> * diffsetJ = equivalenceClassDiffsets->at(1);
+		llSet * diffsetJ = equivalenceClassDiffsets->at(1);
 		int supportJ = prefixSupport - diffsetJ->size();
 		save(prefix, prefixLength, itemJ, supportJ);
 		
-		unordered_set<int> * diffsetIJ = this->performDIFFERENCE(diffsetI, diffsetJ);
+		llSet * diffsetIJ = this->performDIFFERENCE(diffsetI, diffsetJ);
 		int supportIJ = supportI - diffsetIJ->size();
 		
 		if(supportIJ >= minSupRelative) {
@@ -828,23 +872,54 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 		int DTotal = 0;
 
 		int suffixI = equivalenceClassItems->at(i);
-		unordered_set<int> * diffsetI = equivalenceClassDiffsets->at(i);
+		llSet * diffsetI = equivalenceClassDiffsets->at(i);
 		int supportI = prefixSupport - diffsetI->size();
 		save(prefix, prefixLength, suffixI, supportI);
 		
 		vector<int> * equivalenceClassISuffixItems = new vector<int>();
-		vector<unordered_set<int> * > * equivalenceClassIDiffsets = new vector<unordered_set<int> * >();
+		vector<llSet * > * equivalenceClassIDiffsets = new vector<llSet * >();
 
-		unordered_set<int> * newParentDiffsUnion = new unordered_set<int>(parentDiffsUnion->begin(), parentDiffsUnion->end());
-		newParentDiffsUnion->insert(diffsetI->begin(), diffsetI->end());
+		// ------ cloning
+		llSet * newParentDiffsUnion = new llSet();
+
+		llSet_element * ptrA = parentDiffsUnion->getFirst();
+		llSet_element * ptrB = diffsetI->getFirst();
+
+		while(ptrA != NULL && ptrB != NULL) {
+			if(ptrA->getValue() < ptrB->getValue()) {
+				newParentDiffsUnion->addElement(ptrA->getValue());
+				ptrA = ptrA->getNext();
+			}
+			else if(ptrA->getValue() > ptrB->getValue()) {
+				newParentDiffsUnion->addElement(ptrB->getValue());
+				ptrB = ptrB->getNext();
+			}
+			else {
+				newParentDiffsUnion->addElement(ptrB->getValue());
+				ptrB = ptrB->getNext();	
+				ptrA = ptrA->getNext();	
+			}
+		}
+
+		while(ptrA != NULL) {
+			newParentDiffsUnion->addElement(ptrA->getValue());
+			ptrA = ptrA->getNext();
+		}
+
+		while(ptrB != NULL) {
+			newParentDiffsUnion->addElement(ptrB->getValue());
+			ptrB = ptrB->getNext();
+		}
+
+		// newParentDiffsUnion->insert(diffsetI->begin(), diffsetI->end());
 
 		for(int j=i+1; j < equivalenceClassItems->size(); j++) {
 			
 			int suffixJ = equivalenceClassItems->at(j);
-			unordered_set<int> * diffsetJ = equivalenceClassDiffsets->at(j);
+			llSet * diffsetJ = equivalenceClassDiffsets->at(j);
 			int supportJ = prefixSupport - diffsetJ->size();
 			
-			unordered_set<int> * diffsetIJ = this->performDIFFERENCE(diffsetI, diffsetJ);
+			llSet * diffsetIJ = this->performDIFFERENCE(diffsetI, diffsetJ);
 			int supportIJ = supportI - diffsetIJ->size();
 				
 			if(supportIJ >= minSupRelative) {
@@ -865,7 +940,6 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 			int newPrefixLength = prefixLength+1;
 
 
-			
 			if(algo == 3) {
 
 				treeEdges[2][2]++;
@@ -921,8 +995,8 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 					// cout << "ECLAT" << endl;
 					treeEdges[2][0]++;
 					
-					vector<unordered_set<int> * > * equivalenceClassITidsets = convertDIFFSETStoTIDSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
-					unordered_set<int> * prefixTidset = formPrefixTidsetFromParentDiffsUnion(newParentDiffsUnion);
+					vector<llSet * > * equivalenceClassITidsets = convertDIFFSETStoTIDSETS(newParentDiffsUnion, equivalenceClassIDiffsets);
+					llSet * prefixTidset = formPrefixTidsetFromParentDiffsUnion(newParentDiffsUnion);
 
 					for(int i=0;i<equivalenceClassIDiffsets->size();i++)
 						delete equivalenceClassIDiffsets->at(i);
@@ -973,30 +1047,91 @@ void algoFramework::processEquivalenceClassDEclat(unordered_set<int> * parentDif
 
 
 // diff(PXY) = diff(PY) - DIFF(PX)	
-unordered_set<int> * algoFramework::performDIFFERENCE(unordered_set<int> * diffsetI, unordered_set<int> * diffsetJ) {
+llSet * algoFramework::performDIFFERENCE(llSet * diffsetI, llSet * diffsetJ) {
 	
-	unordered_set<int> * diffsetIJ = new unordered_set<int>();
-	for(unordered_set<int>::iterator i = diffsetJ->begin(); i != diffsetJ->end(); i++){ 
-		int tid = *i;
-		if( diffsetI->find(tid) == diffsetI->end() )
-			diffsetIJ->insert(tid);
+	llSet * diffsetIJ = new llSet();
+	llSet_element * ptrA = diffsetI->getFirst();
+	llSet_element * ptrB = diffsetJ->getFirst();
+	
+	while(ptrB != NULL) {
+
+		if(ptrA != NULL) {
+			if(ptrA->getValue() < ptrB->getValue() ) {
+				diffsetIJ->addElement(ptrB->getValue());
+				ptrA = ptrA->getNext();
+			}
+			else if(ptrA->getValue() > ptrB->getValue() ) {
+				diffsetIJ->addElement(ptrB->getValue());
+				ptrB = ptrB->getNext();
+			}
+			else {
+				ptrB = ptrB->getNext();
+				ptrA = ptrA->getNext();
+			}
+		}
+		else {
+			diffsetIJ->addElement(ptrB->getValue());
+			ptrB = ptrB->getNext();		
+		}
+
+
 	}
 
+	// for(unordered_set<int>::iterator i = diffsetJ->begin(); i != diffsetJ->end(); i++){ 
+	// 	int tid = *i;
+	// 	if( diffsetI->find(tid) == diffsetI->end() )
+	// 		diffsetIJ->insert(tid);
+	// }
+
 	return diffsetIJ;
+
 }
 
 
-vector<unordered_set<int> * > * algoFramework::convertDIFFSETStoTIDSETS(unordered_set<int> * parentDiffsUnion, vector<unordered_set<int> * > * equivalenceClassIDiffsets) {
+vector<llSet *> * algoFramework::convertDIFFSETStoTIDSETS(llSet * parentDiffsUnion, vector<llSet * > * equivalenceClassIDiffsets) {
 
-	vector<unordered_set<int> * > * equivalenceClassITidsets = new vector<unordered_set<int> * >();
+	vector<llSet * > * equivalenceClassITidsets = new vector<llSet * >();
 
 	for( int i=0;i<equivalenceClassIDiffsets->size();i++ ) {
-		unordered_set<int> * diffset = equivalenceClassIDiffsets->at(i);
-		unordered_set<int> * tidset = new unordered_set<int>();
+		llSet * diffset = equivalenceClassIDiffsets->at(i);
+		llSet * tidset = new llSet();
+		llSet_element * ptrA = parentDiffsUnion->getFirst();
+		llSet_element * ptrB = diffset->getFirst();
+		
 		for(int j=0; j<N; j++) {
-			if(parentDiffsUnion->find(i) == parentDiffsUnion->end() && diffset->find(i) == diffset->end())
-				tidset->insert(i);
+
+			if(ptrA != NULL && ptrB != NULL) {
+				if(ptrA->getValue() > i && ptrB->getValue() > i) 
+					tidset->addElement(i);
+				else {
+					if(ptrA->getValue() == i)
+						ptrA = ptrA->getNext();
+					if(ptrB->getValue() == i)
+						ptrB = ptrB->getNext();
+				}
+			}
+			else if(ptrA == NULL && ptrB != NULL) {
+				if(ptrB->getValue() > i) 
+					tidset->addElement(i);
+				else
+					ptrB = ptrB->getNext();
+			}
+			else if(ptrB == NULL && ptrA != NULL) {
+				if(ptrA->getValue() > i) 
+					tidset->addElement(i);
+				else
+					ptrA = ptrA->getNext();
+			}
+			else {
+				tidset->addElement(i);
+			}
+
+
+			// if(parentDiffsUnion->find(i) == parentDiffsUnion->end() && diffset->find(i) == diffset->end())
+				// tidset->insert(i);
 		}
+
+
 		equivalenceClassITidsets->push_back(tidset);
 	}
 
@@ -1004,29 +1139,69 @@ vector<unordered_set<int> * > * algoFramework::convertDIFFSETStoTIDSETS(unordere
 }
 
 
-unordered_set<int> * algoFramework::formPrefixTidsetFromParentDiffsUnion(unordered_set<int> * parentDiffsUnion) {
+llSet * algoFramework::formPrefixTidsetFromParentDiffsUnion(llSet * parentDiffsUnion) {
 
-	unordered_set<int> * prefixTidset = new unordered_set<int>();
+	llSet * prefixTidset = new llSet();
+	llSet_element * ptr = parentDiffsUnion->getFirst();
+
 	for(int i=0;i<N;i++) {
-		if( parentDiffsUnion->find(i) == parentDiffsUnion->end() )
-			prefixTidset->insert(i);
+		if(ptr != NULL) {
+			if(ptr->getValue() > i)
+				prefixTidset->addElement(i);
+			else
+				ptr = ptr->getNext();
+		}
+		else
+			prefixTidset->addElement(i);
+			
 	}
 
 	return prefixTidset;
 }
 
 
-vector<boost::dynamic_bitset<> * > * algoFramework::convertDIFFSETStoBITSETS(unordered_set<int> * parentDiffsUnion, vector<unordered_set<int> * > * equivalenceClassIDiffsets) {
+vector<boost::dynamic_bitset<> * > * algoFramework::convertDIFFSETStoBITSETS(llSet * parentDiffsUnion, vector<llSet * > * equivalenceClassIDiffsets) {
 
 	vector<boost::dynamic_bitset<> * > * equivalenceClassIBitsets = new vector<boost::dynamic_bitset<> * >();
 
 	for(int i=0;i<equivalenceClassIDiffsets->size();i++) {
-		unordered_set<int> * diffset = equivalenceClassIDiffsets->at(i);
+		llSet * diffset = equivalenceClassIDiffsets->at(i);
 		boost::dynamic_bitset<> * bs = new boost::dynamic_bitset<>(N);
+		llSet_element * ptrA = parentDiffsUnion->getFirst();
+		llSet_element * ptrB = diffset->getFirst();
+
 		for(int i=0;i>N;i++) {
-			if(parentDiffsUnion->find(i) == parentDiffsUnion->end() && diffset->find(i) == diffset->end()) {
+			
+			if(ptrA != NULL && ptrB != NULL) {
+				if(ptrA->getValue() > i && ptrB->getValue() > i) 
+					bs->set(i);
+				else {
+					if(ptrA->getValue() == i)
+						ptrA = ptrA->getNext();
+					if(ptrB->getValue() == i)
+						ptrB = ptrB->getNext();
+				}
+			}
+			else if(ptrA == NULL && ptrB != NULL) {
+				if(ptrB->getValue() > i) 
+					bs->set(i);
+				else
+					ptrB = ptrB->getNext();
+			}
+			else if(ptrB == NULL && ptrA != NULL) {
+				if(ptrA->getValue() > i) 
+					bs->set(i);
+				else
+					ptrA = ptrA->getNext();
+			}
+			else {
 				bs->set(i);
 			}
+
+
+			// if(parentDiffsUnion->find(i) == parentDiffsUnion->end() && diffset->find(i) == diffset->end()) {
+			// 	bs->set(i);
+			// }
 		}
 		equivalenceClassIBitsets->push_back(bs);
 	}
@@ -1035,13 +1210,22 @@ vector<boost::dynamic_bitset<> * > * algoFramework::convertDIFFSETStoBITSETS(uno
 }
 
 
-boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromParentDiffsUnion(unordered_set<int> * parentDiffsUnion) {
+boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromParentDiffsUnion(llSet * parentDiffsUnion) {
 
 	boost::dynamic_bitset<> * prefixBitset = new boost::dynamic_bitset<>(N);
+	llSet_element * ptr = parentDiffsUnion->getFirst();
 	for(int i=0;i>N;i++) {
-		if(parentDiffsUnion->find(i) == parentDiffsUnion->end()) {
-			prefixBitset->set(i);
+		
+		if(ptr != NULL) {
+			if(ptr->getValue() > i)
+				prefixBitset->set(i);
+			else
+				ptr = ptr->getNext();
 		}
+		else
+			prefixBitset->set(i);
+
+
 	}
 
 	return prefixBitset;

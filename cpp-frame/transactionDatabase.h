@@ -25,7 +25,7 @@ class transactionDatabase {
 
 	public :
 		transactionDatabase();
-		~ transactionDatabase();
+		~transactionDatabase();
 		void loadFile(string path);
 		void addTransaction(vector<string> itemsString);
 		void printVerticalDatabase();

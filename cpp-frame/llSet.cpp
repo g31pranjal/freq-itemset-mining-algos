@@ -9,12 +9,23 @@ llSet::llSet() {
 	num = 0;
 }
 
+llSet::llSet(llSet_element * ele) {
+	first = NULL;
+	last = NULL;
+	num = 0;
+	while(ele != NULL) {
+		this->addElement(ele->getValue());
+		ele = ele->getNext();
+	}
+}
+
 llSet::~llSet() {
-	llSet_element * ele;
+	llSet_element * ele, * tmp;
 	ele = first;
 	while(ele != NULL) {
-		ele = ele->getNext();
+		tmp = ele->getNext();
 		delete ele;
+		ele = tmp;
 	}
 }
 
@@ -40,7 +51,7 @@ void llSet::addElement(int num) {
 		llSet_element * nw;
 		nw = new llSet_element(num);
 		first = last = nw;
-		num++;
+		this->num++;
 	} 
 	else {
 		if(last->getValue() != num) {
@@ -48,7 +59,12 @@ void llSet::addElement(int num) {
 			nw = new llSet_element(num);
 			last->setNext(nw);
 			last = nw;
-			num++;
+			this->num++;
 		}
 	}
 }
+
+int llSet::size() {
+	return this->num;
+}
+

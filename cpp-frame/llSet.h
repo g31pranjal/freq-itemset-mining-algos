@@ -26,7 +26,9 @@ class llSet {
 		int num;
 	public :
 		llSet();
+		llSet(llSet_element * first);
 		~llSet();
+		int size();
 		llSet_element * getFirst();
 		llSet_element * getLast();
 		void setFirst(llSet_element * nw);
