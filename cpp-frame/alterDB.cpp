@@ -26,14 +26,14 @@ string getFilepath(char filename[]) {
 
 int main(int argc, char * argv[]) {
 
-	string filepath = getFilepath("../datasets/test1.txt");
+	string filepath = getFilepath("../datasets/connect.txt");
 
 	chrono::system_clock::time_point tp1 = chrono::system_clock::now();
 
 	transactionDatabase * database = new transactionDatabase();
 	database->loadFile(filepath);
 
-	database->printVerticalDatabase();
+	// database->printVerticalDatabase();
 
 	// database->dismantleVerticalDatabase();
 	// delete database;

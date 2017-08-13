@@ -8,10 +8,10 @@
 
 using namespace std;
 
-// current ratio is, 32*8 | reduce this to get good results !
+// current ratio is, 16*8 | reduce this to get good results !
 
-static double INTSIZE /*bytes*/ = 32.0; 
-static double BITSIZE /*bytes*/ = 1.0/8.0;
+static double INTSIZE = 16.0; 		/* implementation by linked list */
+static double BITSIZE = 1.0/8.0;	/* dynamic bitset */
 
 algoFramework::algoFramework() {
 	this->algo = 0;
@@ -1059,10 +1059,10 @@ llSet * algoFramework::performDIFFERENCE(llSet * diffsetI, llSet * diffsetJ) {
 	llSet_element * ptrA = diffsetI->getFirst();
 	llSet_element * ptrB = diffsetJ->getFirst();
 	
-	cout << "diffset i" << endl;
-	diffsetI->print();
-	cout << "diffset j" << endl;
-	diffsetJ->print();
+	// cout << "diffset i" << endl;
+	// diffsetI->print();
+	// cout << "diffset j" << endl;
+	// diffsetJ->print();
 
 	while(ptrB != NULL) {
 
@@ -1086,8 +1086,8 @@ llSet * algoFramework::performDIFFERENCE(llSet * diffsetI, llSet * diffsetJ) {
 	
 	}
 
-	cout << "diffset ij" << endl;
-	diffsetIJ->print();
+	// cout << "diffset ij" << endl;
+	// diffsetIJ->print();
 
 	// for(unordered_set<int>::iterator i = diffsetJ->begin(); i != diffsetJ->end(); i++){ 
 	// 	int tid = *i;
