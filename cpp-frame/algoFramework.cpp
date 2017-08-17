@@ -306,8 +306,7 @@ void algoFramework::processEquivalenceClassEclat(llSet * prefixTidset, int * pre
 			
 			if(algo == 1) {
 				
-				treeEdges[0][0]++;
-				
+				treeEdges[0][0]++;				
 				llSet * tidsetIClone = new llSet( tidsetI->getFirst() );
 				
 				this->processEquivalenceClassEclat(tidsetIClone, prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
@@ -453,7 +452,7 @@ vector<llSet * > * algoFramework::convertTIDSETStoDIFFSETS(llSet * prefixTidset,
 		for(llSet_element * ele = prefixTidset->getFirst();ele != NULL;ele = ele->getNext()) {
 			int tid = ele->getValue();
 			if(ptr != NULL) {
-				if(ptr->getValue() < tid)
+				if(ptr->getValue() > tid)
 					diffset->addElement(tid);
 				else
 					ptr = ptr->getNext();
@@ -734,6 +733,7 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 	for(int d=0;d<equivalenceClassBitsets->size();d++) 
 		delete equivalenceClassBitsets->at(d);
 	delete equivalenceClassBitsets;
+
 
 }
 
@@ -1165,7 +1165,6 @@ llSet * algoFramework::formPrefixTidsetFromParentDiffsUnion(llSet * parentDiffsU
 		}
 		else
 			prefixTidset->addElement(i);
-			
 	}
 
 	return prefixTidset;
@@ -1182,32 +1181,32 @@ vector<boost::dynamic_bitset<> * > * algoFramework::convertDIFFSETStoBITSETS(llS
 		llSet_element * ptrA = parentDiffsUnion->getFirst();
 		llSet_element * ptrB = diffset->getFirst();
 
-		for(int i=0;i>N;i++) {
+		for(int j=0;j<N;j++) {
 			
 			if(ptrA != NULL && ptrB != NULL) {
-				if(ptrA->getValue() > i && ptrB->getValue() > i) 
-					bs->set(i);
+				if(ptrA->getValue() > j && ptrB->getValue() > j) 
+					bs->set(j);
 				else {
-					if(ptrA->getValue() == i)
+					if(ptrA->getValue() == j)
 						ptrA = ptrA->getNext();
-					if(ptrB->getValue() == i)
+					if(ptrB->getValue() == j)
 						ptrB = ptrB->getNext();
 				}
 			}
 			else if(ptrA == NULL && ptrB != NULL) {
-				if(ptrB->getValue() > i) 
-					bs->set(i);
+				if(ptrB->getValue() > j) 
+					bs->set(j);
 				else
 					ptrB = ptrB->getNext();
 			}
 			else if(ptrB == NULL && ptrA != NULL) {
-				if(ptrA->getValue() > i) 
-					bs->set(i);
+				if(ptrA->getValue() > j) 
+					bs->set(j);
 				else
 					ptrA = ptrA->getNext();
 			}
 			else {
-				bs->set(i);
+				bs->set(j);
 			}
 
 
@@ -1226,7 +1225,7 @@ boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromParentDiffsUnion(ll
 
 	boost::dynamic_bitset<> * prefixBitset = new boost::dynamic_bitset<>(N);
 	llSet_element * ptr = parentDiffsUnion->getFirst();
-	for(int i=0;i>N;i++) {
+	for(int i=0;i<N;i++) {
 		
 		if(ptr != NULL) {
 			if(ptr->getValue() > i)
