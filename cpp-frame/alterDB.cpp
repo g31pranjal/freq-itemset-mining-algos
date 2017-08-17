@@ -33,6 +33,11 @@ int main(int argc, char * argv[]) {
 	transactionDatabase * database = new transactionDatabase();
 	database->loadFile(filepath);
 
+	// database->printVerticalDatabase();
+
+	// database->dismantleVerticalDatabase();
+	// delete database;
+
 	chrono::system_clock::time_point tp2 = chrono::system_clock::now();
 
 	if(argc != 3) {
