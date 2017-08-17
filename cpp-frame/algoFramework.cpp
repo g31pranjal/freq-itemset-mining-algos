@@ -10,7 +10,7 @@ using namespace std;
 
 // current ratio is, 32*8 | reduce this to get good results !
 
-static double INTSIZE /*bytes*/ = 32.0; 
+static double INTSIZE /*bytes*/ = 16.0; 
 static double BITSIZE /*bytes*/ = 1.0/8.0;
 
 algoFramework::algoFramework() {
@@ -221,7 +221,7 @@ void algoFramework::processEquivalenceClassEclat(unordered_set<int> * prefixTids
 		for(int d=0;d<equivalenceClassTidsets->size();d++) 
 			delete equivalenceClassTidsets->at(d);
 		delete equivalenceClassTidsets;
-
+	
 		return;
 	}
 
@@ -691,6 +691,7 @@ void algoFramework::processEquivalenceClassViper(boost::dynamic_bitset<> * prefi
 		delete equivalenceClassBitsets->at(d);
 	delete equivalenceClassBitsets;
 
+
 }
 
 
@@ -994,8 +995,9 @@ vector<unordered_set<int> * > * algoFramework::convertDIFFSETStoTIDSETS(unordere
 		unordered_set<int> * diffset = equivalenceClassIDiffsets->at(i);
 		unordered_set<int> * tidset = new unordered_set<int>();
 		for(int j=0; j<N; j++) {
-			if(parentDiffsUnion->find(i) == parentDiffsUnion->end() && diffset->find(i) == diffset->end())
-				tidset->insert(i);
+			if(parentDiffsUnion->find(j) == parentDiffsUnion->end() && diffset->find(j) == diffset->end()) {
+				tidset->insert(j);
+			}
 		}
 		equivalenceClassITidsets->push_back(tidset);
 	}
@@ -1070,5 +1072,6 @@ void algoFramework::save(int * prefix, int prefixLength, int suffixItem, int sup
 	s = s + (to_string(suffixItem) + " #SUP: " + to_string(support) +  '\n' );
 
 	writer << s;
+
 }
 
