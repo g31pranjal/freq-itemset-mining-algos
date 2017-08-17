@@ -1113,29 +1113,29 @@ vector<llSet *> * algoFramework::convertDIFFSETStoTIDSETS(llSet * parentDiffsUni
 		for(int j=0; j<N; j++) {
 
 			if(ptrA != NULL && ptrB != NULL) {
-				if(ptrA->getValue() > i && ptrB->getValue() > i) 
-					tidset->addElement(i);
+				if(ptrA->getValue() > j && ptrB->getValue() > j) 
+					tidset->addElement(j);
 				else {
-					if(ptrA->getValue() == i)
+					if(ptrA->getValue() == j)
 						ptrA = ptrA->getNext();
-					if(ptrB->getValue() == i)
+					if(ptrB->getValue() == j)
 						ptrB = ptrB->getNext();
 				}
 			}
 			else if(ptrA == NULL && ptrB != NULL) {
-				if(ptrB->getValue() > i) 
-					tidset->addElement(i);
+				if(ptrB->getValue() > j) 
+					tidset->addElement(j);
 				else
 					ptrB = ptrB->getNext();
 			}
 			else if(ptrB == NULL && ptrA != NULL) {
-				if(ptrA->getValue() > i) 
-					tidset->addElement(i);
+				if(ptrA->getValue() > j) 
+					tidset->addElement(j);
 				else
 					ptrA = ptrA->getNext();
 			}
 			else {
-				tidset->addElement(i);
+				tidset->addElement(j);
 			}
 
 
