@@ -2,6 +2,8 @@
 
 #define TRANS_DB
 
+#include "llSet.h"
+
 #include <unordered_set>
 #include <vector>
 #include <unordered_map>
@@ -14,7 +16,7 @@ class transactionDatabase {
 	private :
 		unordered_set<int> * items;
 		vector<vector<int> * > * horizontalDB; 
-		unordered_map<int, unordered_set<int> * > * verticalDB; 
+		unordered_map<int, llSet * > * verticalDB; 
 		int N, M;
 
 		void dismantleHorizontalDatabase();
@@ -23,7 +25,7 @@ class transactionDatabase {
 
 	public :
 		transactionDatabase();
-		~ transactionDatabase();
+		~transactionDatabase();
 		void loadFile(string path);
 		void addTransaction(vector<string> itemsString);
 		void printVerticalDatabase();
@@ -31,7 +33,7 @@ class transactionDatabase {
 		int getM();
 
 		void dismantleVerticalDatabase();
-		unordered_map<int, unordered_set<int> * > * getVerticalDatabase();
+		unordered_map<int, llSet * > * getVerticalDatabase();
 		// vector<vector<int> * > * getHorizontalDatabase();
 		// unordered_set<int> * getItems();
 		
