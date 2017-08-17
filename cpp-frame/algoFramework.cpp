@@ -1025,9 +1025,9 @@ vector<boost::dynamic_bitset<> * > * algoFramework::convertDIFFSETStoBITSETS(uno
 	for(int i=0;i<equivalenceClassIDiffsets->size();i++) {
 		unordered_set<int> * diffset = equivalenceClassIDiffsets->at(i);
 		boost::dynamic_bitset<> * bs = new boost::dynamic_bitset<>(N);
-		for(int i=0;i>N;i++) {
-			if(parentDiffsUnion->find(i) == parentDiffsUnion->end() && diffset->find(i) == diffset->end()) {
-				bs->set(i);
+		for(int j=0;j<N;i++) {
+			if(parentDiffsUnion->find(j) == parentDiffsUnion->end() && diffset->find(j) == diffset->end()) {
+				bs->set(j);
 			}
 		}
 		equivalenceClassIBitsets->push_back(bs);
