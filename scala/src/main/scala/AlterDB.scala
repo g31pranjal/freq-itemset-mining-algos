@@ -9,7 +9,7 @@ object AlterDB {
   
   def main(args: Array[String]) {
     
-    val appName = "Umdblab Project"
+    val appName = "Umdblab Project Scala Part"
     val masterUrl = "local[4]"
     val filename ="file://" + new File("").getAbsolutePath + "/src/resources/test1.txt"
     
