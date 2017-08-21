@@ -1,18 +1,33 @@
-import org.apache.spark.sql.SparkSession
+import java.io.File
+
+import org.apache.spark.SparkContext
+import org.apache.spark.SparkConf
+import org.apache.spark.rdd.RDD
 
 
 object AlterDB {
   
   def main(args: Array[String]) {
     
-    val logFile = "/home/zhida/Downloads/spark-2.2.0-bin-hadoop2.7/README.md" // Should be some file on your system
-    val spark = SparkSession.builder.appName("AlterDB Application").getOrCreate()
-    val logData = spark.read.textFile(logFile).cache()
-    val numAs = logData.filter(line => line.contains("a")).count()
-    val numBs = logData.filter(line => line.contains("b")).count()
-    println(s"Lines with a: $numAs, Lines with b: $numBs")
+    val appName = "Umdblab Project"
+    val masterUrl = "local[4]"
+    val filename ="file://" + new File("").getAbsolutePath + "/src/resources/test1.txt"
     
-    spark.stop()
+    val conf = new SparkConf()
+      .setAppName(appName)
+      .setMaster(masterUrl)
+    val sc = new SparkContext(conf)
+    
+    
+    readFile(filename, sc)
+    
+  }
+  
+  def readFile(filepath: String, sc: SparkContext): Unit = {
+    
+    val distFile = sc.textFile(filepath)
+    
+    distFile.foreach(x => println(x))
     
   }
   
