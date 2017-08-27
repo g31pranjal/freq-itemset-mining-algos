@@ -62,7 +62,6 @@ boost::dynamic_bitset<> * uBitset::getEligible() {
 double uBitset::getProbability(int tid) {
 	
 	if(!this->eligible->test(tid)){
-		cout << "returning " << endl;
 		return 0.0;
 	}
 

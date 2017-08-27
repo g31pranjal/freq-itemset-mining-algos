@@ -76,12 +76,11 @@ void algoFramework::runAlgo(char * outputFile, transactionDatabase * database, d
 		long Vstore = (double)N*(long)(oneFrequentItems->size()+1.0)*BITSIZE;
 
 		cout << Estore << ", " << Vstore << ", " << Dstore << endl;
-		cout << oneFrequentItems->size() << ", " << N << endl;
+		// cout << oneFrequentItems->size() << ", " << N << endl;
 
 		if(algo == 0) {
 			if(Estore <= Dstore && Estore <= Vstore ) {
 				// cout << "ECLAT" << endl;
-				// this->constructTIDSETS(oneFrequentItems);
 				this->constructTIDSETS(oneFrequentItems);
 			}
 			else if(Vstore <= Estore && Vstore <= Dstore){
@@ -1099,7 +1098,6 @@ llSet * algoFramework::performDIFFERENCE(llSet * diffsetI, llSet * diffsetJ) {
 
 }
 
-
 vector<llSet *> * algoFramework::convertDIFFSETStoTIDSETS(llSet * parentDiffsUnion, vector<llSet * > * equivalenceClassIDiffsets) {
 
 	vector<llSet * > * equivalenceClassITidsets = new vector<llSet * >();
@@ -1246,6 +1244,7 @@ boost::dynamic_bitset<> * algoFramework::formPrefixBitsetFromParentDiffsUnion(ll
 void algoFramework::printStats() {
 	cout << "\n\n===================================================" << endl;
 	cout << " Transactions count from database : " << N << endl;
+	cout << " Items count from database : " << M << endl;
 	cout << " Frequent itemset count : " << itemsetCount << endl;
 	cout << " Usage : ECLAT "  << rec[1] << " VIPER " << rec[2] << " DECLAT " << rec[3] << endl;
 	cout << " E->E : " << treeEdges[0][0] << "\tE->V : " << treeEdges[0][1] << "\tE->D : " << treeEdges[0][2] << endl;
