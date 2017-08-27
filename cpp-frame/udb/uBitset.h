@@ -11,12 +11,14 @@ static int precision = 16;
 class uBitset{
 	private:
 		double support;
+		int num;
 		boost::dynamic_bitset<> ** bitBucket;
 		boost::dynamic_bitset<> * eligible;
 	public:
 		uBitset(int N);
 		~ uBitset();
 		double getSupport();
+		int size();
 		boost::dynamic_bitset<> ** getBitBucket();
 		boost::dynamic_bitset<> * getEligible();
 		double getProbability(int tid);

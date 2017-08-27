@@ -1,6 +1,6 @@
 #include "uTransactionDatabase.h"
 #include "uItem.h"
-#include "uTidset.h"
+#include "ullSet.h"
 
 #include <fstream>
 #include <sstream>
@@ -30,7 +30,7 @@ vector<string> stringSplit(string str, string sep){
 uTransactionDatabase::uTransactionDatabase() {
 	items = new set<int>();
 	horizontalDB = new vector<vector<uItem *> *>();
-	verticalDB = new map<int, uTidset * >();
+	verticalDB = new map<int, ullSet * >();
 }
 
 uTransactionDatabase:: ~ uTransactionDatabase() {
@@ -55,7 +55,7 @@ void uTransactionDatabase::loadFile(string path){
 	// convert to vertical data structure
 	vector<uItem *> * currTransaction;
 	//set<tidAndProb *> * st;
-	uTidset * st;	
+	ullSet * st;	
 
 	for (int i = 0; i < N; i++){
 		currTransaction = horizontalDB->at(i);
@@ -64,13 +64,12 @@ void uTransactionDatabase::loadFile(string path){
 			int transactionID = i;
 			double probability = currTransaction->at(j)->getProbability();
 			if (verticalDB->find(itemID) == verticalDB->end()){
-				//st = new set<tidAndProb *>();
-				st = new uTidset();
-				verticalDB->insert(pair<int, uTidset *>(itemID, st));
+				st = new ullSet();
+				verticalDB->insert(pair<int, ullSet *>(itemID, st));
 			} else
 				st = verticalDB->at(itemID);
 
-			st->insert(transactionID, probability);
+			st->addElement(make_pair(transactionID, probability));
 		}
 	}
 
@@ -112,10 +111,10 @@ void uTransactionDatabase::printHorizontalDatabase() {
 }
 
 void uTransactionDatabase::printVerticalDatabase() {
-	uTidset * st;
+	ullSet * st;
 	cout << "\n... Transaction Database :: (vertical)\n";
 
-	for(map<int, uTidset *>::iterator i = verticalDB->begin(); i != verticalDB->end(); i++){
+	for(map<int, ullSet *>::iterator i = verticalDB->begin(); i != verticalDB->end(); i++){
 		cout << i->first << " : ";
 		st = i->second;
 		st->print();
@@ -156,7 +155,7 @@ void uTransactionDatabase::dismantleItems() {
 
 void uTransactionDatabase::dismantleVerticalDatabase() {
 	if (verticalDB != NULL){
-		for (map<int, uTidset *>::iterator it = verticalDB->begin(); it != verticalDB->end(); it ++){
+		for (map<int, ullSet *>::iterator it = verticalDB->begin(); it != verticalDB->end(); it ++){
 			if (it->second != NULL)
 				delete it->second;
 		}
@@ -165,7 +164,7 @@ void uTransactionDatabase::dismantleVerticalDatabase() {
 	}
 }
 
-map<int, uTidset *> * uTransactionDatabase::getVerticalDatabase() {
+map<int, ullSet *> * uTransactionDatabase::getVerticalDatabase() {
 	return this->verticalDB;
 }
 

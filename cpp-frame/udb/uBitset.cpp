@@ -7,6 +7,7 @@ using namespace std;
 
 uBitset::uBitset(int N) {
 	this->support = 0;
+	this->num = 0;
 	this->bitBucket = (boost::dynamic_bitset<> **)malloc(precision*sizeof(boost::dynamic_bitset<> *));
 	for(int i=0;i<precision;i++) {
 		this->bitBucket[i] = new boost::dynamic_bitset<>(N);
@@ -26,6 +27,7 @@ void uBitset::insert(int tid, double probability) {
 	double fraction = 0;
 	double factor = 1.0;
 	if(!this->eligible->test(tid)) {
+		this->num++;
 		this->eligible->set(tid);
 		for(int i=0;i<precision;i++) {
 			probability *= 2.0;
@@ -48,15 +50,19 @@ void uBitset::insert(int tid, double probability) {
 // }
 
 double uBitset::getSupport() {
-	return support;
+	return this->support;
+}
+
+int uBitset::size() {
+	return this->num;
 }
 
 boost::dynamic_bitset<> ** uBitset::getBitBucket() {
-	return bitBucket;
+	return this->bitBucket;
 }
 
 boost::dynamic_bitset<> * uBitset::getEligible() {
-	return eligible;
+	return this->eligible;
 }
 
 double uBitset::getProbability(int tid) {

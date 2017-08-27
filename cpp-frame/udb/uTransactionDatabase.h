@@ -3,7 +3,7 @@
 #define UTRANS_DB
 
 #include "uItem.h"
-#include "uTidset.h"
+#include "ullSet.h"
 
 #include <set>
 #include <vector>
@@ -16,7 +16,7 @@ class uTransactionDatabase{
 	private :
 		set<int> * items;
 		vector<vector<uItem*> *> * horizontalDB;
-		map<int, uTidset * > *verticalDB;
+		map<int, ullSet * > *verticalDB;
 		int N,M;
 
 	public :
@@ -28,7 +28,7 @@ class uTransactionDatabase{
 		void printVerticalDatabase();
 		int getN();
 		int getM();
-		map<int, uTidset *> * getVerticalDatabase();
+		map<int, ullSet *> * getVerticalDatabase();
 		void dismantleHorizontalDatabase();
 		void dismantleItems();
 		void dismantleVerticalDatabase();
