@@ -160,19 +160,6 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 
 	int length = prefixLength+1;
 
-    if(prefix[0] == 2) {
-        cout << "equivalenceClassItems = " << equivalenceClassItems << endl;
-
-        for(int k=0; k < equivalenceClassItems->size(); k++) {
-            cout << equivalenceClassItems->at(k) << ", ";
-        }
-
-        cout <<endl<< "equivalenceClassTidsets =  " << equivalenceClassTidsets << endl;
-
-        for(int k=0; k < equivalenceClassTidsets->size(); k++){
-            equivalenceClassTidsets->at(k)->print();
-        }
-    }
 	
 	if(equivalenceClassItems->size() == 1) {
 		
@@ -200,13 +187,6 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 		ullSet * tidsetJ = equivalenceClassTidsets->at(1);
 		double supportJ = tidsetJ->support();
 		this->save(prefix, prefixLength, itemJ, supportJ);
-
-        cout << "this is test tidsetI -----" <<endl;
-        tidsetI->print();
-        cout << "this is test tidsetJ -----" <<endl;
-        tidsetJ->print();
-        cout << "this is test prefixSupport -----" <<endl;
-        cout << (prefixSupport/this->N) <<endl;
 
 		ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ, prefixSupportVector);
 		double supportIJ = tidsetIJ->support();
@@ -403,9 +383,6 @@ ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ,
     else {
         ullSet_element * ptrPrefix = prefixSupportVector->getFirst();
 
-        cout << "prefixSupportVector = ";
-        prefixSupportVector->print();
-
         while(ptrA != NULL && ptrB != NULL) {
             if(ptrA->getValue().first < ptrB->getValue().first) {
                 ptrA = ptrA->getNext();
@@ -418,10 +395,6 @@ ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ,
                 while(ptrPrefix->getValue().first != ptrA->getValue().first) {
                     ptrPrefix = ptrPrefix->getNext();
                 }
-                cout << "now prefixSupportVector is " << endl;
-                prefixSupportVector->print();
-                cout << "Now we are dealing with: ptrA->getValue().second*ptrB->getValue().second/ptrPrefix->getValue().second) " << endl <<
-                     ptrA->getValue().second << "*" << ptrB->getValue().second << "/" << ptrPrefix->getValue().second <<endl;
                 tidsetIJ->addElement(make_pair(ptrA->getValue().first, (ptrA->getValue().second*ptrB->getValue().second/ptrPrefix->getValue().second)));
                 ptrA = ptrA->getNext();
                 ptrB = ptrB->getNext();
