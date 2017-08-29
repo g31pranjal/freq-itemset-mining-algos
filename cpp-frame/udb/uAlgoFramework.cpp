@@ -141,7 +141,7 @@ void uAlgoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
 }
 
 
-void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<ullSet * > * equivalenceClassTidsets, ullSet * prefixSupportVector) {
+void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<ullSet * > * equivalenceClassTidsets, ullSet * prefixSupportSet) {
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> ECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
@@ -188,7 +188,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 		double supportJ = tidsetJ->support();
 		this->save(prefix, prefixLength, itemJ, supportJ);
 
-		ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ, prefixSupportVector);
+		ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ, prefixSupportSet);
 		double supportIJ = tidsetIJ->support();
 		
 		if(supportIJ >= minSupRelative) {
@@ -232,7 +232,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 
 
 
-			ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ, prefixSupportVector);
+			ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ, prefixSupportSet);
 			double supportIJ = tidsetIJ->support();
 	
 			// cout << "support ij : " << supportIJ << endl;
@@ -312,7 +312,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 
 				cout << Estore << ", " << Vstore << endl;
 
-				if(true/*Estore <= Vstore*/){
+				if(/*true*/Estore <= Vstore){
 					
 					// cout << "ECLAT" << endl;
 					this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets, tidsetI);
@@ -322,13 +322,44 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 					
 //					// cout << "VIPER" << endl;
 //
-//					vector<uBitset *> * equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
+					vector<uBitset * > * equivalenceClassIBitsets = convertTIDSETStoBITSETS(equivalenceClassITidsets);
+
+
+//                    cout << "1. test convertTIDSETStoBITSETS: prefixSupportSet before convert" << endl;
+//                    ullSet* testUllSet = new ullSet();
+//                    testUllSet->addElement(make_pair<int, double>(1,0.3));
+//                    testUllSet->addElement(make_pair<int, double>(2,0.5));
+//                    testUllSet->print();
 //
-//					for(int i=0;i<equivalenceClassITidsets->size();i++)
-//						delete equivalenceClassITidsets->at(i);
-//					delete equivalenceClassITidsets;
+//                    vector<ullSet * > * testUllSetVector = new vector<ullSet *>();
+//                    testUllSetVector->push_back(testUllSet);
+//                    vector<uBitset * > * testUllSetBitsetsVector = convertTIDSETStoBITSETS(testUllSetVector);
+//                    uBitset * testUllSetBitsets = testUllSetBitsetsVector->at(0);
 //
-//					this->processEquivalenceClassViper(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets);
+//                    cout << "2. test convertTIDSETStoBITSETS: prefixSupportSet after convert" << endl;
+//                    for(int i=0; i < 4; i++){
+//                        cout << "(" << i <<"," << testUllSetBitsets->getProbability(i) << "), ";
+//                    }
+//                    cout << endl;
+
+
+
+                    vector<ullSet * > * tidsetIVector = new vector<ullSet *>();
+                    tidsetIVector->push_back(tidsetI);
+                    vector<uBitset * > * tidsetIBitsetsVector = convertTIDSETStoBITSETS(tidsetIVector);
+                    uBitset * tidsetIBitsets = tidsetIBitsetsVector->at(0);
+
+//                    cout << "2. test convertTIDSETStoBITSETS: prefixSupportSet after convert" << endl;
+//                    for(int i=0; i < prefixSupportBitsets->size(); i++){
+//                        cout << "(" << i <<"," << prefixSupportBitsets->getProbability(i) << "), ";
+//                    }
+//                    cout << endl;
+
+					for(int i=0;i<equivalenceClassITidsets->size();i++)
+						delete equivalenceClassITidsets->at(i);
+					delete equivalenceClassITidsets;
+
+					this->processEquivalenceClassViper(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets, tidsetIBitsets);
 				}
 	// 			// }
 			}			
@@ -346,7 +377,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 
 }
 
-ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ, ullSet * prefixSupportVector) {
+ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ, ullSet * prefixSupportSet) {
 	
 	ullSet * tidsetIJ = new ullSet();
 	ullSet_element * ptrA = tidsetI->getFirst();
@@ -364,7 +395,7 @@ ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ,
 	// 			tidsetIJ->insert( i->first ,(i->second)*(JMap->at(i->first)));
 	// }
 
-    if(prefixSupportVector->size() == 0){ //when prefix is {}
+    if(prefixSupportSet->size() == 0){ //when prefix is {}
         while(ptrA != NULL && ptrB != NULL) {
             if(ptrA->getValue().first < ptrB->getValue().first) {
                 ptrA = ptrA->getNext();
@@ -381,7 +412,7 @@ ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ,
 
     }
     else {
-        ullSet_element * ptrPrefix = prefixSupportVector->getFirst();
+        ullSet_element * ptrPrefix = prefixSupportSet->getFirst();
 
         while(ptrA != NULL && ptrB != NULL) {
             if(ptrA->getValue().first < ptrB->getValue().first) {
@@ -463,7 +494,10 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 		uBitset * bitsetJ = equivalenceClassBitsets->at(1);
 		double supportJ = bitsetJ->getSupport();
 		save(prefix, prefixLength, itemJ, supportJ);
-		
+
+
+
+
 		uBitset * bitsetIJ = this->performAND(bitsetI, bitsetJ, prefixBitsets);
 		double supportIJ = bitsetIJ->getSupport();
 		
@@ -576,27 +610,58 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 				cout << Estore << ", " << Vstore << endl;
 
 				if(Estore <= Vstore){
-					
+
 					// cout << "ECLAT" << endl;
 					
 					vector<ullSet * > * equivalenceClassITidsets = convertBITSETStoTIDSETS(equivalenceClassIBitsets);
 
-                    vector<uBitset * > * prefixBitsetsVector = new vector<uBitset *>();
-                    prefixBitsetsVector->push_back(prefixBitsets);
-                    vector<ullSet * > * prefixTidsetsVector = convertBITSETStoTIDSETS(prefixBitsetsVector);
-                    ullSet * prefixTidsets = prefixTidsetsVector->at(0);
+
+//                    uBitset* testBitset = new uBitset(4);
+//                    testBitset->insert(2, 0.3);
+//                    testBitset->insert(1, 0.5);
+//
+//                    vector<uBitset * > * testBitsetVector = new vector<uBitset *>();
+//                    testBitsetVector->push_back(testBitset);
+//                    vector<ullSet * > * testTidsetVector = convertBITSETStoTIDSETS(testBitsetVector);
+//                    ullSet * testTidset = testTidsetVector->at(0);
+//
+//                    cout << "3. test convertBITSETStoTIDSETS: prefixTidsets before convert" << endl;
+//                    for(int i=0; i < 4; i++){
+//                        cout << "(" << i <<"," << testBitset->getProbability(i) << "), ";
+//                    }
+//                    cout << endl;
+//
+//                    cout << "4. test convertBITSETStoTIDSETS: prefixTidsets after convert" << endl;
+//                    testTidset->print();
+
+
+
+
+
+                    vector<uBitset * > * bitSetIVector = new vector<uBitset *>();
+                    bitSetIVector->push_back(bitsetI);
+                    vector<ullSet * > * bitSetITidsetsVector = convertBITSETStoTIDSETS(bitSetIVector);
+                    ullSet * bitSetITidsets = bitSetITidsetsVector->at(0);
+
+
+
+
+
 
 				
 					for(int i=0;i<equivalenceClassIBitsets->size();i++)
 						delete equivalenceClassIBitsets->at(i);
 					delete equivalenceClassIBitsets;
 
-					this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets, prefixTidsets);
+					this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets, bitSetITidsets);
 				}
 				else {
 					
 					// cout << "VIPER" << endl;s
-					this->processEquivalenceClassViper(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets, prefixBitsets);
+
+
+
+					this->processEquivalenceClassViper(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassIBitsets, bitsetI);
 			
 				}
 			// 	// }
@@ -618,6 +683,19 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 }
 
 uBitset * uAlgoFramework::performAND(uBitset * bitsetI, uBitset * bitsetJ, uBitset * prefixBitsets) {
+
+    if(prefixBitsets->size() != 0) {
+
+        cout << "before performAnd, check prefixBitsets" <<endl;
+        for(int k = 0 ; k<N; k++){
+            cout << "(" << k <<"," << prefixBitsets->getProbability(k) << "), ";
+        }
+        cout << endl;
+    } else {
+        cout << "before performAnd, check prefixBitsets" <<endl;
+        cout << "prefixBitsets is empty!!" <<endl;
+    }
+
 	
 	uBitset * bitsetIJ = new uBitset(this->N);
 	
