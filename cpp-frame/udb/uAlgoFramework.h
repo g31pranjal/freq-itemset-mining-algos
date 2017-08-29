@@ -24,8 +24,8 @@ class uAlgoFramework {
 		ullSet * performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ, ullSet * prefixSupportVector);
 		vector<uBitset * > * convertTIDSETStoBITSETS(vector<ullSet * > * equivalenceClassITidsets);
 
-		void processEquivalenceClassViper(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uBitset * > * equivalenceClassBitsets);
-		uBitset * performAND(uBitset * bitsetI, uBitset * bitsetJ);
+		void processEquivalenceClassViper(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uBitset * > * equivalenceClassBitsets, uBitset * prefixBitsets);
+		uBitset * performAND(uBitset * bitsetI, uBitset * bitsetJ, uBitset * prefixBitsets);
 		vector<ullSet * > * convertBITSETStoTIDSETS(vector<uBitset *> * equivalenceClassIBitsets);
 
 		void printStats();
