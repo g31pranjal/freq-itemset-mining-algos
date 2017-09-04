@@ -98,7 +98,7 @@ double ullSet::support() {
 void ullSet::print() {
 	ullSet_element * ele = this->first;
 	while(ele != NULL) {
-		cout << ele->getValue().first << "," << ele->getValue().second << " -> " ;
+		cout << "(" << ele->getValue().first << "," << ele->getValue().second << ") -> " ;
 		ele = ele->getNext();
 	}
 	cout << endl;

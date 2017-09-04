@@ -71,7 +71,7 @@ int llSet::size() {
 void llSet::print() {
 	llSet_element * ele = this->first;
 	while(ele != NULL) {
-		cout << ele->getValue() << " -> " ;
+		cout  << ele->getValue() << " -> " ;
 		ele = ele->getNext();
 	}
 	cout << endl;
