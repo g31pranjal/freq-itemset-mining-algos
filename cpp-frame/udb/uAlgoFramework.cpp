@@ -105,9 +105,9 @@ void uAlgoFramework::constructTIDSETS(vector<int> * equivalenceClassItems) {
 
 	int * prefixArray = new int[1000];
 	
-	this->processEquivalenceClassEclat(prefixArray, 0, (double)N, equivalenceClassItems, equivalenceClassTidsets);
+	this->processEquivalenceClassEclat(prefixArray, 0, (double)N, equivalenceClassItems, equivalenceClassTidsets, new ullSet());
 	
-	delete prefixArray;
+	delete[] prefixArray;
 
 }
 
@@ -141,7 +141,7 @@ void uAlgoFramework::constructBITSETS(vector<int> * equivalenceClassItems) {
 }
 
 
-void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<ullSet * > * equivalenceClassTidsets) {
+void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<ullSet * > * equivalenceClassTidsets, ullSet * prefixSupportSet ) {
 
 	cout << ">>>>>>>>>>>>>>>>>>>>>>>>>>>> ECLAT <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<" << endl;
 
@@ -166,6 +166,8 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 			delete equivalenceClassTidsets->at(d);
 		delete equivalenceClassTidsets;
 
+        delete prefixSupportSet;
+
 		return;
 	}
 
@@ -181,7 +183,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 		double supportJ = tidsetJ->support();
 		this->save(prefix, prefixLength, itemJ, supportJ);
 		
-		ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ);
+		ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ, prefixSupportSet);
 		double supportIJ = tidsetIJ->support();
 		
 		if(supportIJ >= minSupRelative) {
@@ -190,11 +192,15 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 			this->save(prefix, newPrefixLength, itemJ, supportIJ);
 		}
 
+        tidsetI = NULL;
+        tidsetJ = NULL;
 		delete tidsetIJ;
 		delete equivalenceClassItems;
 		for(int d=0;d<equivalenceClassTidsets->size();d++) 
 			delete equivalenceClassTidsets->at(d);
 		delete equivalenceClassTidsets;
+
+        delete prefixSupportSet;
 
 		return;
 	}
@@ -221,7 +227,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 			
 			// cout << "i : " << suffixI << ", j : " << suffixJ << endl;
 
-			ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ);
+			ullSet * tidsetIJ = this->performINTERSECTION(tidsetI, tidsetJ, prefixSupportSet);
 			double supportIJ = tidsetIJ->support();
 	
 			// cout << "support ij : " << supportIJ << endl;
@@ -231,6 +237,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 				DTotal += (tidsetI->size() - tidsetIJ->size());
 				equivalenceClassISuffixItems->push_back(suffixJ);
 				equivalenceClassITidsets->push_back(tidsetIJ);
+                tidsetIJ == NULL;
 			}
 			else {
 				delete tidsetIJ;
@@ -243,8 +250,8 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 			int newPrefixLength = prefixLength+1;
 			
 			if(algo == 1) {
-				
-				this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+				ullSet * tidSetICopy = tidsetI->getDeepCopy();
+				this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets, tidSetICopy);
 
 			}
 			else {
@@ -292,7 +299,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 				if(true/*Estore <= Vstore*/){
 					
 					// cout << "ECLAT" << endl;
-					this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+					this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets, tidsetI);
 				
 				}
 				else {
@@ -321,9 +328,11 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 		delete equivalenceClassTidsets->at(d);
 	delete equivalenceClassTidsets;
 
+    delete prefixSupportSet;
+
 }
 
-ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ) {
+ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ, ullSet * prefixSupportSet) {
 	
 	ullSet * tidsetIJ = new ullSet();
 	ullSet_element * ptrA = tidsetI->getFirst();
@@ -340,19 +349,42 @@ ullSet * uAlgoFramework::performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ)
 	// 			tidsetIJ->insert( i->first ,(i->second)*(JMap->at(i->first)));
 	// }
 
-	while(ptrA != NULL && ptrB != NULL) {
-		if(ptrA->getValue().first < ptrB->getValue().first) {
-			ptrA = ptrA->getNext();
-		}
-		else if(ptrA->getValue().first > ptrB->getValue().first) {
-			ptrB = ptrB->getNext();
-		}
-		else {
-			tidsetIJ->addElement(make_pair(ptrA->getValue().first, ptrA->getValue().second*ptrB->getValue().second));
-			ptrA = ptrA->getNext();
-			ptrB = ptrB->getNext();
-		}
-	}
+    if(prefixSupportSet->size() == 0) {
+        while(ptrA != NULL && ptrB != NULL) {
+            if(ptrA->getValue().first < ptrB->getValue().first) {
+                ptrA = ptrA->getNext();
+            }
+            else if(ptrA->getValue().first > ptrB->getValue().first) {
+                ptrB = ptrB->getNext();
+            }
+            else {
+                tidsetIJ->addElement(make_pair(ptrA->getValue().first, ptrA->getValue().second*ptrB->getValue().second/1));
+                ptrA = ptrA->getNext();
+                ptrB = ptrB->getNext();
+            }
+        }
+    } else {
+        ullSet_element * ptrPrefix = prefixSupportSet->getFirst();
+
+        while(ptrA != NULL && ptrB != NULL) {
+            if(ptrA->getValue().first < ptrB->getValue().first) {
+                ptrA = ptrA->getNext();
+            }
+            else if(ptrA->getValue().first > ptrB->getValue().first) {
+                ptrB = ptrB->getNext();
+            }
+            else {
+                while(ptrPrefix->getValue().first != ptrA->getValue().first) {
+                    ptrPrefix = ptrPrefix->getNext();
+                }
+                tidsetIJ->addElement(make_pair(ptrA->getValue().first, ptrA->getValue().second*ptrB->getValue().second/ptrPrefix->getValue().second));
+                ptrA = ptrA->getNext();
+                ptrB = ptrB->getNext();
+            }
+        }
+    }
+
+
 
 	return tidsetIJ;
 }
@@ -536,7 +568,7 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 						delete equivalenceClassIBitsets->at(i);
 					delete equivalenceClassIBitsets;
 
-					this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
+					//this->processEquivalenceClassEclat(prefix, newPrefixLength, supportI, equivalenceClassISuffixItems, equivalenceClassITidsets);
 				}
 				else {
 					
@@ -576,7 +608,7 @@ uBitset * uAlgoFramework::performAND(uBitset * bitsetI, uBitset * bitsetJ) {
 }
 
 vector<ullSet *> * uAlgoFramework::convertBITSETStoTIDSETS(vector<uBitset * > * equivalenceClassIBitsets) {
-	
+
 	vector<ullSet * > * equivalenceClassITidsets = new vector<ullSet * >();
 
 	for(int i=0;i<equivalenceClassIBitsets->size();i++) {

@@ -20,8 +20,8 @@ class uAlgoFramework {
 		void constructTIDSETS(vector<int> * equivalenceClassItems);
 		void constructBITSETS(vector<int> * equivalenceClassItems);
 		
-		void processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<ullSet * > * equivalenceClassTidsets);
-		ullSet * performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ);
+		void processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<ullSet * > * equivalenceClassTidsets, ullSet * prefixSupportSet);
+		ullSet * performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ, ullSet * prefixSupportSet);
 		vector<uBitset * > * convertTIDSETStoBITSETS(vector<ullSet * > * equivalenceClassITidsets);
 
 		void processEquivalenceClassViper(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uBitset * > * equivalenceClassBitsets);

@@ -31,6 +31,25 @@ ullSet::~ullSet() {
 	}
 }
 
+ullSet* ullSet::getDeepCopy() {
+	if(this->num == 0) {
+		return new ullSet();
+	} else {
+		ullSet* newUllSet = new ullSet();
+		ullSet_element * ele = this->first;
+		while(ele != NULL) {
+			ullSet_element* newEle = ele->getDeepCopy();
+			newUllSet->addElement(newEle->getValue());
+			//newEle = NULL;
+			delete newEle;
+			//cout << ele->getValue().first << "," << ele->getValue().second << " -> " ;
+			ele = ele->getNext();
+		}
+		return newUllSet;
+//		cout << endl;
+	}
+}
+
 ullSet_element * ullSet::getFirst() {
 	return this->first;
 }

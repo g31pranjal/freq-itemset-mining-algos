@@ -7,3 +7,7 @@ clean:
 	rm -rf *.o
 	rm -rf *.out
 	rm -rf switch
+
+
+run:
+	bash script.sh

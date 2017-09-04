@@ -11,6 +11,7 @@ class ullSet_element {
 		ullSet_element * next;
 	public :
 		ullSet_element(pair<int, double> val);
+		ullSet_element* getDeepCopy();
 		pair<int,double> getValue();
 		ullSet_element * getNext();
 		void setNext(ullSet_element * nw);
@@ -31,6 +32,7 @@ class ullSet {
 		ullSet();
 		ullSet(ullSet_element * first);
 		~ullSet();
+		ullSet* getDeepCopy();
 		int size();
 		double support();
 		ullSet_element * getFirst();
