@@ -27,7 +27,7 @@ string getFilepath(char filename[]) {
 
 int main(int argc, char const *argv[]) {
 
-//	string filepath = getFilepath("../../datasets/uncertainSample.txt");
+//	string filepath = getFilepath("../../datasets/uncertainSample.txtmake");
 	string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/mushroom_10_100SPMF.txt");
 //	string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/mushroomSPMF.txt");
 

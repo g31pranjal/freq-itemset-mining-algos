@@ -17,6 +17,7 @@ class uBitset{
 	public:
 		uBitset(int N);
 		~ uBitset();
+		uBitset * getDeepCopy();
 		double getSupport();
 		int size();
 		boost::dynamic_bitset<> ** getBitBucket();

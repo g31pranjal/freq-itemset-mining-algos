@@ -8,7 +8,9 @@ using namespace std;
 uBitset::uBitset(int N) {
 	this->support = 0;
 	this->num = 0;
-	this->bitBucket = (boost::dynamic_bitset<> **)malloc(precision*sizeof(boost::dynamic_bitset<> *));
+//	this->bitBucket = (boost::dynamic_bitset<> **)malloc(precision*sizeof(boost::dynamic_bitset<> *));
+	unsigned long precision_long = unsigned(long(precision));
+	this->bitBucket = new boost::dynamic_bitset<> *[precision_long]();
 	for(int i=0;i<precision;i++) {
 		this->bitBucket[i] = new boost::dynamic_bitset<>(N);
 	}
@@ -18,9 +20,28 @@ uBitset::uBitset(int N) {
 uBitset::~uBitset() {
 	delete this->eligible;
 	for(int i=0;i<precision;i++) {
+//		delete this->bitBucket[i];
+		this->bitBucket[i]->clear();
 		delete this->bitBucket[i];
 	}
-	delete this->bitBucket;
+	//free(this->bitBucket);
+	delete[] this->bitBucket;
+}
+
+uBitset* uBitset::getDeepCopy() {
+	uBitset* copy = new uBitset(this->eligible->size());
+	boost::dynamic_bitset<> * eligibleCopy = this->getEligible();
+//	boost::dynamic_bitset<> ** bitBucketCopy = this->getBitBucket();
+
+	for(int i = eligibleCopy->find_first(); i >= 0; i = eligibleCopy->find_next(i)){
+		 if(eligibleCopy->test(i)){
+			 //cout << "tid: " << i << ", probability: " << this->getProbability(i)<<endl;
+			 copy->insert(i, this->getProbability(i));
+		 }
+	}
+	eligibleCopy = 0;
+
+	return copy;
 }
 
 void uBitset::insert(int tid, double probability) {
@@ -66,8 +87,9 @@ boost::dynamic_bitset<> * uBitset::getEligible() {
 }
 
 double uBitset::getProbability(int tid) {
-	
-	if(!this->eligible->test(tid)){
+
+	unsigned long tid_long = unsigned(long(tid));
+	if(!this->eligible->test(tid_long)){
 		return 0.0;
 	}
 
@@ -75,8 +97,9 @@ double uBitset::getProbability(int tid) {
 	double factor = 1.0;
 	for(int i=0;i<precision;i++) {
 		factor /= 2.0;
-		fraction += ((int)(this->bitBucket[i]->test(tid))) * factor;
+		fraction += ((int)(this->bitBucket[i]->test(tid_long))) * factor;
 	}
+	return fraction;
 }
 
 
