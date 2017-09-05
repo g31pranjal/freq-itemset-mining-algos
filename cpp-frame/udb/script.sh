@@ -31,7 +31,7 @@ fi
 # do the massif job
 #------------------
 
-for number in 1
+for number in 1 09 08 07 06 05 04 03 02 01
 do
 	c=$a$number
 	outputfile=$b$number

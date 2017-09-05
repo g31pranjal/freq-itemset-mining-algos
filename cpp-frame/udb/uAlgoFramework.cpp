@@ -151,11 +151,11 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 		cout << prefix[i] << ", " ;
 	cout << endl;
 
-    cout << "equivalentClassItems: "<<endl;
-    for(int i=0; i < equivalenceClassItems->size(); i++) {
-        cout <<equivalenceClassItems->at(i)<<", ";
-    }
-    cout<<endl;
+//    cout << "equivalentClassItems: "<<endl;
+//    for(int i=0; i < equivalenceClassItems->size(); i++) {
+//        cout <<equivalenceClassItems->at(i)<<", ";
+//    }
+//    cout<<endl;
 
 	rec[1]++;
 
@@ -286,8 +286,8 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 	// 			// int DECLATthreshold  = supportI - ECLATthreshold;
 	// 			// int DECLATstart  = supportI;
 
-				int Estore = ULLSET*(ETotal);
-				int Vstore = (double)N * (equivalenceClassISuffixItems->size()) * BITSIZE * (precision+1);
+				int Estore = ULLSET*(ETotal + prefixLength);
+				int Vstore = (double)N * (equivalenceClassISuffixItems->size() + 1.0 + 1.0) * BITSIZE * (precision+1);
 
 	// 			// if(DECLATthreshold <= ECLATthreshold) {
 
@@ -488,11 +488,11 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 		cout << prefix[i] << ", ";
 	cout << endl;
 
-    cout << "equivalentClassItems: "<<endl;
-    for(int i=0; i < equivalenceClassItems->size(); i++) {
-        cout <<equivalenceClassItems->at(i)<<", ";
-    }
-    cout<<endl;
+//    cout << "equivalentClassItems: "<<endl;
+//    for(int i=0; i < equivalenceClassItems->size(); i++) {
+//        cout <<equivalenceClassItems->at(i)<<", ";
+//    }
+//    cout<<endl;
 
 	rec[2]++;
 
@@ -614,8 +614,8 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 			// 	// int DECLATthreshold  = supportI - ECLATthreshold;
 			// 	// int DECLATstart  = supportI;
 
-				int Estore = ULLSET*(ETotal);
-				int Vstore = (double)N*(equivalenceClassISuffixItems->size()+1.0)*BITSIZE*(precision+1);
+				int Estore = ULLSET*(ETotal + prefixLength /*for prefixSupportSet*/);
+				int Vstore = (double)N*(equivalenceClassISuffixItems->size()+1.0 + 1.0 /*for prefixBitsets*/)*BITSIZE*(precision+1);
 
 			// 	// if(DECLATthreshold <= ECLATthreshold) {
 
