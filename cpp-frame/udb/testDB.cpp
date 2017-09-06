@@ -29,8 +29,8 @@ int main(int argc, char const *argv[]) {
 
 //	string filepath = getFilepath("../../datasets/uncertainSample.txtmake");
 	string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/mushroom_10_100SPMF.txt");
-//	string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/mushroomSPMF.txt");
-
+//	string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/connect4_10_100SPMF.txt");
+//	string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/retail_10_100SPMF.txt");
 	chrono::system_clock::time_point tp1 = chrono::system_clock::now();
 	
 	uTransactionDatabase * database = new uTransactionDatabase();
@@ -46,9 +46,15 @@ int main(int argc, char const *argv[]) {
 	else {
 		double minsup = atof(argv[2]);
 		cout << "the minimum support is: "<< minsup << endl;
+
+        ofstream st;
+        st.open("out.put", _Ios_Openmode::_S_app);
+        st << "\n\nalgo: " << argv[1] <<"   support: " << argv[2] << "\n";
+        st.close();
+
 	 	uAlgoFramework * algo = new uAlgoFramework(atoi(argv[1]));		
 		algo->runAlgo("out.put", database, minsup);
-	
+
 		delete algo;
 	}
 

@@ -30,8 +30,8 @@ void uAlgoFramework::runAlgo(char * outputFile, uTransactionDatabase * database,
 	this->M = database->getM();
 	this->minSupRelative = minsupp * (double)N;
 	this->verticalDB = database->getVerticalDatabase();
-	this->writer.open(outputFile);
-
+//	this->writer.open(outputFile);
+    this->writer.open(outputFile, _Ios_Openmode::_S_app);
 	itemsetCount = 0;
 	double totalInOneFrequent = 0l;
 
@@ -85,9 +85,11 @@ void uAlgoFramework::runAlgo(char * outputFile, uTransactionDatabase * database,
 		}
 	}
 
-	writer.close();
-	
+//	writer.close();
+
 	this->printStats();
+
+    writer.close();
 
 }
 
@@ -287,7 +289,7 @@ void uAlgoFramework::processEquivalenceClassEclat(int * prefix, int prefixLength
 	// 			// int DECLATstart  = supportI;
 
 				int Estore = ULLSET*(ETotal + prefixLength);
-				int Vstore = (double)N * (equivalenceClassISuffixItems->size() + 1.0 + 1.0) * BITSIZE * (precision+1);
+				int Vstore = (double)N * (equivalenceClassISuffixItems->size() + 1.0) * BITSIZE * (precision+1);
 
 	// 			// if(DECLATthreshold <= ECLATthreshold) {
 
@@ -615,7 +617,7 @@ void uAlgoFramework::processEquivalenceClassViper(int * prefix, int prefixLength
 			// 	// int DECLATstart  = supportI;
 
 				int Estore = ULLSET*(ETotal + prefixLength /*for prefixSupportSet*/);
-				int Vstore = (double)N*(equivalenceClassISuffixItems->size()+1.0 + 1.0 /*for prefixBitsets*/)*BITSIZE*(precision+1);
+				int Vstore = (double)N*(equivalenceClassISuffixItems->size() + 1.0 /*for prefixBitsets*/)*BITSIZE*(precision+1);
 
 			// 	// if(DECLATthreshold <= ECLATthreshold) {
 
@@ -793,11 +795,24 @@ vector<ullSet *> * uAlgoFramework::convertBITSETStoTIDSETS(vector<uBitset * > * 
 
 
 void uAlgoFramework::printStats() {
-	cout << "\n\n===================================================" << endl;
-	cout << " Transactions count from database : " << N << endl;
-	cout << " Frequent itemset count : " << itemsetCount << endl;
-	cout << " Usage : ECLAT "  << rec[1] << " VIPER " << rec[2] << " DECLAT " << rec[3] << endl;
-	cout << "===================================================" << endl;
+
+    string s = "";
+    s = s + "===================================================\n" ;
+    s = s + " Transactions count from database : " + to_string(N) + "\n" ;
+    s = s +  " Frequent itemset count : " + to_string(itemsetCount) + "\n";
+    s = s + " Usage : ECLAT "  + to_string(rec[1]) + " VIPER " + to_string(rec[2]) + " DECLAT " + to_string(rec[3]) + "\n";
+    s = s + "===================================================" "\n";
+
+    writer << s;
+//    ofstream statsStream;
+//    string statusFilename =
+//    statsStream.open("")
+
+//	cout << "\n\n===================================================" << endl;
+//	cout << " Transactions count from database : " << N << endl;
+//	cout << " Frequent itemset count : " << itemsetCount << endl;
+//	cout << " Usage : ECLAT "  << rec[1] << " VIPER " << rec[2] << " DECLAT " << rec[3] << endl;
+//	cout << "===================================================" << endl;
 }
 
 void uAlgoFramework::save(int * prefix, int prefixLength, int suffixItem, double support) {
@@ -809,7 +824,7 @@ void uAlgoFramework::save(int * prefix, int prefixLength, int suffixItem, double
 		s = s + (to_string(prefix[i]) + " ") ;
 	s = s + (to_string(suffixItem) + " #SUP: " + to_string(support) +  '\n' );
 
-	writer << s;
+//	writer << s;
 }
 
 
