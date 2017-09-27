@@ -11,21 +11,25 @@
 
 class uAlgoFramework {
 	private:
+		int precision;
 		double minSupRelative;
 		uTransactionDatabase * database;
 		map<int, ullSet *> * verticalDB;
+        map<int, ullSet *> * existentialDBUllSet;
+        map<int, uBitset *> * existentialDBUBitset;
 		int itemsetCount, algo, rec[4], N, M;
 		ofstream writer;
 
 		void constructTIDSETS(vector<int> * equivalenceClassItems);
 		void constructBITSETS(vector<int> * equivalenceClassItems);
+        void constructExistentialProb(std::vector<int> * equivalenceClassItems);
 		
-		void processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<ullSet * > * equivalenceClassTidsets, ullSet * prefixSupportSet);
-		ullSet * performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ, ullSet * prefixSupportSet);
+		void processEquivalenceClassEclat(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<ullSet * > * equivalenceClassTidsets);
+		ullSet * performINTERSECTION(ullSet * tidsetI, ullSet * tidsetJ);
 		vector<uBitset * > * convertTIDSETStoBITSETS(vector<ullSet * > * equivalenceClassITidsets);
 
-		void processEquivalenceClassViper(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uBitset * > * equivalenceClassBitsets, uBitset * prefixBitsets);
-		uBitset * performAND(uBitset * bitsetI, uBitset * bitsetJ, uBitset * prefixBitsets);
+		void processEquivalenceClassViper(int * prefix, int prefixLength, double prefixSupport, vector<int> * equivalenceClassItems, vector<uBitset * > * equivalenceClassBitsets);
+		uBitset * performAND(uBitset * bitsetI, uBitset * bitsetJ);
 		vector<ullSet * > * convertBITSETStoTIDSETS(vector<uBitset *> * equivalenceClassIBitsets);
 
 		void printStats();
@@ -34,7 +38,9 @@ class uAlgoFramework {
 	public:
 		uAlgoFramework();
 		uAlgoFramework(int algo);
-		void runAlgo(char * outputFile, uTransactionDatabase * database, double minsupp);
+		void runAlgo(char * outputFile, uTransactionDatabase * database, double minsupp, int precision);
+        void dismantleExistentialDBUllSet();
+        void dismantleExistentialDBUBitset();
 	
 };
 

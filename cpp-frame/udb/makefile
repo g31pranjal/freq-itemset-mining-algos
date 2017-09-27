@@ -7,6 +7,7 @@ clean:
 	rm -rf *.o
 	rm -rf *.out
 	rm -rf switch
+	rm -rf out.put
 
 
 

@@ -6,16 +6,17 @@
 
 using namespace std;
 
-static int precision = 16;
+//static int precision = 16;
 
 class uBitset{
 	private:
+		int precision;
 		double support;
 		int num;
 		boost::dynamic_bitset<> ** bitBucket;
 		boost::dynamic_bitset<> * eligible;
 	public:
-		uBitset(int N);
+		uBitset(int N, int precision);
 		~ uBitset();
 		uBitset * getDeepCopy();
 		double getSupport();

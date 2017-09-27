@@ -1,6 +1,6 @@
 a="0."
 b="massif.out."
-f="mushroom_10_100SPMF"
+f="retail_10_100SPMF"
 dir1=./massif/switch_$f
 dir2=./massif/eclat_$f
 dir3=./massif/viper_$f
@@ -31,11 +31,32 @@ fi
 # do the massif job
 #------------------
 
-for number in 03 0275 025 0225 020 018 016 014 012 010 009 008 007 006 005 004 003
+for number in  06 04 02
 do
-	c=$a$number
-	outputfile=$b$number
-    valgrind --tool=massif --max-snapshots=500 --massif-out-file=$dir2/$outputfile ./switch 1 $c > $dir2/$number.txt
-    valgrind --tool=massif --max-snapshots=500 --massif-out-file=$dir1/$outputfile ./switch 0 $c > $dir1/$number.txt
-    valgrind --tool=massif --max-snapshots=500 --massif-out-file=$dir3/$outputfile ./switch 2 $c > $dir3/$number.txt
+    for precision in 16
+    do
+	    c=$a$number
+	    outputfile=$b$number
+	    #valgrind --tool=massif --max-snapshots=1000 --alloc-fn='uAlgoFramework::constructExistentialProb(std::vector<int> *)' --alloc-fn='ullSet_element::getDeepCopy()' --massif-out-file=$dir1/$outputfile ./switch 0 $c $precision > $dir1/$number.txt
+        valgrind --tool=massif --max-snapshots=1000 --alloc-fn='uAlgoFramework::constructExistentialProb(std::vector<int> *)' --alloc-fn='ullSet_element::getDeepCopy()' --massif-out-file=$dir2/$outputfile ./switch 1 $c $precision > $dir2/$number.txt
+        #valgrind --tool=massif --max-snapshots=1000 --alloc-fn='uAlgoFramework::constructExistentialProb(std::vector<int> *)' --alloc-fn='ullSet_element::getDeepCopy()' --massif-out-file=$dir3/$outputfile ./switch 2 $c $precision > $dir3/$number.txt
+        #./switch 0 $c $precision
+        #./switch 1 $c $precision
+        #./switch 2 $c $precision
+    done
 done
+
+#for number in  05 04 03 02 01 009 008 007 006 005 0045 004 0035 003 0025 002
+#do
+#    for precision in 6 8 10 12 14 16 18 20 22 24
+#    do
+#	    c=$a$number
+#	    outputfile=$b$number
+#	    #valgrind --tool=massif --max-snapshots=1000 --alloc-fn='uAlgoFramework::constructExistentialProb(std::vector<int> *)' --alloc-fn='ullSet_element::getDeepCopy()' --massif-out-file=$dir1/$outputfile ./switch 0 $c $precision > $dir1/$number.txt
+#        #valgrind --tool=massif --max-snapshots=1000 --alloc-fn='uAlgoFramework::constructExistentialProb(std::vector<int> *)' --alloc-fn='ullSet_element::getDeepCopy()' --massif-out-file=$dir2/$outputfile ./switch 1 $c $precision > $dir2/$number.txt
+#        #valgrind --tool=massif --max-snapshots=1000 --alloc-fn='uAlgoFramework::constructExistentialProb(std::vector<int> *)' --alloc-fn='ullSet_element::getDeepCopy()' --massif-out-file=$dir3/$outputfile ./switch 2 $c $precision > $dir3/$number.txt
+#        ./switch 0 $c $precision
+#        ./switch 1 $c $precision
+#        ./switch 2 $c $precision
+#    done
+#done

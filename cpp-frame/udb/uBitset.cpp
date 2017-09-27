@@ -5,7 +5,8 @@
 
 using namespace std;
 
-uBitset::uBitset(int N) {
+uBitset::uBitset(int N, int _precision) {
+	this->precision = _precision;
 	this->support = 0;
 	this->num = 0;
 //	this->bitBucket = (boost::dynamic_bitset<> **)malloc(precision*sizeof(boost::dynamic_bitset<> *));
@@ -29,7 +30,7 @@ uBitset::~uBitset() {
 }
 
 uBitset* uBitset::getDeepCopy() {
-	uBitset* copy = new uBitset(this->eligible->size());
+	uBitset* copy = new uBitset(this->eligible->size(), this->precision);
 	boost::dynamic_bitset<> * eligibleCopy = this->getEligible();
 //	boost::dynamic_bitset<> ** bitBucketCopy = this->getBitBucket();
 
