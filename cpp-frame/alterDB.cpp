@@ -26,7 +26,7 @@ string getFilepath(char filename[]) {
 
 int main(int argc, char * argv[]) {
 
-	string filepath = getFilepath("../datasets/PAMAP.txt");
+	string filepath = getFilepath("../datasets/t20i6d100k.txt");
 
 	chrono::system_clock::time_point tp1 = chrono::system_clock::now();
 
