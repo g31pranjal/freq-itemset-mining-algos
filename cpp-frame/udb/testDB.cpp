@@ -9,6 +9,7 @@
 
 #include "uTransactionDatabase.h"
 #include "uAlgoFramework.h"
+
 //#include "uTidset.h"
 
 using namespace std;
@@ -27,6 +28,7 @@ string getFilepath(char filename[]) {
 
 int main(int argc, char const *argv[]) {
 
+
 //	string filepath = getFilepath("../../datasets/uncertainSample.txt");
 //	string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/mushroom_50_60SPMF.txt");
     string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/mushroom_10_100SPMF.txt");
@@ -40,11 +42,13 @@ int main(int argc, char const *argv[]) {
 //    string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/bms2SPMF.txt");
 //    string filepath = getFilepath("../../datasets/spmf(uncertain)/testUncertainData5uci/bms1SPMF.txt");
 
+
 	chrono::system_clock::time_point tp1 = chrono::system_clock::now();
 
 
 	uTransactionDatabase * database = new uTransactionDatabase();
 	database->loadFile(filepath);
+
 
 	//database->printVerticalDatabase();
 	
