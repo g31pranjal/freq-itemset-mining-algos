@@ -8,12 +8,12 @@ import code.input.transaction_database_list_integers.TransactionDatabase;
 import code.algorithms.frequentpatterns.algoFramework;
 
 
-public class alterDBstructure {
+public class alterDBstruct {
 
 	public static void main(String args[]) throws IOException{
 
 		String filename = "../../datasets/retail.txt";
-		URL url = alterDBstructure.class.getResource(filename);
+		URL url = alterDBstruct.class.getResource(filename);
 		String input = java.net.URLDecoder.decode(url.getPath(),"UTF-8");
 
 		// fetching the database.
