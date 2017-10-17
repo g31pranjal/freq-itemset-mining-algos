@@ -26,7 +26,6 @@ vector<string> stringSplit(string str, string sep){
 	return arr;
 }
 
-//this is the constructor for uTransactionDatabase
 uTransactionDatabase::uTransactionDatabase() {
 	items = new set<int>();
 	horizontalDB = new vector<vector<uItem *> *>();
@@ -39,7 +38,6 @@ uTransactionDatabase:: ~ uTransactionDatabase() {
 	this->dismantleVerticalDatabase();
 }
 
-//the function to load the file
 void uTransactionDatabase::loadFile(string path){
 	string thisLine;
 	ifstream infile(path.c_str());
@@ -54,7 +52,6 @@ void uTransactionDatabase::loadFile(string path){
 
 	// convert to vertical data structure
 	vector<uItem *> * currTransaction;
-	//set<tidAndProb *> * st;
 	ullSet * st;	
 
 	for (int i = 0; i < N; i++){
